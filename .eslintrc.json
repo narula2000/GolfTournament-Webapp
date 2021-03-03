@@ -8,6 +8,9 @@
     "ecmaVersion": 12,
     "sourceType": "module"
   },
+  "env": {
+    "jest/globals": true
+  },
   "rules": {
     "prettier/prettier": "error",
     "no-unused-vars": "warn",
