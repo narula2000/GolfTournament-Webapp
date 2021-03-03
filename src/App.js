@@ -1,14 +1,13 @@
 import React from 'react';
 import { ChakraProvider } from '@chakra-ui/react';
-import logo from './assets/logo.svg';
 import './assets/App.css';
 
-import AdminLoginPage from './pages/AdminLogin';
+import MyRouter from './router';
 
 function App() {
   return (
     <ChakraProvider>
-      <AdminLoginPage />
+      <MyRouter />
     </ChakraProvider>
   );
 }

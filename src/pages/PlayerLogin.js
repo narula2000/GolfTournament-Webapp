@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container } from '@chakra-ui/react';
 
-const AdminLoginPage = () => <Container>Admin Login Page</Container>;
+const AdminLoginPage = () => <Container>Home Page</Container>;
 
 export default AdminLoginPage;
