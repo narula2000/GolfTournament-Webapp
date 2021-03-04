@@ -7,6 +7,7 @@
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "eslint-plugin-jest": "^24.1.5",
+    "firebase": "^8.2.9",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-scripts": "4.0.3",
@@ -38,6 +39,7 @@
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",
+    "babel-eslint": "^10.1.0",
     "eslint": "^7.2.0",
     "eslint-config-airbnb": "18.2.1",
     "eslint-config-node": "^4.1.0",
