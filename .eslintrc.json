@@ -1,5 +1,10 @@
 {
-  "extends": ["airbnb", "prettier", "eslint:recommended", "plugin:jest/recommended"],
+  "extends": [
+    "airbnb",
+    "prettier",
+    "eslint:recommended",
+    "plugin:jest/recommended"
+  ],
   "plugins": ["prettier"],
   "parserOptions": {
     "ecmaFeatures": {
@@ -9,7 +14,9 @@
     "sourceType": "module"
   },
   "env": {
-    "jest/globals": true
+    "jest/globals": true,
+    "browser": true,
+    "node": true
   },
   "rules": {
     "prettier/prettier": "error",
