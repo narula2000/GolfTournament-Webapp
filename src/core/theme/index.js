@@ -13,7 +13,7 @@ const overrides = {
   styles: {
     global: {
       body: {
-        bg: colors.background,
+        // bg: colors.background,
       },
     },
   },
