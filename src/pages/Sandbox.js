@@ -31,7 +31,31 @@ const createMockDataAdmin = () => {
 
 const clearData = () => {
   const database = firebase.database();
-  database.ref('admin').set({});
+  database.ref('admin').set({
+    dummyData: 0,
+  });
+};
+
+const fetchData = () => {
+  const database = firebase.database();
+  database.ref('admin/').on('value', (snap) => {
+    const data = snap.val();
+    console.log('Snap values ->', snap.val());
+    if (data != null || data !== undefined) {
+      const adminIds = Object.keys(data);
+      console.log('AdminIds ->', Object.keys(adminIds));
+      adminIds.forEach((adminId) => {
+        const tourIds = Object.keys(data[adminId]);
+        console.log('TourIds ->', Object.keys(data[adminId]));
+        tourIds.forEach((tourId) => {
+          const userIds = Object.keys(data[adminId][tourId]);
+          userIds.forEach((userId) => {
+            console.log('User Info ->', data[adminId][tourId][userId]);
+          });
+        });
+      });
+    }
+  });
 };
 
 const Sandbox = () => (
@@ -53,6 +77,14 @@ const Sandbox = () => (
         variant="solid"
       >
         Clear Data
+      </Button>
+      <Button
+        onClick={fetchData}
+        leftIcon={<AddIcon />}
+        colorScheme="blue"
+        variant="solid"
+      >
+        Fetch Data
       </Button>
     </Stack>
   </Container>
