@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './assets/index.css';
+import './assets/styles/index.css';
 import firebaseConfig from './firebase';
 
 if (!firebase.apps.length) {
