@@ -43,12 +43,13 @@ const fetchData = () => {
     console.log('Snap values ->', snap.val());
     if (data != null || data !== undefined) {
       const adminIds = Object.keys(data);
-      console.log('AdminIds ->', Object.keys(adminIds));
+      console.log('AdminIds ->', adminIds);
       adminIds.forEach((adminId) => {
         const tourIds = Object.keys(data[adminId]);
-        console.log('TourIds ->', Object.keys(data[adminId]));
+        console.log('TourIds ->', tourIds);
         tourIds.forEach((tourId) => {
           const userIds = Object.keys(data[adminId][tourId]);
+          console.log('UserIds ->', userIds);
           userIds.forEach((userId) => {
             console.log('User Info ->', data[adminId][tourId][userId]);
           });
@@ -84,7 +85,7 @@ const Sandbox = () => (
         colorScheme="blue"
         variant="solid"
       >
-        Fetch Data
+        Fetch All Data
       </Button>
     </Stack>
   </Container>
