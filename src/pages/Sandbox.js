@@ -59,38 +59,6 @@ const fetchData = () => {
   });
 };
 
-const renameUserId = (userId, _phonenumber) => {
-  const database = firebase.database();
-  database.ref('admin/').on('value', (snap) => {
-    const data = snap.val();
-    console.log('Snap values ->', snap.val());
-    if (data != null || data !== undefined) {
-      const adminIds = Object.keys(data);
-      adminIds.forEach((adminId) => {
-        const tourIds = Object.keys(data[adminId]);
-        tourIds.forEach((tourId) => {
-          const userIds = Object.keys(data[adminId][tourId]);
-          console.log('User ids ->', userIds);
-          userIds.forEach((userID) => {
-            if (
-              userID.phonenumber !== undefined &&
-              userID.phonenumber === _phonenumber
-            ) {
-              // Clone old key values to new UserID
-              data[adminId][tourId][userId] = data[adminId][tourId][userID];
-              delete data[adminId][tourId][userID]; // Delete old key
-            }
-          });
-          // Sandbox reason
-          data[adminId][tourId].newUserId = data[adminId][tourId][userIds['0']];
-          delete data[adminId][tourId][userIds['0']]; // Delete old key
-          console.log('New data ->', data);
-        });
-      });
-    }
-  });
-};
-
 const Sandbox = () => (
   <Container>
     <Heading>This Page for Sandboxing</Heading>
@@ -118,14 +86,6 @@ const Sandbox = () => (
         variant="solid"
       >
         Fetch All Data
-      </Button>
-      <Button
-        onClick={renameUserId}
-        leftIcon={<LinkIcon />}
-        colorScheme="blue"
-        variant="solid"
-      >
-        Change UserID
       </Button>
     </Stack>
   </Container>
