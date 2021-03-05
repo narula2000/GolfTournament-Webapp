@@ -1,7 +1,7 @@
 import React from 'react';
 import firebase from 'firebase/app';
 import { Container, Button, Heading, Stack } from '@chakra-ui/react';
-import { DeleteIcon, AddIcon, LinkIcon } from '@chakra-ui/icons';
+import { DeleteIcon, AddIcon } from '@chakra-ui/icons';
 import 'firebase/database';
 
 const mockData = {
