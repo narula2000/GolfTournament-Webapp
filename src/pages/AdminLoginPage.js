@@ -3,6 +3,7 @@ import { Image, Box, Input, VStack, Text, Button } from '@chakra-ui/react';
 
 import logo from '../assets/golf-logo.png';
 import theme from '../core/theme';
+import styles from '../core/theme/styles';
 
 const AdminLoginPage = () => (
   <Box>
@@ -17,7 +18,6 @@ const AdminLoginPage = () => (
     />
     <Box
       bg={theme.styles.colors.secondary}
-      color={theme.styles.colors.white}
       borderRadius="20px"
       maxW="400px"
       alignItems="center"
@@ -27,10 +27,25 @@ const AdminLoginPage = () => (
       m="auto"
     >
       <VStack spacing="20px">
-        <Text fontSize="xl">Admin Login Page</Text>
-        <Input type="email" placeholder="Email" maxW="90%" />
-        <Input type="password" placeholder="Password" maxW="90%" />
-        <Button>Login</Button>
+        <Text fontSize="xl" color="white">
+          Admin Login Page
+        </Text>
+        <Input background="white" type="email" placeholder="Email" maxW="90%" />
+        <Input
+          background="white"
+          type="password"
+          placeholder="Password"
+          maxW="90%"
+        />
+        <Button
+          bg={styles.colors.primary}
+          color="white"
+          borderRadius="20px"
+          width="140px"
+          p="10px"
+        >
+          Login
+        </Button>
       </VStack>
     </Box>
   </Box>
