@@ -18,8 +18,8 @@ const mockData = {
       fairway: null,
       gir: false,
       putt: 0,
-      createDate: 'new Date()',
-      updateDate: 'new Date()',
+      createDate: new Date(),
+      updateDate: new Date(),
     },
   },
 };
@@ -31,9 +31,7 @@ const createMockDataAdmin = () => {
 
 const clearData = () => {
   const database = firebase.database();
-  database.ref('admin').set({
-    dummyData: 0,
-  });
+  database.ref('admin').set({});
 };
 
 const fetchData = () => {
@@ -41,7 +39,7 @@ const fetchData = () => {
   database.ref('admin/').on('value', (snap) => {
     const data = snap.val();
     console.log('Snap values ->', snap.val());
-    if (data != null || data !== undefined) {
+    if (data != null && data !== undefined) {
       const adminIds = Object.keys(data);
       console.log('AdminIds ->', adminIds);
       adminIds.forEach((adminId) => {
@@ -61,7 +59,7 @@ const fetchData = () => {
 
 const fetchDataOnce = async () => {
   const database = firebase.database();
-  const snap = await database.ref('/admin/').once('value');
+  const snap = await database.ref('admin/').once('value');
   console.log('Data snap ->', snap.val());
 };
 
@@ -86,20 +84,20 @@ const Sandbox = () => (
         Clear Data
       </Button>
       <Button
-        onClick={fetchData}
-        leftIcon={<AddIcon />}
-        colorScheme="blue"
-        variant="solid"
-      >
-        Fetching and Logging All Data
-      </Button>
-      <Button
         onClick={fetchDataOnce}
         leftIcon={<AddIcon />}
         colorScheme="blue"
         variant="solid"
       >
         Fetch and Log All Data Once
+      </Button>
+      <Button
+        onClick={fetchData}
+        leftIcon={<AddIcon />}
+        colorScheme="blue"
+        variant="solid"
+      >
+        (async) Fetch and Log Data on Change
       </Button>
     </Stack>
   </Container>
