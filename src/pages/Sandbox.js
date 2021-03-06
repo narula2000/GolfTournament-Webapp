@@ -13,7 +13,7 @@ const mockData = {
       stroke: 3,
       par: 3,
       strokeIndex: 9,
-      saveSand: false,
+      sandSave: false,
       penalty: 0,
       fairway: null,
       gir: false,
@@ -59,6 +59,12 @@ const fetchData = () => {
   });
 };
 
+const fetchDataOnce = async () => {
+  const database = firebase.database();
+  const snap = await database.ref('/admin/').once('value');
+  console.log('Data snap ->', snap.val());
+};
+
 const Sandbox = () => (
   <Container>
     <Heading>This Page for Sandboxing</Heading>
@@ -85,7 +91,15 @@ const Sandbox = () => (
         colorScheme="blue"
         variant="solid"
       >
-        Fetch All Data
+        Fetching and Logging All Data
+      </Button>
+      <Button
+        onClick={fetchDataOnce}
+        leftIcon={<AddIcon />}
+        colorScheme="blue"
+        variant="solid"
+      >
+        Fetch and Log All Data Once
       </Button>
     </Stack>
   </Container>
