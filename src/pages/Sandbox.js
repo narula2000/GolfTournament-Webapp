@@ -18,8 +18,8 @@ const mockData = {
       fairway: null,
       gir: false,
       putt: 0,
-      createDate: new Date(),
-      updateDate: new Date(),
+      createDate: new Date().toString(),
+      updateDate: new Date().toString(),
     },
   },
 };
