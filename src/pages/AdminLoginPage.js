@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import firebase from 'firebase/app';
+import { useHistory } from 'react-router-dom';
 import { Image, Box, Input, VStack, Text, Button } from '@chakra-ui/react';
 import logo from '../assets/golf-logo.png';
 import theme from '../core/theme';
@@ -7,6 +8,7 @@ import styles from '../core/theme/styles';
 import 'firebase/auth';
 
 const AdminLoginPage = () => {
+  const history = useHistory();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -34,7 +36,7 @@ const AdminLoginPage = () => {
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .then(console.log('Good Login'))
+      .then(history.push('/admin/dashboard'))
       .catch((err) => alert(err));
   };
 
