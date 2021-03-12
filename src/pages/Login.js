@@ -7,7 +7,7 @@ import theme from '../core/theme';
 import styles from '../core/theme/styles';
 import 'firebase/auth';
 
-const AdminLoginPage = () => {
+const Login = () => {
   const history = useHistory();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -94,4 +94,4 @@ const AdminLoginPage = () => {
     </Box>
   );
 };
-export default AdminLoginPage;
+export default Login;
