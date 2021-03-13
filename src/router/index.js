@@ -8,10 +8,10 @@ import AdminDashboard from '../pages/AdminDashboard';
 const router = () => (
   <Router>
     <Switch>
+      <Route path="/admin/create" component={AdminCreatePage} />
       <Route path="/admin/dashboard" component={AdminDashboard} />
       <Route path="/admin" component={AdminLoginPage} />
       <Route path="/" component={RankingHomePage} />
-      <Route path="admin/create" component={AdminCreatePage} />
     </Switch>
   </Router>
 );

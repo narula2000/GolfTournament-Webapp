@@ -20,7 +20,7 @@ import {
 } from '@chakra-ui/react';
 import logo from '../assets/golf-logo.png';
 
-const AdminHomePage = () => {
+const AdminCreatePage = () => {
   const [name, setName] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [outPar, setOut] = useState(0);
@@ -661,4 +661,4 @@ const AdminHomePage = () => {
   );
 };
 
-export default AdminHomePage;
+export default AdminCreatePage;
