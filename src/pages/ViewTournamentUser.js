@@ -8,8 +8,10 @@ import {
   Heading,
   HStack,
   Input,
+  InputGroup,
+  InputLeftElement,
 } from '@chakra-ui/react';
-import { ArrowBackIcon } from '@chakra-ui/icons';
+import { ArrowBackIcon, SearchIcon } from '@chakra-ui/icons';
 
 import theme from '../core/theme';
 import logo from '../assets/golf-logo.png';
@@ -61,6 +63,14 @@ const ViewTournamentUser = () => (
             Add User
           </Button>
         </HStack>
+      </Box>
+      <Box mx="200px" my="10px" p="20px">
+        <InputGroup>
+          <InputLeftElement pointerEvents="none">
+            <SearchIcon color="gray.300" />
+          </InputLeftElement>
+          <Input type="text" placeholder="Search" />
+        </InputGroup>
       </Box>
     </Flex>
   </Box>
