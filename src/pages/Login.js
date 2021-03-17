@@ -2,9 +2,11 @@ import React, { useState } from 'react';
 import firebase from 'firebase/app';
 import { useHistory } from 'react-router-dom';
 import { Image, Box, Input, VStack, Text, Button } from '@chakra-ui/react';
+
 import logo from '../assets/golf-logo.png';
 import theme from '../core/theme';
 import styles from '../core/theme/styles';
+import '../assets/styles/Login.css';
 import 'firebase/auth';
 
 const Login = () => {
@@ -41,7 +43,7 @@ const Login = () => {
   };
 
   return (
-    <Box>
+    <Box bg={theme.styles.colors.background}>
       <Image
         src={logo}
         boxSize="150px"

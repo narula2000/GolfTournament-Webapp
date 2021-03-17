@@ -4,7 +4,7 @@ const styles = {
   colors,
   global: {
     body: {
-      bg: colors.background,
+      // bg: colors.background,
     },
   },
 };
