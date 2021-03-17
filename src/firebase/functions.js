@@ -26,9 +26,9 @@ const createTournament = async (_adminId, _tournamentId, holesData) => {
     phonenumber: '6666666666',
     holes: holes,
   };
-  const path = `admin/${_adminId}/${_tournamentId}/000/`;
+  const path = `admin/${_adminId}/${_tournamentId}/`;
   const database = firebase.database();
-  await database.ref(path).set(data);
+  await database.ref(path).set({ '000': data, isComplete: false });
 };
 
 const addUser = async (_adminId, _tournamentId, userInfo) => {
