@@ -1,7 +1,19 @@
 import firebase from 'firebase/app';
 import 'firebase/database';
 
-const createTournament = async (_adminId, _tournamentId, holesData) => {
+const fetchRealtimeRank = async (_adminId) => {
+  const path = `admin/${_adminId}/`;
+  const database = firebase.database();
+  const tournaments = await database.ref(path).once('value');
+  return tournaments.val();
+};
+
+const createTournament = async (
+  _adminId,
+  _tournamentId,
+  holesData,
+  tournamentName
+) => {
   const holes = {};
   Object.keys(holesData).forEach((hole) => {
     const { par, strokeIndex } = holesData.hole;
@@ -28,7 +40,9 @@ const createTournament = async (_adminId, _tournamentId, holesData) => {
   };
   const path = `admin/${_adminId}/${_tournamentId}/`;
   const database = firebase.database();
-  await database.ref(path).set({ '000': data, isComplete: false });
+  await database
+    .ref(path)
+    .set({ '000': data, isComplete: false, name: tournamentName });
 };
 
 const addUser = async (_adminId, _tournamentId, userInfo) => {
@@ -57,4 +71,4 @@ const deleteUser = async (_adminId, _tournamentId, userId) => {
   await database.ref(path).set(data);
 };
 
-export default { createTournament, addUser, deleteUser };
+export default { fetchRealtimeRank, createTournament, addUser, deleteUser };
