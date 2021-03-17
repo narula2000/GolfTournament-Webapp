@@ -44,8 +44,8 @@ const addUser = async (_adminId, _tournamentId, userInfo) => {
       max = Number(userId);
     }
   });
-  const userId = String(max + 1).padStart(3, '0');
-  users[userId] = { name: name, phonenumber: phonenumber, holes: holes };
+  const dummyId = String(max + 1).padStart(3, '0');
+  users[dummyId] = { name: name, phonenumber: phonenumber, holes: holes };
   await database.ref(userPath).set(users);
 };
 
