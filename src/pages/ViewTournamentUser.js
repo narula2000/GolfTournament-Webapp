@@ -28,25 +28,23 @@ const ViewTournamentUser = () => (
   <Box>
     <Flex bg={theme.colors.background}>
       <Square>
-        <Image src={logo} boxSize="150px" objectFit="cover" />
+        <Image src={logo} boxSize="100px" objectFit="cover" />
       </Square>
-      <Flex align="center">
+      <Flex align="center" mx="10px">
         <Heading size="md">View Tournament Users</Heading>
       </Flex>
     </Flex>
     <Flex mb="147px" bg="white" direction="column">
       <Box mx="20px" my="10px">
-        <Button leftIcon={<ArrowBackIcon />} colorScheme="teal" variant="ghost">
+        <Button
+          leftIcon={<ArrowBackIcon />}
+          colorScheme="green"
+          variant="ghost"
+        >
           Back
         </Button>
       </Box>
-      <Box
-        mx="200px"
-        my="10px"
-        borderRadius="20px"
-        p="20px"
-        bg={theme.colors.secondary}
-      >
+      <Box mx="200px" borderRadius="20px" p="20px" bg={theme.colors.secondary}>
         <HStack spacing="20px" justify="center">
           <Input
             background="white"
@@ -104,7 +102,7 @@ const ViewTournamentUser = () => (
               </Td>
             </Tr>
             <Tr>
-              <Td>User 1</Td>
+              <Td>User 3</Td>
               <Td>xxx-xxx-xxxx</Td>
               <Td>
                 {' '}
