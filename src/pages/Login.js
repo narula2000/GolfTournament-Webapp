@@ -5,7 +5,6 @@ import { Image, Box, Input, VStack, Text, Button } from '@chakra-ui/react';
 
 import logo from '../assets/golf-logo.png';
 import theme from '../core/theme';
-import styles from '../core/theme/styles';
 import '../assets/styles/Login.css';
 import 'firebase/auth';
 
@@ -43,7 +42,7 @@ const Login = () => {
   };
 
   return (
-    <Box bg={theme.styles.colors.background}>
+    <Box bg={theme.colors.background}>
       <Image
         src={logo}
         boxSize="150px"
@@ -54,7 +53,7 @@ const Login = () => {
         mb="20px"
       />
       <Box
-        bg={theme.styles.colors.secondary}
+        bg={theme.colors.secondary}
         borderRadius="20px"
         maxW="400px"
         alignItems="center"
@@ -82,7 +81,7 @@ const Login = () => {
             onChangeCapture={(event) => setPassword(event.target.value)}
           />
           <Button
-            bg={styles.colors.primary}
+            bg={theme.colors.primary}
             color="white"
             borderRadius="20px"
             width="140px"
