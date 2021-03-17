@@ -1,11 +1,13 @@
 import { extendTheme } from '@chakra-ui/react';
 
-import colors from './colors';
-import styles from './styles';
-
 const overrides = {
-  colors,
-  styles,
+  colors: {
+    white: 'white',
+    primary: '#80D2F1',
+    secondary: '#7FD661',
+    error: '#f13a59',
+    background: '#CFECC5',
+  },
 };
 
 export default extendTheme(overrides);
