@@ -10,8 +10,15 @@ import {
   Input,
   InputGroup,
   InputLeftElement,
+  Table,
+  Tbody,
+  Tr,
+  Th,
+  Td,
+  IconButton,
+  Spacer,
 } from '@chakra-ui/react';
-import { ArrowBackIcon, SearchIcon } from '@chakra-ui/icons';
+import { ArrowBackIcon, SearchIcon, DeleteIcon } from '@chakra-ui/icons';
 
 import theme from '../core/theme';
 import logo from '../assets/golf-logo.png';
@@ -71,6 +78,45 @@ const ViewTournamentUser = () => (
           </InputLeftElement>
           <Input type="text" placeholder="Search" />
         </InputGroup>
+        <Table variant="simple">
+          <Tbody>
+            <Tr>
+              <Td>User 1</Td>
+              <Td>xxx-xxx-xxxx</Td>
+              <Td>
+                <IconButton
+                  aria-label="Delete user"
+                  colorScheme="red"
+                  icon={<DeleteIcon />}
+                />
+              </Td>
+            </Tr>
+            <Tr>
+              <Td>User 2</Td>
+              <Td>xxx-xxx-xxxx</Td>
+              <Td>
+                {' '}
+                <IconButton
+                  aria-label="Delete user"
+                  colorScheme="red"
+                  icon={<DeleteIcon />}
+                />{' '}
+              </Td>
+            </Tr>
+            <Tr>
+              <Td>User 1</Td>
+              <Td>xxx-xxx-xxxx</Td>
+              <Td>
+                {' '}
+                <IconButton
+                  aria-label="Delete user"
+                  colorScheme="red"
+                  icon={<DeleteIcon />}
+                />{' '}
+              </Td>
+            </Tr>
+          </Tbody>
+        </Table>
       </Box>
     </Flex>
   </Box>
