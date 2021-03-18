@@ -9,6 +9,12 @@ const fetchRealtimeRank = async (_adminId) => {
   return tournaments.val();
 };
 
+const deleteTournament = async (_adminId, tournamentId) => {
+  const path = `admin/${_adminId}/${tournamentId}/`;
+  const database = firebase.database();
+  await database.ref(path).set({});
+};
+
 const createTournament = async (_adminId, holesData, tournamentName) => {
   const date = String(new Date());
   const tournamentId = crypto.createHash('sha256').update(date).digest('hex');
@@ -75,4 +81,10 @@ const deleteUser = async (_adminId, _tournamentId, userId) => {
   await database.ref(path).set(data);
 };
 
-export default { fetchRealtimeRank, createTournament, addUser, deleteUser };
+export default {
+  fetchRealtimeRank,
+  deleteTournament,
+  createTournament,
+  addUser,
+  deleteUser,
+};
