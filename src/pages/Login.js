@@ -35,7 +35,7 @@ const Login = () => {
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .then(history.push('admin/dashboard'));
+      .then(history.push('/admin/dashboard'));
   };
 
   return (
