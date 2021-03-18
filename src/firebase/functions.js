@@ -10,11 +10,8 @@ const fetchRealtimeRank = async (_adminId) => {
 };
 
 const createTournament = async (_adminId, holesData, tournamentName) => {
-  const date = new Date();
-  const tournamentId = crypto
-    .createHash('sha256')
-    .update(String(date))
-    .digest('hex');
+  const date = String(new Date());
+  const tournamentId = crypto.createHash('sha256').update(date).digest('hex');
   const holes = {};
   Object.keys(holesData).forEach((hole) => {
     const { par, strokeIndex } = holesData[hole];
@@ -29,8 +26,8 @@ const createTournament = async (_adminId, holesData, tournamentName) => {
       fairway: null,
       gir: false,
       putt: 0,
-      createDate: String(date),
-      updateDate: String(date),
+      createDate: date,
+      updateDate: date,
     };
   });
 
