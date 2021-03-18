@@ -15,6 +15,7 @@ const createTournament = async (
   tournamentName
 ) => {
   const holes = {};
+  const date = new Date();
   Object.keys(holesData).forEach((hole) => {
     const { par, strokeIndex } = holesData[hole];
     holes[hole] = {
@@ -28,8 +29,8 @@ const createTournament = async (
       fairway: null,
       gir: false,
       putt: 0,
-      createDate: new Date(),
-      updateDate: new Date(),
+      createDate: date,
+      updateDate: date,
     };
   });
 
