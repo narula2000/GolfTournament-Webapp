@@ -19,8 +19,10 @@ import {
   AlertDialogCloseButton,
 } from '@chakra-ui/react';
 import logo from '../assets/golf-logo.png';
+import firebaseFunction from '../firebase/functions';
 
 const AdminCreatePage = () => {
+  const uId = localStorage.getItem('adminId');
   const [name, setName] = useState('');
   const [isOpen, setIsOpen] = useState(false);
   const [outPar, setOut] = useState(0);
@@ -174,7 +176,7 @@ const AdminCreatePage = () => {
           {' '}
           Create Tournament{' '}
         </Text>
-        <Stack spacing={3}>
+        <Stack spacing={3} align="center">
           <Input
             placeholder="Tournament Name"
             width="380px"
@@ -406,7 +408,7 @@ const AdminCreatePage = () => {
           {' '}
           Create Tournament{' '}
         </Text>
-        <Stack spacing={3}>
+        <Stack spacing={3} align="center">
           <InputGroup width="480px">
             <Stack direction="row" spacing={4} align="center">
               <InputGroup>
@@ -653,7 +655,14 @@ const AdminCreatePage = () => {
             <Button ref={cancelRef} colorScheme="red" onClick={onClose}>
               No
             </Button>
-            <Button ml={3}>Yes</Button>
+            <Button
+              ml={3}
+              onClick={() => {
+                firebaseFunction.createTournament(uId, holes, name);
+              }}
+            >
+              Yes
+            </Button>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>

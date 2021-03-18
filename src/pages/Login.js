@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import firebase from 'firebase/app';
 import { useHistory } from 'react-router-dom';
 import { Image, Box, Input, VStack, Text, Button } from '@chakra-ui/react';
-
 import logo from '../assets/golf-logo.png';
 import theme from '../core/theme';
 import 'firebase/auth';
@@ -36,8 +35,7 @@ const Login = () => {
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .then(history.push('/admin/dashboard'))
-      .catch((err) => alert(err));
+      .then(history.push('admin/dashboard'));
   };
 
   return (
