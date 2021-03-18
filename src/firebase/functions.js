@@ -16,7 +16,7 @@ const createTournament = async (
 ) => {
   const holes = {};
   Object.keys(holesData).forEach((hole) => {
-    const { par, strokeIndex } = holesData.hole;
+    const { par, strokeIndex } = holesData[hole];
     holes[hole] = {
       par: par,
       strokeIndex: strokeIndex,
