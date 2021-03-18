@@ -51,22 +51,28 @@ const addUser = async (_adminId, _tournamentId, userInfo) => {
   const database = firebase.database();
   const holePath = `admin/${_adminId}/${_tournamentId}/000/holes`;
   const userPath = `admin/${_adminId}/${_tournamentId}/`;
-  const holes = await database.ref(holePath).once('value');
-  const users = await database.ref(userPath).once('value');
+  const holesRef = await database.ref(holePath).once('value');
+  const usersRef = await database.ref(userPath).once('value');
+  const users = usersRef.val();
   Object.keys(users).forEach((userId) => {
     if (userId.length === 3 && Number(userId) > max) {
       max = Number(userId);
     }
   });
   const dummyId = String(max + 1).padStart(3, '0');
-  users[dummyId] = { name: name, phonenumber: phonenumber, holes: holes };
+  users[dummyId] = {
+    name: name,
+    phonenumber: phonenumber,
+    holes: holesRef.val(),
+  };
   await database.ref(userPath).set(users);
 };
 
 const deleteUser = async (_adminId, _tournamentId, userId) => {
   const path = `admin/${_adminId}/${_tournamentId}/`;
   const database = firebase.database();
-  const data = await database.ref(path).once('value');
+  const dataRef = await database.ref(path).once('value');
+  const data = dataRef.val();
   delete data[userId];
   await database.ref(path).set(data);
 };
