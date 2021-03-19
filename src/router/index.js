@@ -12,6 +12,7 @@ const router = () => (
     <Switch>
       <Route path="/admin/tournamentuser" component={ViewTournamentUser} />
       <Route path="/admin/create" component={AdminCreatePage} />
+      <Route path="/admin/create" component={AdminCreatePage} />
       <Route path="/admin/dashboard" component={AdminDashboard} />
       <Route path="/admin" component={Login} />
       <Route path="/" component={RankingHome} />
