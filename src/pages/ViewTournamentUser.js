@@ -33,8 +33,17 @@ const ViewTournamentUser = () => {
     'a9ea14e9b5975dadb5c6f88768a0749e449f049917ea7aaff52387569a66b8a1';
 
   const getUsers = () => {
-    const lis = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five'];
-    return lis;
+    // const lis = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five'];
+    const items = [];
+    functions
+      .fetchRealtimeRank(adminIDTest)
+      .then((result) =>
+        Object.keys(result[tournamentIDTest]).forEach((user) =>
+          user !== 'isComplete' && user !== 'name'
+            ? console.log(user)
+            : console.log('None')
+        )
+      );
   };
 
   return (
@@ -140,20 +149,6 @@ const ViewTournamentUser = () => {
                   />{' '}
                 </Td>
               </Tr>
-              {getUsers().map((key, idx) => (
-                <Tr key={key}>
-                  <Td>{idx}</Td>
-                  <Td>{key}</Td>
-                  <Td>
-                    {' '}
-                    <IconButton
-                      aria-label="Delete user"
-                      colorScheme="red"
-                      icon={<DeleteIcon />}
-                    />{' '}
-                  </Td>
-                </Tr>
-              ))}
             </Tbody>
           </Table>
         </Box>
