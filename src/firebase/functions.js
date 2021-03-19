@@ -14,7 +14,14 @@ const fetchRealtimeRank = async (_adminId) => {
 
 const deleteTournament = async (_adminId, tournamentId) => {
   const path = `admin/${_adminId}/${tournamentId}/`;
+  const tournamentListPath = `tournament/`;
   const database = firebase.database();
+  const tournamentListRef = await database
+    .ref(tournamentListPath)
+    .once('value');
+  const tournamentList = tournamentListRef.val();
+  tournamentList.splice(tournamentList.indexOf(tournamentId), 1);
+  await database.ref(tournamentListPath).set(tournamentList);
   await database.ref(path).set({});
 };
 
@@ -46,13 +53,14 @@ const createTournament = async (_adminId, holesData, tournamentName) => {
     holes: holes,
   };
   const path = `admin/${_adminId}/${tournamentId}/`;
-  const tournamentListRef = `tournament/`;
+  const tournamentListPath = `tournament/`;
   const database = firebase.database();
-  const tournamentList = await (
-    await database.ref(tournamentListRef).once('value')
-  ).val();
+  const tournamentListRef = await database
+    .ref(tournamentListPath)
+    .once('value');
+  const tournamentList = tournamentListRef.val();
   tournamentList.push(tournamentId);
-  await database.ref(path).set(tournamentList);
+  await database.ref(tournamentListPath).set(tournamentList);
   await database
     .ref(path)
     .set({ '000': data, isComplete: false, name: tournamentName });
