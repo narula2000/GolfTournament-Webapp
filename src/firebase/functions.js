@@ -46,7 +46,13 @@ const createTournament = async (_adminId, holesData, tournamentName) => {
     holes: holes,
   };
   const path = `admin/${_adminId}/${tournamentId}/`;
+  const tournamentListRef = `tournament/`;
   const database = firebase.database();
+  const tournamentList = await (
+    await database.ref(tournamentListRef).once('value')
+  ).val();
+  tournamentList.push(tournamentId);
+  await database.ref(path).set(tournamentList);
   await database
     .ref(path)
     .set({ '000': data, isComplete: false, name: tournamentName });
