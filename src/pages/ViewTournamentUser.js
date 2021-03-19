@@ -32,6 +32,11 @@ const ViewTournamentUser = () => {
   const tournamentIDTest =
     'a9ea14e9b5975dadb5c6f88768a0749e449f049917ea7aaff52387569a66b8a1';
 
+  const getUsers = () => {
+    const lis = [0, 1, 2, 3, 4, 5];
+    return lis;
+  };
+
   return (
     <Box>
       <Flex bg={theme.colors.background}>
@@ -135,6 +140,20 @@ const ViewTournamentUser = () => {
                   />{' '}
                 </Td>
               </Tr>
+              {getUsers().map((i) => (
+                <Tr key={i}>
+                  <Td>{i}</Td>
+                  <Td>{i}</Td>
+                  <Td>
+                    {' '}
+                    <IconButton
+                      aria-label="Delete user"
+                      colorScheme="red"
+                      icon={<DeleteIcon />}
+                    />{' '}
+                  </Td>
+                </Tr>
+              ))}
             </Tbody>
           </Table>
         </Box>
