@@ -1,4 +1,7 @@
+/* eslint-disable consistent-return */
+/* eslint-disable array-callback-return */
 import firebase from 'firebase/app';
+import admin from 'firebase-admin';
 import crypto from 'crypto';
 import 'firebase/database';
 
@@ -81,10 +84,30 @@ const deleteUser = async (_adminId, _tournamentId, userId) => {
   await database.ref(path).set(data);
 };
 
+const completeTournament = async (_adminId, _tournamentId) => {
+  const path = `admin/${_adminId}/${_tournamentId}/`;
+  const database = firebase.database();
+  const dataRef = await database.ref(path).once('value');
+  const tournament = dataRef.val();
+  const validUserId = Object.keys(tournament).map((userId) => {
+    if (userId.length > 3) return userId;
+  });
+
+  let idx = '001';
+  const toMigrate = {};
+  const adminAuth = admin.auth();
+  validUserId.forEach((validId) => {
+    toMigrate[idx] = tournament[validId];
+    idx = String(Number(idx) + 1).padStart(3, '0');
+    adminAuth.deleteUser(validId);
+  });
+};
+
 export default {
   fetchRealtimeRank,
   deleteTournament,
   createTournament,
   addUser,
   deleteUser,
+  completeTournament,
 };
