@@ -79,10 +79,13 @@ const ViewTournamentUser = () => {
               borderRadius="20px"
               maxW="20%"
               p="20px"
-              onClick={functions.addUser(adminIDTest, tournamentIDTest, {
-                name: username,
-                phonenumber: phoneNum,
-              })}
+              onClick={(e) => {
+                e.preventDefault();
+                functions.addUser(adminIDTest, tournamentIDTest, {
+                  name: username,
+                  phonenumber: phoneNum,
+                });
+              }}
             >
               Add User
             </Button>
