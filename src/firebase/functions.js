@@ -19,9 +19,10 @@ const deleteTournament = async (_adminId, tournamentId) => {
   const tournamentListRef = await database
     .ref(tournamentListPath)
     .once('value');
-  const tournamentList = tournamentListRef.val();
+  const tournamentList = String(tournamentListRef.val()).split(', ');
   tournamentList.splice(tournamentList.indexOf(tournamentId), 1);
-  await database.ref(tournamentListPath).set(tournamentList);
+  const strTournament = tournamentList.join(', ');
+  await database.ref(tournamentListPath).set(strTournament);
   await database.ref(path).set({});
 };
 
@@ -58,9 +59,10 @@ const createTournament = async (_adminId, holesData, tournamentName) => {
   const tournamentListRef = await database
     .ref(tournamentListPath)
     .once('value');
-  const tournamentList = tournamentListRef.val();
+  const tournamentList = String(tournamentListRef.val()).split(', ');
   tournamentList.push(tournamentId);
-  await database.ref(tournamentListPath).set(tournamentList);
+  const strTournament = tournamentList.join(', ');
+  await database.ref(tournamentListPath).set(strTournament);
   await database
     .ref(path)
     .set({ '000': data, isComplete: false, name: tournamentName });
