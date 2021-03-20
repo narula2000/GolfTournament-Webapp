@@ -22,7 +22,8 @@ const AdminDashboard = () => {
   const backgroundText = 'There is no ongoing tournament';
   const location = useLocation();
   const data = location.state.detail;
-  const [loading, setLoading] = useState(false);
+  const [refreshLoading, setRefreshLoading] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
   const uId = localStorage.getItem('adminId');
   const logOut = () => {
     firebase
@@ -33,9 +34,9 @@ const AdminDashboard = () => {
       });
   };
   const refresh = () => {
-    setLoading(true);
     firebaseFunction.fetchRealtimeRank(uId).then((result) => {
-      setLoading(false);
+      setRefreshLoading(false);
+      setDeleteLoading(false);
       history.push({
         pathname: '/admin/dashboard',
         state: { detail: result || {} },
@@ -72,9 +73,12 @@ const AdminDashboard = () => {
           background="#80D2F1"
           borderRadius="20px"
           color="white"
-          onClick={refresh}
+          onClick={() => {
+            setRefreshLoading(true);
+            refresh();
+          }}
         >
-          {loading ? <Spinner /> : 'Update Page'}
+          {refreshLoading ? <Spinner /> : 'Update Page'}
         </Button>
         <Button
           position="absolute"
@@ -208,7 +212,7 @@ const AdminDashboard = () => {
                   borderRadius="20px"
                   color="white"
                   onClick={() => {
-                    setLoading(true);
+                    setDeleteLoading(true);
                     firebaseFunction
                       .deleteTournament(uId, tournamentId)
                       .then(() => {
@@ -216,7 +220,7 @@ const AdminDashboard = () => {
                       });
                   }}
                 >
-                  {loading ? <Spinner /> : 'Delete'}
+                  {deleteLoading ? <Spinner /> : 'Delete'}
                 </Button>
               </Stack>
             </HStack>

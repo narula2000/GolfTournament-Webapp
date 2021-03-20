@@ -37,16 +37,17 @@ const Login = () => {
   const loginAdmin = () => {
     const emailError = emailValidator(email);
     const passwordError = passwordValidator(password);
+    setLoading(true);
 
     if (emailError || passwordError) {
       alert(`${emailError} ${passwordError}`);
       return;
     }
+
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
       .then(() => {
-        setLoading(true);
         firebaseFunction
           .fetchRealtimeRank(localStorage.getItem('adminId'))
           .then((result) => {
