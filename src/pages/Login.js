@@ -5,6 +5,7 @@ import { Image, Box, Input, VStack, Text, Button } from '@chakra-ui/react';
 import logo from '../assets/golf-logo.png';
 import theme from '../core/theme';
 import 'firebase/auth';
+import firebaseFunction from '../firebase/functions';
 
 const Login = () => {
   const history = useHistory();
@@ -35,7 +36,16 @@ const Login = () => {
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .then(history.push('/admin/dashboard'));
+      .then(
+        firebaseFunction
+          .fetchRealtimeRank(localStorage.getItem('adminId'))
+          .then((result) => {
+            history.push({
+              pathname: '/admin/dashboard',
+              state: { detail: result || {} },
+            });
+          })
+      );
   };
 
   return (

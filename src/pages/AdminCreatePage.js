@@ -9,6 +9,7 @@ import {
   InputLeftAddon,
   Input,
   Stack,
+  Spinner,
   Button,
   AlertDialog,
   AlertDialogBody,
@@ -18,10 +19,12 @@ import {
   AlertDialogOverlay,
   AlertDialogCloseButton,
 } from '@chakra-ui/react';
+import { useHistory } from 'react-router-dom';
 import logo from '../assets/golf-logo.png';
 import firebaseFunction from '../firebase/functions';
 
 const AdminCreatePage = () => {
+  const history = useHistory();
   const uId = localStorage.getItem('adminId');
   const [name, setName] = useState('');
   const [isOpen, setIsOpen] = useState(false);
@@ -103,6 +106,7 @@ const AdminCreatePage = () => {
       strokeIndex: 0,
     },
   });
+  const [loading, setLoading] = useState(false);
   const onClose = () => setIsOpen(false);
   const cancelRef = React.useRef();
 
@@ -658,10 +662,19 @@ const AdminCreatePage = () => {
             <Button
               ml={3}
               onClick={() => {
-                firebaseFunction.createTournament(uId, holes, name);
+                setLoading(true);
+                firebaseFunction.createTournament(uId, holes, name).then(() => {
+                  firebaseFunction.fetchRealtimeRank(uId).then((result) => {
+                    setLoading(false);
+                    history.push({
+                      pathname: '/admin/dashboard',
+                      state: { detail: result },
+                    });
+                  });
+                });
               }}
             >
-              Yes
+              {loading ? <Spinner /> : 'Yes'}
             </Button>
           </AlertDialogFooter>
         </AlertDialogContent>
