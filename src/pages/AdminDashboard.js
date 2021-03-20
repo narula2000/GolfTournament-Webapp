@@ -24,6 +24,8 @@ const AdminDashboard = () => {
   const data = location.state.detail;
   const [loading, setLoading] = useState(false);
   const uId = localStorage.getItem('adminId');
+  const outHoleKeys = ['01', '02', '03', '04', '05', '06', '07', '08', '09'];
+  const inHoleKyes = ['10', '11', '12', '13', '14', '15', '16', '17', '18'];
   const logOut = () => {
     firebase
       .auth()
@@ -41,16 +43,20 @@ const AdminDashboard = () => {
         width="100%"
         height="147px"
       >
-        <Button
-          position="absolute"
-          top="50px"
-          left="50px"
-          background="#80D2F1"
-          borderRadius="20px"
-          color="white"
-        >
-          Create Tournament
-        </Button>
+        {Object.keys(data).length === 0 ? (
+          ''
+        ) : (
+          <Button
+            position="absolute"
+            top="50px"
+            left="50px"
+            background="#80D2F1"
+            borderRadius="20px"
+            color="white"
+          >
+            Create Tournament
+          </Button>
+        )}
         <Button
           position="absolute"
           top="50px"
@@ -64,7 +70,7 @@ const AdminDashboard = () => {
               setLoading(false);
               history.push({
                 pathname: '/admin/dashboard',
-                state: { detail: result },
+                state: { detail: result || {} },
               });
             });
           }}
@@ -85,7 +91,7 @@ const AdminDashboard = () => {
       </Flex>
       <Image src={logo} position="absolute" left="calc(50% - 131px)" />
       <VStack>
-        Object.keys(obj).length === 0 ?
+        Object.keys(data).length === 0 ?
         <Button
           position="absolute"
           width="800px"
@@ -127,167 +133,58 @@ const AdminDashboard = () => {
             justifyItems="center"
             overflowY="auto"
           >
-            {console.log(tournamentId)}
             <Text color="white" fontSize="26px" lineHeight="70px">
               {' '}
               {data[tournamentId].name}{' '}
             </Text>
-            {Object.keys(data[tournamentId]['000'].holes).map((holeNum) => {
-              console.log('hole number ->', holeNum);
-              console.log(
-                'hole par ->',
-                data[tournamentId]['000'].holes[holeNum].par
-              );
-              return '';
-            })}
             <HStack spacing={5} align="center" justify="center">
               <Stack spacing={3} align="center">
-                <Stack direction="row" spacing={3}>
-                  <Box background="white" width="200px">
-                    <Text>Hole 1 Par</Text>
-                  </Box>
-                  <Box background="white" width="200px">
-                    <Text>Hole 1 Stroke Index</Text>
-                  </Box>
-                </Stack>
-                <Stack direction="row" spacing={3}>
-                  <Box background="white" width="200px">
-                    <Text>Hole 2 Par</Text>
-                  </Box>
-                  <Box background="white" width="200px">
-                    <Text>Hole 2 Stroke Index</Text>
-                  </Box>
-                </Stack>
-                <Stack direction="row" spacing={3}>
-                  <Box background="white" width="200px">
-                    <Text>Hole 3 Par</Text>
-                  </Box>
-                  <Box background="white" width="200px">
-                    <Text>Hole 3 Stroke Index</Text>
-                  </Box>
-                </Stack>
-                <Stack direction="row" spacing={3}>
-                  <Box background="white" width="200px">
-                    <Text>Hole 4 Par</Text>
-                  </Box>
-                  <Box background="white" width="200px">
-                    <Text>Hole 4 Stroke Index</Text>
-                  </Box>
-                </Stack>
-                <Stack direction="row" spacing={3}>
-                  <Box background="white" width="200px">
-                    <Text>Hole 5 Par</Text>
-                  </Box>
-                  <Box background="white" width="200px">
-                    <Text>Hole 5 Stroke Index</Text>
-                  </Box>
-                </Stack>
-                <Stack direction="row" spacing={3}>
-                  <Box background="white" width="200px">
-                    <Text>Hole 6 Par</Text>
-                  </Box>
-                  <Box background="white" width="200px">
-                    <Text>Hole 6 Stroke Index</Text>
-                  </Box>
-                </Stack>
-                <Stack direction="row" spacing={3}>
-                  <Box background="white" width="200px">
-                    <Text>Hole 7 Par</Text>
-                  </Box>
-                  <Box background="white" width="200px">
-                    <Text>Hole 7 Stroke Index</Text>
-                  </Box>
-                </Stack>
-                <Stack direction="row" spacing={3}>
-                  <Box background="white" width="200px">
-                    <Text>Hole 8 Par</Text>
-                  </Box>
-                  <Box background="white" width="200px">
-                    <Text>Hole 8 Stroke Index</Text>
-                  </Box>
-                </Stack>
-                <Stack direction="row" spacing={3}>
-                  <Box background="white" width="200px">
-                    <Text>Hole 9 Par</Text>
-                  </Box>
-                  <Box background="white" width="200px">
-                    <Text>Hole 9 Stroke Index</Text>
-                  </Box>
-                </Stack>
+                {Object.keys(data[tournamentId]['000'].holes).map((holeNum) =>
+                  holeNum > 9 ? (
+                    ''
+                  ) : (
+                    <Stack direction="row" spacing={3} key={holeNum}>
+                      <Box background="white" width="100px">
+                        <Text>Hole: {holeNum}</Text>
+                      </Box>
+                      <Box background="white" width="100px">
+                        <Text>
+                          Par:{data[tournamentId]['000'].holes[holeNum].par}
+                        </Text>
+                      </Box>
+                      <Box background="white" width="100px">
+                        <Text>
+                          SI:{' '}
+                          {data[tournamentId]['000'].holes[holeNum].strokeIndex}
+                        </Text>
+                      </Box>
+                    </Stack>
+                  )
+                )}
               </Stack>
               <Stack spacing={3} align="center">
-                <Stack direction="row" spacing={3}>
-                  <Box background="white" width="200px">
-                    <Text>Hole 10 Par</Text>
-                  </Box>
-                  <Box background="white" width="200px">
-                    <Text>Hole 10 Stroke Index</Text>
-                  </Box>
-                </Stack>
-                <Stack direction="row" spacing={3}>
-                  <Box background="white" width="200px">
-                    <Text>Hole 11 Par</Text>
-                  </Box>
-                  <Box background="white" width="200px">
-                    <Text>Hole 11 Stroke Index</Text>
-                  </Box>
-                </Stack>
-                <Stack direction="row" spacing={3}>
-                  <Box background="white" width="200px">
-                    <Text>Hole 12 Par</Text>
-                  </Box>
-                  <Box background="white" width="200px">
-                    <Text>Hole 12 Stroke Index</Text>
-                  </Box>
-                </Stack>
-                <Stack direction="row" spacing={3}>
-                  <Box background="white" width="200px">
-                    <Text>Hole 13 Par</Text>
-                  </Box>
-                  <Box background="white" width="200px">
-                    <Text>Hole 13 Stroke Index</Text>
-                  </Box>
-                </Stack>
-                <Stack direction="row" spacing={3}>
-                  <Box background="white" width="200px">
-                    <Text>Hole 14 Par</Text>
-                  </Box>
-                  <Box background="white" width="200px">
-                    <Text>Hole 14 Stroke Index</Text>
-                  </Box>
-                </Stack>
-                <Stack direction="row" spacing={3}>
-                  <Box background="white" width="200px">
-                    <Text>Hole 15 Par</Text>
-                  </Box>
-                  <Box background="white" width="200px">
-                    <Text>Hole 15 Stroke Index</Text>
-                  </Box>
-                </Stack>
-                <Stack direction="row" spacing={3}>
-                  <Box background="white" width="200px">
-                    <Text>Hole 16 Par</Text>
-                  </Box>
-                  <Box background="white" width="200px">
-                    <Text>Hole 16 Stroke Index</Text>
-                  </Box>
-                </Stack>
-                <Stack direction="row" spacing={3}>
-                  <Box background="white" width="200px">
-                    <Text>Hole 17 Par</Text>
-                  </Box>
-                  <Box background="white" width="200px">
-                    <Text>Hole 17 Stroke Index</Text>
-                  </Box>
-                </Stack>
-                <Stack direction="row" spacing={3}>
-                  <Box background="white" width="200px">
-                    <Text>Hole 18 Par</Text>
-                  </Box>
-                  <Box background="white" width="200px">
-                    <Text>Hole 18 Stroke Index</Text>
-                  </Box>
-                </Stack>
+                {Object.keys(data[tournamentId]['000'].holes).map((holeNum) =>
+                  holeNum < 10 ? (
+                    ''
+                  ) : (
+                    <Stack direction="row" spacing={3} key={holeNum}>
+                      <Box background="white" width="100px">
+                        <Text>Hole: {holeNum}</Text>
+                      </Box>
+                      <Box background="white" width="100px">
+                        <Text>
+                          Par:{data[tournamentId]['000'].holes[holeNum].par}
+                        </Text>
+                      </Box>
+                      <Box background="white" width="100px">
+                        <Text>
+                          SI:{' '}
+                          {data[tournamentId]['000'].holes[holeNum].strokeIndex}
+                        </Text>
+                      </Box>
+                    </Stack>
+                  )
+                )}
               </Stack>
               <Stack spacing={3} align="center">
                 <Button

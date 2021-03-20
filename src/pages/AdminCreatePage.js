@@ -24,15 +24,7 @@ import logo from '../assets/golf-logo.png';
 import firebaseFunction from '../firebase/functions';
 
 const AdminCreatePage = () => {
-  const history = useHistory();
-  const uId = localStorage.getItem('adminId');
-  const [name, setName] = useState('');
-  const [isOpen, setIsOpen] = useState(false);
-  const [outPar, setOut] = useState(0);
-  const [inPar, setIn] = useState(0);
-  const [outSi, setOutSI] = useState(0);
-  const [inSi, setInSI] = useState(0);
-  const [holes, setHoles] = useState({
+  const template = {
     '01': {
       par: 0,
       strokeIndex: 0,
@@ -105,32 +97,37 @@ const AdminCreatePage = () => {
       par: 0,
       strokeIndex: 0,
     },
-  });
+  };
+  const history = useHistory();
+  const uId = localStorage.getItem('adminId');
+  const [name, setName] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
+  const [outPar, setOut] = useState(0);
+  const [inPar, setIn] = useState(0);
+  const [outSi, setOutSI] = useState(0);
+  const [inSi, setInSI] = useState(0);
+  const [holes, setHoles] = useState(template);
   const [loading, setLoading] = useState(false);
   const onClose = () => setIsOpen(false);
   const cancelRef = React.useRef();
 
-  const handlePar = (event, holeData, holeName) => {
+  const handlePar = (event, holeName) => {
     setHoles(() => {
       const data = { ...holes };
-      data[holeName] = {
-        ...holeData,
-        par: Number.isNaN(parseInt(event.target.value, 10))
-          ? 0
-          : parseInt(event.target.value, 10),
-      };
+      data[holeName].par = Number.isNaN(parseInt(event.target.value, 10))
+        ? 0
+        : parseInt(event.target.value, 10);
       return data;
     });
   };
-  const handleStrokeIndex = (event, holeData, holeName) => {
+  const handleStrokeIndex = (event, holeName) => {
     setHoles(() => {
       const data = { ...holes };
-      data[holeName] = {
-        ...holeData,
-        strokeIndex: Number.isNaN(parseInt(event.target.value, 10))
-          ? 0
-          : parseInt(event.target.value, 10),
-      };
+      data[holeName].strokeIndex = Number.isNaN(
+        parseInt(event.target.value, 10)
+      )
+        ? 0
+        : parseInt(event.target.value, 10);
       return data;
     });
   };
@@ -140,8 +137,9 @@ const AdminCreatePage = () => {
     let inParCount = 0;
     let inSiCount = 0;
     let flip = true;
-    Object.keys(holes).forEach((key) => {
-      if (key.slice(-1) === '0') flip = false;
+    const keys = Object.keys(holes).sort((a, b) => a - b);
+    keys.forEach((key) => {
+      if (Number(key) > 9) flip = false;
       if (flip) {
         outParCount += holes[key].par;
         outSiCount += holes[key].strokeIndex;
@@ -197,7 +195,7 @@ const AdminCreatePage = () => {
                   type="text"
                   background="white"
                   border="3px solid #BBBBBB"
-                  onChange={(event) => handlePar(event, holes.hole1, 'hole1')}
+                  onChange={(event) => handlePar(event, '01')}
                 />
               </InputGroup>
               <Input
@@ -205,9 +203,7 @@ const AdminCreatePage = () => {
                 type="text"
                 background="white"
                 border="3px solid #BBBBBB"
-                onChange={(event) =>
-                  handleStrokeIndex(event, holes.hole1, 'hole1')
-                }
+                onChange={(event) => handleStrokeIndex(event, '01')}
               />
             </Stack>
           </InputGroup>
@@ -220,7 +216,7 @@ const AdminCreatePage = () => {
                   type="text"
                   background="white"
                   border="3px solid #BBBBBB"
-                  onChange={(event) => handlePar(event, holes.hole1, 'hole2')}
+                  onChange={(event) => handlePar(event, '02')}
                 />
               </InputGroup>
               <Input
@@ -228,9 +224,7 @@ const AdminCreatePage = () => {
                 type="text"
                 background="white"
                 border="3px solid #BBBBBB"
-                onChange={(event) =>
-                  handleStrokeIndex(event, holes.hole1, 'hole2')
-                }
+                onChange={(event) => handleStrokeIndex(event, '02')}
               />
             </Stack>
           </InputGroup>
@@ -243,7 +237,7 @@ const AdminCreatePage = () => {
                   type="text"
                   background="white"
                   border="3px solid #BBBBBB"
-                  onChange={(event) => handlePar(event, holes.hole1, 'hole3')}
+                  onChange={(event) => handlePar(event, '03')}
                 />
               </InputGroup>
               <Input
@@ -251,9 +245,7 @@ const AdminCreatePage = () => {
                 type="text"
                 background="white"
                 border="3px solid #BBBBBB"
-                onChange={(event) =>
-                  handleStrokeIndex(event, holes.hole1, 'hole3')
-                }
+                onChange={(event) => handleStrokeIndex(event, '03')}
               />
             </Stack>
           </InputGroup>
@@ -266,7 +258,7 @@ const AdminCreatePage = () => {
                   type="text"
                   background="white"
                   border="3px solid #BBBBBB"
-                  onChange={(event) => handlePar(event, holes.hole1, 'hole4')}
+                  onChange={(event) => handlePar(event, '04')}
                 />
               </InputGroup>
               <Input
@@ -274,9 +266,7 @@ const AdminCreatePage = () => {
                 type="text"
                 background="white"
                 border="3px solid #BBBBBB"
-                onChange={(event) =>
-                  handleStrokeIndex(event, holes.hole1, 'hole4')
-                }
+                onChange={(event) => handleStrokeIndex(event, '04')}
               />
             </Stack>
           </InputGroup>
@@ -289,7 +279,7 @@ const AdminCreatePage = () => {
                   type="text"
                   background="white"
                   border="3px solid #BBBBBB"
-                  onChange={(event) => handlePar(event, holes.hole1, 'hole5')}
+                  onChange={(event) => handlePar(event, '05')}
                 />
               </InputGroup>
               <Input
@@ -297,9 +287,7 @@ const AdminCreatePage = () => {
                 type="text"
                 background="white"
                 border="3px solid #BBBBBB"
-                onChange={(event) =>
-                  handleStrokeIndex(event, holes.hole1, 'hole5')
-                }
+                onChange={(event) => handleStrokeIndex(event, '05')}
               />
             </Stack>
           </InputGroup>
@@ -312,7 +300,7 @@ const AdminCreatePage = () => {
                   type="text"
                   background="white"
                   border="3px solid #BBBBBB"
-                  onChange={(event) => handlePar(event, holes.hole1, 'hole6')}
+                  onChange={(event) => handlePar(event, '06')}
                 />
               </InputGroup>
               <Input
@@ -320,9 +308,7 @@ const AdminCreatePage = () => {
                 type="text"
                 background="white"
                 border="3px solid #BBBBBB"
-                onChange={(event) =>
-                  handleStrokeIndex(event, holes.hole1, 'hole6')
-                }
+                onChange={(event) => handleStrokeIndex(event, '06')}
               />
             </Stack>
           </InputGroup>
@@ -335,7 +321,7 @@ const AdminCreatePage = () => {
                   type="text"
                   background="white"
                   border="3px solid #BBBBBB"
-                  onChange={(event) => handlePar(event, holes.hole1, 'hole7')}
+                  onChange={(event) => handlePar(event, '07')}
                 />
               </InputGroup>
               <Input
@@ -343,9 +329,7 @@ const AdminCreatePage = () => {
                 type="text"
                 background="white"
                 border="3px solid #BBBBBB"
-                onChange={(event) =>
-                  handleStrokeIndex(event, holes.hole1, 'hole7')
-                }
+                onChange={(event) => handleStrokeIndex(event, '07')}
               />
             </Stack>
           </InputGroup>
@@ -358,7 +342,7 @@ const AdminCreatePage = () => {
                   type="text"
                   background="white"
                   border="3px solid #BBBBBB"
-                  onChange={(event) => handlePar(event, holes.hole1, 'hole8')}
+                  onChange={(event) => handlePar(event, '08')}
                 />
               </InputGroup>
               <Input
@@ -366,9 +350,7 @@ const AdminCreatePage = () => {
                 type="text"
                 background="white"
                 border="3px solid #BBBBBB"
-                onChange={(event) =>
-                  handleStrokeIndex(event, holes.hole1, 'hole8')
-                }
+                onChange={(event) => handleStrokeIndex(event, '08')}
               />
             </Stack>
           </InputGroup>
@@ -381,7 +363,7 @@ const AdminCreatePage = () => {
                   type="text"
                   background="white"
                   border="3px solid #BBBBBB"
-                  onChange={(event) => handlePar(event, holes.hole1, 'hole9')}
+                  onChange={(event) => handlePar(event, '09')}
                 />
               </InputGroup>
               <Input
@@ -389,9 +371,7 @@ const AdminCreatePage = () => {
                 type="text"
                 background="white"
                 border="3px solid #BBBBBB"
-                onChange={(event) =>
-                  handleStrokeIndex(event, holes.hole1, 'hole9')
-                }
+                onChange={(event) => handleStrokeIndex(event, '09')}
               />
             </Stack>
           </InputGroup>
@@ -422,7 +402,7 @@ const AdminCreatePage = () => {
                   placeholder="Par"
                   background="white"
                   border="3px solid #BBBBBB"
-                  onChange={(event) => handlePar(event, holes.hole1, 'hole10')}
+                  onChange={(event) => handlePar(event, '10')}
                 />
               </InputGroup>
               <Input
@@ -430,9 +410,7 @@ const AdminCreatePage = () => {
                 placeholder="Stroke Index"
                 background="white"
                 border="3px solid #BBBBBB"
-                onChange={(event) =>
-                  handleStrokeIndex(event, holes.hole1, 'hole10')
-                }
+                onChange={(event) => handleStrokeIndex(event, '10')}
               />
             </Stack>
           </InputGroup>
@@ -445,7 +423,7 @@ const AdminCreatePage = () => {
                   type="text"
                   background="white"
                   border="3px solid #BBBBBB"
-                  onChange={(event) => handlePar(event, holes.hole1, 'hole11')}
+                  onChange={(event) => handlePar(event, '11')}
                 />
               </InputGroup>
               <Input
@@ -453,9 +431,7 @@ const AdminCreatePage = () => {
                 type="text"
                 background="white"
                 border="3px solid #BBBBBB"
-                onChange={(event) =>
-                  handleStrokeIndex(event, holes.hole1, 'hole11')
-                }
+                onChange={(event) => handleStrokeIndex(event, '11')}
               />
             </Stack>
           </InputGroup>
@@ -468,7 +444,7 @@ const AdminCreatePage = () => {
                   type="text"
                   background="white"
                   border="3px solid #BBBBBB"
-                  onChange={(event) => handlePar(event, holes.hole1, 'hole12')}
+                  onChange={(event) => handlePar(event, '12')}
                 />
               </InputGroup>
               <Input
@@ -476,9 +452,7 @@ const AdminCreatePage = () => {
                 type="text"
                 background="white"
                 border="3px solid #BBBBBB"
-                onChange={(event) =>
-                  handleStrokeIndex(event, holes.hole1, 'hole12')
-                }
+                onChange={(event) => handleStrokeIndex(event, '12')}
               />
             </Stack>
           </InputGroup>
@@ -491,7 +465,7 @@ const AdminCreatePage = () => {
                   type="text"
                   background="white"
                   border="3px solid #BBBBBB"
-                  onChange={(event) => handlePar(event, holes.hole1, 'hole13')}
+                  onChange={(event) => handlePar(event, '13')}
                 />
               </InputGroup>
               <Input
@@ -499,9 +473,7 @@ const AdminCreatePage = () => {
                 type="text"
                 background="white"
                 border="3px solid #BBBBBB"
-                onChange={(event) =>
-                  handleStrokeIndex(event, holes.hole1, 'hole13')
-                }
+                onChange={(event) => handleStrokeIndex(event, '13')}
               />
             </Stack>
           </InputGroup>
@@ -514,7 +486,7 @@ const AdminCreatePage = () => {
                   type="text"
                   background="white"
                   border="3px solid #BBBBBB"
-                  onChange={(event) => handlePar(event, holes.hole1, 'hole14')}
+                  onChange={(event) => handlePar(event, '14')}
                 />
               </InputGroup>
               <Input
@@ -522,9 +494,7 @@ const AdminCreatePage = () => {
                 type="text"
                 background="white"
                 border="3px solid #BBBBBB"
-                onChange={(event) =>
-                  handleStrokeIndex(event, holes.hole1, 'hole14')
-                }
+                onChange={(event) => handleStrokeIndex(event, '14')}
               />
             </Stack>
           </InputGroup>
@@ -537,7 +507,7 @@ const AdminCreatePage = () => {
                   type="text"
                   background="white"
                   border="3px solid #BBBBBB"
-                  onChange={(event) => handlePar(event, holes.hole1, 'hole15')}
+                  onChange={(event) => handlePar(event, '15')}
                 />
               </InputGroup>
               <Input
@@ -545,9 +515,7 @@ const AdminCreatePage = () => {
                 type="text"
                 background="white"
                 border="3px solid #BBBBBB"
-                onChange={(event) =>
-                  handleStrokeIndex(event, holes.hole1, 'hole15')
-                }
+                onChange={(event) => handleStrokeIndex(event, '15')}
               />
             </Stack>
           </InputGroup>
@@ -560,7 +528,7 @@ const AdminCreatePage = () => {
                   type="text"
                   background="white"
                   border="3px solid #BBBBBB"
-                  onChange={(event) => handlePar(event, holes.hole1, 'hole16')}
+                  onChange={(event) => handlePar(event, '16')}
                 />
               </InputGroup>
               <Input
@@ -568,9 +536,7 @@ const AdminCreatePage = () => {
                 type="text"
                 background="white"
                 border="3px solid #BBBBBB"
-                onChange={(event) =>
-                  handleStrokeIndex(event, holes.hole1, 'hole16')
-                }
+                onChange={(event) => handleStrokeIndex(event, '16')}
               />
             </Stack>
           </InputGroup>
@@ -583,7 +549,7 @@ const AdminCreatePage = () => {
                   type="text"
                   background="white"
                   border="3px solid #BBBBBB"
-                  onChange={(event) => handlePar(event, holes.hole1, 'hole17')}
+                  onChange={(event) => handlePar(event, '17')}
                 />
               </InputGroup>
               <Input
@@ -591,9 +557,7 @@ const AdminCreatePage = () => {
                 type="text"
                 background="white"
                 border="3px solid #BBBBBB"
-                onChange={(event) =>
-                  handleStrokeIndex(event, holes.hole1, 'hole17')
-                }
+                onChange={(event) => handleStrokeIndex(event, '17')}
               />
             </Stack>
           </InputGroup>
@@ -606,7 +570,7 @@ const AdminCreatePage = () => {
                   type="text"
                   background="white"
                   border="3px solid #BBBBBB"
-                  onChange={(event) => handlePar(event, holes.hole1, 'hole18')}
+                  onChange={(event) => handlePar(event, '18')}
                 />
               </InputGroup>
               <Input
@@ -614,9 +578,7 @@ const AdminCreatePage = () => {
                 type="text"
                 background="white"
                 border="3px solid #BBBBBB"
-                onChange={(event) =>
-                  handleStrokeIndex(event, holes.hole1, 'hole18')
-                }
+                onChange={(event) => handleStrokeIndex(event, '18')}
               />
             </Stack>
           </InputGroup>
@@ -628,6 +590,7 @@ const AdminCreatePage = () => {
           color="white"
           top="20px"
           onClick={() => {
+            console.log(holes);
             setIsOpen(true);
             totalCount();
           }}

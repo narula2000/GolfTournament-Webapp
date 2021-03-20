@@ -1,8 +1,19 @@
 import React from 'react';
+import firebase from 'firebase/app';
+import admin from 'firebase-admin';
 import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import './assets/styles/index.css';
+import firebaseConfig from './firebase';
+
+if (!firebase.apps.length) {
+  firebase.initializeApp(firebaseConfig);
+  admin.initializeApp({
+    credential: admin.credential.applicationDefault(),
+    databaseURL: process.env.REACT_APP_FIREBASE_DB_URL,
+  });
+}
 
 ReactDOM.render(
   <React.StrictMode>
