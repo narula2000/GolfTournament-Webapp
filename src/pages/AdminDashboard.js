@@ -207,15 +207,16 @@ const AdminDashboard = () => {
                   background="red"
                   borderRadius="20px"
                   color="white"
-                  onClick={() =>
+                  onClick={() => {
+                    setLoading(true);
                     firebaseFunction
                       .deleteTournament(uId, tournamentId)
                       .then(() => {
                         refresh();
-                      })
-                  }
+                      });
+                  }}
                 >
-                  Delete
+                  {loading ? <Spinner /> : 'Delete'}
                 </Button>
               </Stack>
             </HStack>
