@@ -101,13 +101,13 @@ const AdminCreatePage = () => {
   const history = useHistory();
   const uId = localStorage.getItem('adminId');
   const [name, setName] = useState('');
-  const [isOpen, setIsOpen] = useState(false);
   const [outPar, setOut] = useState(0);
   const [inPar, setIn] = useState(0);
   const [outSi, setOutSI] = useState(0);
   const [inSi, setInSI] = useState(0);
   const [holes, setHoles] = useState(template);
   const [loading, setLoading] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const onClose = () => setIsOpen(false);
   const cancelRef = React.useRef();
 

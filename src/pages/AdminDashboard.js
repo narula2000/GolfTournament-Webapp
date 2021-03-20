@@ -9,6 +9,14 @@ import {
   HStack,
   Stack,
   Spinner,
+  Popover,
+  PopoverTrigger,
+  Portal,
+  PopoverContent,
+  PopoverArrow,
+  PopoverHeader,
+  PopoverCloseButton,
+  PopoverBody,
 } from '@chakra-ui/react';
 import { useHistory, useLocation } from 'react-router-dom';
 import firebase from 'firebase/app';
@@ -25,6 +33,8 @@ const AdminDashboard = () => {
   const [refreshLoading, setRefreshLoading] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
   const uId = localStorage.getItem('adminId');
+  const firstNine = ['01', '02', '03', '04', '05', '06', '07', '08', '09'];
+  const secondNine = ['10', '11', '12', '13', '14', '15', '16', '17', '18'];
   const logOut = () => {
     firebase
       .auth()
@@ -62,6 +72,9 @@ const AdminDashboard = () => {
             background="#80D2F1"
             borderRadius="20px"
             color="white"
+            onClick={() => {
+              history.push('/admin/create');
+            }}
           >
             Create Tournament
           </Button>
@@ -142,52 +155,44 @@ const AdminDashboard = () => {
             </Text>
             <HStack spacing={5} align="center" justify="center">
               <Stack spacing={3} align="center">
-                {Object.keys(data[tournamentId]['000'].holes).map((holeNum) =>
-                  holeNum > 9 ? (
-                    ''
-                  ) : (
-                    <Stack direction="row" spacing={3} key={holeNum}>
-                      <Box background="white" width="100px">
-                        <Text>Hole: {holeNum}</Text>
-                      </Box>
-                      <Box background="white" width="100px">
-                        <Text>
-                          Par:{data[tournamentId]['000'].holes[holeNum].par}
-                        </Text>
-                      </Box>
-                      <Box background="white" width="100px">
-                        <Text>
-                          SI:{' '}
-                          {data[tournamentId]['000'].holes[holeNum].strokeIndex}
-                        </Text>
-                      </Box>
-                    </Stack>
-                  )
-                )}
+                {firstNine.map((holeNum) => (
+                  <Stack direction="row" spacing={3} key={holeNum}>
+                    <Box background="white" width="100px">
+                      <Text>Hole: {holeNum}</Text>
+                    </Box>
+                    <Box background="white" width="100px">
+                      <Text>
+                        Par:{data[tournamentId]['000'].holes[holeNum].par}
+                      </Text>
+                    </Box>
+                    <Box background="white" width="100px">
+                      <Text>
+                        SI:{' '}
+                        {data[tournamentId]['000'].holes[holeNum].strokeIndex}
+                      </Text>
+                    </Box>
+                  </Stack>
+                ))}
               </Stack>
               <Stack spacing={3} align="center">
-                {Object.keys(data[tournamentId]['000'].holes).map((holeNum) =>
-                  holeNum < 10 ? (
-                    ''
-                  ) : (
-                    <Stack direction="row" spacing={3} key={holeNum}>
-                      <Box background="white" width="100px">
-                        <Text>Hole: {holeNum}</Text>
-                      </Box>
-                      <Box background="white" width="100px">
-                        <Text>
-                          Par:{data[tournamentId]['000'].holes[holeNum].par}
-                        </Text>
-                      </Box>
-                      <Box background="white" width="100px">
-                        <Text>
-                          SI:{' '}
-                          {data[tournamentId]['000'].holes[holeNum].strokeIndex}
-                        </Text>
-                      </Box>
-                    </Stack>
-                  )
-                )}
+                {secondNine.map((holeNum) => (
+                  <Stack direction="row" spacing={3} key={holeNum}>
+                    <Box background="white" width="100px">
+                      <Text>Hole: {holeNum}</Text>
+                    </Box>
+                    <Box background="white" width="100px">
+                      <Text>
+                        Par:{data[tournamentId]['000'].holes[holeNum].par}
+                      </Text>
+                    </Box>
+                    <Box background="white" width="100px">
+                      <Text>
+                        SI:{' '}
+                        {data[tournamentId]['000'].holes[holeNum].strokeIndex}
+                      </Text>
+                    </Box>
+                  </Stack>
+                ))}
               </Stack>
               <Stack spacing={3} align="center">
                 <Button
@@ -206,22 +211,39 @@ const AdminDashboard = () => {
                 >
                   Add User
                 </Button>
-                <Button
-                  width="110px"
-                  background="red"
-                  borderRadius="20px"
-                  color="white"
-                  onClick={() => {
-                    setDeleteLoading(true);
-                    firebaseFunction
-                      .deleteTournament(uId, tournamentId)
-                      .then(() => {
-                        refresh();
-                      });
-                  }}
-                >
-                  {deleteLoading ? <Spinner /> : 'Delete'}
-                </Button>
+                <Popover>
+                  <PopoverTrigger>
+                    <Button width="110px" colorScheme="red" borderRadius="20px">
+                      Delete
+                    </Button>
+                  </PopoverTrigger>
+                  <Portal>
+                    <PopoverContent>
+                      <PopoverArrow />
+                      <PopoverHeader>
+                        Do you want to delete {data[tournamentId].name} ?
+                      </PopoverHeader>
+                      <PopoverCloseButton />
+                      <PopoverBody align="center">
+                        <Button
+                          width="200px"
+                          colorScheme="red"
+                          borderRadius="20px"
+                          onClick={() => {
+                            setDeleteLoading(true);
+                            firebaseFunction
+                              .deleteTournament(uId, tournamentId)
+                              .then(() => {
+                                refresh();
+                              });
+                          }}
+                        >
+                          {deleteLoading ? <Spinner /> : 'Yes'}
+                        </Button>
+                      </PopoverBody>
+                    </PopoverContent>
+                  </Portal>
+                </Popover>
               </Stack>
             </HStack>
           </Box>
