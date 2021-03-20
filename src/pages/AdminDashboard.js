@@ -24,8 +24,6 @@ const AdminDashboard = () => {
   const data = location.state.detail;
   const [loading, setLoading] = useState(false);
   const uId = localStorage.getItem('adminId');
-  const outHoleKeys = ['01', '02', '03', '04', '05', '06', '07', '08', '09'];
-  const inHoleKyes = ['10', '11', '12', '13', '14', '15', '16', '17', '18'];
   const logOut = () => {
     firebase
       .auth()
@@ -33,6 +31,16 @@ const AdminDashboard = () => {
       .then(() => {
         history.push({ pathname: '/admin' });
       });
+  };
+  const refresh = () => {
+    setLoading(true);
+    firebaseFunction.fetchRealtimeRank(uId).then((result) => {
+      setLoading(false);
+      history.push({
+        pathname: '/admin/dashboard',
+        state: { detail: result || {} },
+      });
+    });
   };
 
   return (
@@ -64,16 +72,7 @@ const AdminDashboard = () => {
           background="#80D2F1"
           borderRadius="20px"
           color="white"
-          onClick={() => {
-            setLoading(true);
-            firebaseFunction.fetchRealtimeRank(uId).then((result) => {
-              setLoading(false);
-              history.push({
-                pathname: '/admin/dashboard',
-                state: { detail: result || {} },
-              });
-            });
-          }}
+          onClick={refresh}
         >
           {loading ? <Spinner /> : 'Update Page'}
         </Button>
@@ -208,6 +207,13 @@ const AdminDashboard = () => {
                   background="red"
                   borderRadius="20px"
                   color="white"
+                  onClick={() =>
+                    firebaseFunction
+                      .deleteTournament(uId, tournamentId)
+                      .then(() => {
+                        refresh();
+                      })
+                  }
                 >
                   Delete
                 </Button>
