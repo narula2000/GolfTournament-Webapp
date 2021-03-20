@@ -33,75 +33,75 @@ const AdminCreatePage = () => {
   const [outSi, setOutSI] = useState(0);
   const [inSi, setInSI] = useState(0);
   const [holes, setHoles] = useState({
-    hole1: {
+    '01': {
       par: 0,
       strokeIndex: 0,
     },
-    hole2: {
+    '02': {
       par: 0,
       strokeIndex: 0,
     },
-    hole3: {
+    '03': {
       par: 0,
       strokeIndex: 0,
     },
-    hole4: {
+    '04': {
       par: 0,
       strokeIndex: 0,
     },
-    hole5: {
+    '05': {
       par: 0,
       strokeIndex: 0,
     },
-    hole6: {
+    '06': {
       par: 0,
       strokeIndex: 0,
     },
-    hole7: {
+    '07': {
       par: 0,
       strokeIndex: 0,
     },
-    hole8: {
+    '08': {
       par: 0,
       strokeIndex: 0,
     },
-    hole9: {
+    '09': {
       par: 0,
       strokeIndex: 0,
     },
-    hole10: {
+    10: {
       par: 0,
       strokeIndex: 0,
     },
-    hole11: {
+    11: {
       par: 0,
       strokeIndex: 0,
     },
-    hole12: {
+    12: {
       par: 0,
       strokeIndex: 0,
     },
-    hole13: {
+    13: {
       par: 0,
       strokeIndex: 0,
     },
-    hole14: {
+    14: {
       par: 0,
       strokeIndex: 0,
     },
-    hole15: {
+    15: {
       par: 0,
       strokeIndex: 0,
     },
-    hole16: {
+    16: {
       par: 0,
       strokeIndex: 0,
     },
-    hole17: {
+    17: {
       par: 0,
       strokeIndex: 0,
     },
-    hole18: {
+    18: {
       par: 0,
       strokeIndex: 0,
     },
