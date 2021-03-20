@@ -30,7 +30,7 @@ const deleteTournament = async (_adminId, tournamentId) => {
 };
 
 const createTournament = async (_adminId, holesData, tournamentName) => {
-  const date = String(new Date());
+  const date = new Date().toISOString();
   const tournamentId = crypto.createHash('sha256').update(date).digest('hex');
   const holes = {};
   Object.keys(holesData).forEach((hole) => {
