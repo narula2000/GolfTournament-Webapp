@@ -19,10 +19,13 @@ const deleteTournament = async (_adminId, tournamentId) => {
   const tournamentListRef = await database
     .ref(tournamentListPath)
     .once('value');
-  const tournamentList = String(tournamentListRef.val()).split(', ');
-  tournamentList.splice(tournamentList.indexOf(tournamentId), 1);
-  const strTournament = tournamentList.join(', ');
-  await database.ref(tournamentListPath).set(strTournament);
+  const tournamentList = tournamentListRef.val();
+  let delId = '';
+  Object.keys(tournamentList).forEach((key) => {
+    if (tournamentList[key].id === tournamentId) delId = key;
+  });
+  delete tournamentListRef[delId];
+  await tournamentListRef.set(tournamentList);
   await database.ref(path).set({});
 };
 
@@ -56,13 +59,8 @@ const createTournament = async (_adminId, holesData, tournamentName) => {
   const path = `admin/${_adminId}/${tournamentId}/`;
   const tournamentListPath = `tournament/`;
   const database = firebase.database();
-  const tournamentListRef = await database
-    .ref(tournamentListPath)
-    .once('value');
-  const tournamentList = String(tournamentListRef.val()).split(', ');
-  tournamentList.push(tournamentId);
-  const strTournament = tournamentList.join(', ');
-  await database.ref(tournamentListPath).set(strTournament);
+  const tournamentListRef = await database.ref(tournamentListPath).push();
+  await tournamentListRef.set({ id: tournamentId });
   await database
     .ref(path)
     .set({ '000': data, isComplete: false, name: tournamentName });
@@ -121,10 +119,13 @@ const completeTournament = async (_adminId, _tournamentId) => {
   const tournamentListRef = await database
     .ref(tournamentListPath)
     .once('value');
-  const tournamentList = String(tournamentListRef.val()).split(', ');
-  tournamentList.splice(tournamentList.indexOf(_tournamentId), 1);
-  const strTournament = tournamentList.join(', ');
-  await database.ref(tournamentListPath).set(strTournament);
+  const tournamentList = tournamentListRef.val();
+  let delId = '';
+  Object.keys(tournamentList).forEach((key) => {
+    if (tournamentList[key].id === _tournamentId) delId = key;
+  });
+  delete tournamentListRef[delId];
+  await tournamentListRef.set(tournamentList);
 };
 
 export default {
