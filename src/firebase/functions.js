@@ -117,6 +117,14 @@ const completeTournament = async (_adminId, _tournamentId) => {
     idx = String(Number(idx) + 1).padStart(3, '0');
     adminAuth.deleteUser(validId);
   });
+  const tournamentListPath = `tournament/`;
+  const tournamentListRef = await database
+    .ref(tournamentListPath)
+    .once('value');
+  const tournamentList = String(tournamentListRef.val()).split(', ');
+  tournamentList.splice(tournamentList.indexOf(_tournamentId), 1);
+  const strTournament = tournamentList.join(', ');
+  await database.ref(tournamentListPath).set(strTournament);
 };
 
 export default {
