@@ -25,7 +25,7 @@ const deleteTournament = async (_adminId, tournamentId) => {
     if (tournamentList[key].id === tournamentId) delId = key;
   });
   delete tournamentListRef[delId];
-  await tournamentListRef.set(tournamentList);
+  await database.ref(tournamentListPath).set(tournamentList);
   await database.ref(path).set({});
 };
 
@@ -125,7 +125,7 @@ const completeTournament = async (_adminId, _tournamentId) => {
     if (tournamentList[key].id === _tournamentId) delId = key;
   });
   delete tournamentListRef[delId];
-  await tournamentListRef.set(tournamentList);
+  await database.ref(tournamentListPath).set(tournamentList);
 };
 
 export default {
