@@ -162,6 +162,7 @@ const AdminCreatePage = () => {
         <Image src={logo} position="absolute" left="calc(50% - 131px)" />
         <Box mt="7">
           <Flex direction="row">
+            <Spacer />
             <Box
               background="#7FD661"
               width="auto"
@@ -170,7 +171,6 @@ const AdminCreatePage = () => {
               borderRadius="20px"
               align="center"
               overflowY="auto"
-              ml="20"
             >
               <Text color="white" fontSize="26px" lineHeight="70px">
                 {' '}
@@ -384,7 +384,6 @@ const AdminCreatePage = () => {
               borderRadius="20px"
               align="center"
               overflowY="auto"
-              mr="20"
             >
               <Text color="white" fontSize="26px" lineHeight="70px">
                 {' '}
@@ -645,6 +644,7 @@ const AdminCreatePage = () => {
                 </AlertDialogFooter>
               </AlertDialogContent>
             </AlertDialog>
+            <Spacer />
           </Flex>
         </Box>
       </Flex>
