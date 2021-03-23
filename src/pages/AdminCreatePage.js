@@ -154,11 +154,30 @@ const AdminCreatePage = () => {
     setIn(inParCount);
     setInSI(inSiCount);
   };
+  const goBack = () => {
+    firebaseFunction.fetchRealtimeRank(uId).then((result) => {
+      history.push({
+        pathname: '/admin/dashboard',
+        state: { detail: result || {} },
+      });
+    });
+  };
 
   return (
     <Box background="white">
       <Flex direction="column">
-        <Flex background="#CFECC5" width="100%" height="147px" />
+        <Flex background="#CFECC5" width="100%" height="147px">
+          <Button
+            ml="4"
+            mt="50"
+            background="#80D2F1"
+            borderRadius="20px"
+            color="white"
+            onClick={goBack}
+          >
+            Back
+          </Button>
+        </Flex>
         <Image src={logo} position="absolute" left="calc(50% - 131px)" />
         <Box mt="7">
           <Flex direction="row">
@@ -610,9 +629,17 @@ const AdminCreatePage = () => {
                 <AlertDialogBody>
                   <Heading>{name}</Heading>
                   <br />
-                  <Text>Total Out Par: {outPar}</Text>
+                  {outPar === 36 ? (
+                    <Text color="green">Total Out Par: {outPar}</Text>
+                  ) : (
+                    <Text color="red">Total Out Par: {outPar}</Text>
+                  )}
                   <Text>Total Out Stroke Index: {outSi}</Text>
-                  <Text>Total In Par: {inPar}</Text>
+                  {inPar === 36 ? (
+                    <Text color="green">Total In Par: {inPar}</Text>
+                  ) : (
+                    <Text color="red">Total In Par: {inPar}</Text>
+                  )}
                   <Text>Total In Stroke Index: {inSi}</Text>
                 </AlertDialogBody>
                 <AlertDialogFooter>

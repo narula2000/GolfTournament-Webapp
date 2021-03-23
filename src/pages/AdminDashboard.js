@@ -66,68 +66,60 @@ const AdminDashboard = () => {
 
   return (
     <Box background="white">
-      <Flex
-        position="absolute"
-        background="#CFECC5"
-        width="100%"
-        height="147px"
-      >
-        {Object.keys(data).length === 0 ? (
-          ''
-        ) : (
-          <Button
-            ml="4"
-            mt="50"
-            background="#80D2F1"
-            borderRadius="20px"
-            color="white"
-            onClick={() => {
-              history.push('/admin/create');
-            }}
-          >
-            Create Tournament
-          </Button>
-        )}
-        <Spacer />
-        <Box>
-          <Button
-            mr="4"
-            mt="50"
-            background="#80D2F1"
-            borderRadius="20px"
-            color="white"
-            disabled={refreshLoading}
-            onClick={() => {
-              setRefreshLoading(true);
-              refresh();
-            }}
-          >
-            {refreshLoading ? <Spinner /> : 'Update Page'}
-          </Button>
-          <Button
-            mr="4"
-            mt="50"
-            background="#80D2F1"
-            borderRadius="20px"
-            color="white"
-            onClick={logOut}
-          >
-            Logout
-          </Button>
-        </Box>
-      </Flex>
-      <Image src={logo} position="absolute" left="calc(50% - 131px)" />
-      <Flex>
-        <Container>
+      <Flex direction="column">
+        <Flex background="#CFECC5" width="100%" height="147px">
+          {Object.keys(data).length === 0 ? (
+            ''
+          ) : (
+            <Button
+              ml="4"
+              mt="50"
+              background="#80D2F1"
+              borderRadius="20px"
+              color="white"
+              onClick={() => {
+                history.push('/admin/create');
+              }}
+            >
+              Create Tournament
+            </Button>
+          )}
+          <Spacer />
+          <Box>
+            <Button
+              mr="4"
+              mt="50"
+              background="#80D2F1"
+              borderRadius="20px"
+              color="white"
+              disabled={refreshLoading}
+              onClick={() => {
+                setRefreshLoading(true);
+                refresh();
+              }}
+            >
+              {refreshLoading ? <Spinner /> : 'Update Page'}
+            </Button>
+            <Button
+              mr="4"
+              mt="50"
+              background="#80D2F1"
+              borderRadius="20px"
+              color="white"
+              onClick={logOut}
+            >
+              Logout
+            </Button>
+          </Box>
+        </Flex>
+        <Image src={logo} position="absolute" left="calc(50% - 131px)" />
+        <Box mt="7">
           <VStack>
             {Object.keys(data).length === 0 ? (
-              <Container>
+              <Container align="center" mt="100">
                 <Button
-                  position="absolute"
-                  width="800px"
+                  width="auto"
                   height="100px"
-                  top="260px"
-                  left="calc(50% - 400px)"
                   border="3px dashed #7FD661"
                   borderRadius="20px"
                   align="center"
@@ -140,12 +132,7 @@ const AdminDashboard = () => {
                     {buttonText}
                   </Text>
                 </Button>
-                <Text
-                  color="rgba(127, 214, 97, 0.48)"
-                  fontSize="28px"
-                  position="absolute"
-                  top="400px"
-                >
+                <Text color="rgba(127, 214, 97, 0.48)" fontSize="28px" mt="30">
                   {backgroundText}
                 </Text>
               </Container>
@@ -158,7 +145,7 @@ const AdminDashboard = () => {
                   background="#7FD661"
                   width="auto"
                   height="auto"
-                  top="240px"
+                  mt="20"
                   borderRadius="20px"
                   align="center"
                   justifyItems="center"
@@ -183,7 +170,8 @@ const AdminDashboard = () => {
                           </Box>
                           <Box background="white" width="100px">
                             <Text>
-                              Par:{data[tournamentId]['000'].holes[holeNum].par}
+                              Par:
+                              {data[tournamentId]['000'].holes[holeNum].par}
                             </Text>
                           </Box>
                           <Box background="white" width="100px">
@@ -206,7 +194,8 @@ const AdminDashboard = () => {
                           </Box>
                           <Box background="white" width="100px">
                             <Text>
-                              Par:{data[tournamentId]['000'].holes[holeNum].par}
+                              Par:
+                              {data[tournamentId]['000'].holes[holeNum].par}
                             </Text>
                           </Box>
                           <Box background="white" width="100px">
@@ -309,7 +298,7 @@ const AdminDashboard = () => {
               ))
             )}
           </VStack>
-        </Container>
+        </Box>
       </Flex>
     </Box>
   );
