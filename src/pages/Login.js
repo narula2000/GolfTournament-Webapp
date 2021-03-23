@@ -1,16 +1,25 @@
 import React, { useState } from 'react';
 import firebase from 'firebase/app';
 import { useHistory } from 'react-router-dom';
-import { Image, Box, Input, VStack, Text, Button } from '@chakra-ui/react';
-
+import {
+  Image,
+  Box,
+  Input,
+  VStack,
+  Text,
+  Button,
+  Spinner,
+} from '@chakra-ui/react';
 import logo from '../assets/golf-logo.png';
 import theme from '../core/theme';
 import 'firebase/auth';
+import firebaseFunction from '../firebase/functions';
 
 const Login = () => {
   const history = useHistory();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const emailValidator = (_email) => {
     const regex = /\S+@\S+\.\S+/;
@@ -28,16 +37,27 @@ const Login = () => {
   const loginAdmin = () => {
     const emailError = emailValidator(email);
     const passwordError = passwordValidator(password);
+    setLoading(true);
 
     if (emailError || passwordError) {
       alert(`${emailError} ${passwordError}`);
       return;
     }
+
     firebase
       .auth()
       .signInWithEmailAndPassword(email, password)
-      .then(history.push('/admin/dashboard'))
-      .catch((err) => alert(err));
+      .then(() => {
+        firebaseFunction
+          .fetchRealtimeRank(localStorage.getItem('adminId'))
+          .then((result) => {
+            setLoading(false);
+            history.push({
+              pathname: '/admin/dashboard',
+              state: { detail: result || {} },
+            });
+          });
+      });
   };
 
   return (
@@ -85,9 +105,10 @@ const Login = () => {
             borderRadius="20px"
             width="140px"
             p="10px"
+            disabled={loading}
             onClick={loginAdmin}
           >
-            Login
+            {loading ? <Spinner /> : 'Log in'}
           </Button>
         </VStack>
       </Box>
