@@ -8,6 +8,9 @@ import {
   VStack,
   HStack,
   Stack,
+  Container,
+  Center,
+  Spacer,
   Spinner,
   Popover,
   PopoverTrigger,
@@ -55,6 +58,13 @@ const AdminDashboard = () => {
     });
   };
 
+  function generateURL(tournamentId) {
+    const qrData = { adminId: uId, tournamentId: tournamentId };
+    return `https://chart.googleapis.com/chart?cht=qr&chs=250x250&chl=${JSON.stringify(
+      qrData
+    )}`;
+  }
+
   return (
     <Box background="white">
       <Flex
@@ -67,9 +77,8 @@ const AdminDashboard = () => {
           ''
         ) : (
           <Button
-            position="absolute"
-            top="50px"
-            left="50px"
+            ml="4"
+            mt="50"
             background="#80D2F1"
             borderRadius="20px"
             color="white"
@@ -80,183 +89,229 @@ const AdminDashboard = () => {
             Create Tournament
           </Button>
         )}
-        <Button
-          position="absolute"
-          top="50px"
-          right="150px"
-          background="#80D2F1"
-          borderRadius="20px"
-          color="white"
-          disabled={refreshLoading}
-          onClick={() => {
-            setRefreshLoading(true);
-            refresh();
-          }}
-        >
-          {refreshLoading ? <Spinner /> : 'Update Page'}
-        </Button>
-        <Button
-          position="absolute"
-          top="50px"
-          right="50px"
-          background="#80D2F1"
-          borderRadius="20px"
-          color="white"
-          onClick={logOut}
-        >
-          Logout
-        </Button>
+        <Spacer />
+        <Box>
+          <Button
+            mr="4"
+            mt="50"
+            background="#80D2F1"
+            borderRadius="20px"
+            color="white"
+            disabled={refreshLoading}
+            onClick={() => {
+              setRefreshLoading(true);
+              refresh();
+            }}
+          >
+            {refreshLoading ? <Spinner /> : 'Update Page'}
+          </Button>
+          <Button
+            mr="4"
+            mt="50"
+            background="#80D2F1"
+            borderRadius="20px"
+            color="white"
+            onClick={logOut}
+          >
+            Logout
+          </Button>
+        </Box>
       </Flex>
       <Image src={logo} position="absolute" left="calc(50% - 131px)" />
-      <VStack>
-        Object.keys(data).length === 0 ?
-        <Button
-          position="absolute"
-          width="800px"
-          height="100px"
-          top="260px"
-          left="calc(50% - 400px)"
-          border="3px dashed #7FD661"
-          borderRadius="20px"
-          align="center"
-          background="white"
-          onClick={() => {
-            history.push('/admin/create');
-          }}
-        >
-          <Text color="#7FD661" fontSize="28px">
-            {buttonText}
-          </Text>
-        </Button>
-        <Text
-          color="rgba(127, 214, 97, 0.48)"
-          fontSize="28px"
-          position="absolute"
-          top="400px"
-        >
-          {backgroundText}
-        </Text>
-        :
-        {Object.keys(data).map((tournamentId) => (
-          <Box
-            key={tournamentId}
-            position="relative"
-            background="#7FD661"
-            width="70%"
-            height="400px"
-            left="calc(50% - width/2)"
-            top="240px"
-            borderRadius="20px"
-            align="center"
-            justifyItems="center"
-            overflowY="auto"
-          >
-            <Text color="white" fontSize="26px" lineHeight="70px">
-              {' '}
-              {data[tournamentId].name}{' '}
-            </Text>
-            <HStack
-              spacing={5}
-              align="center"
-              justify="center"
-              divider={<StackDivider borderColor="grey.200" size="30" />}
-            >
-              <Stack spacing={3} align="center">
-                {firstNine.map((holeNum) => (
-                  <Stack direction="row" spacing={3} key={holeNum}>
-                    <Box background="white" width="100px">
-                      <Text>Hole: {holeNum}</Text>
-                    </Box>
-                    <Box background="white" width="100px">
-                      <Text>
-                        Par:{data[tournamentId]['000'].holes[holeNum].par}
-                      </Text>
-                    </Box>
-                    <Box background="white" width="100px">
-                      <Text>
-                        SI:{' '}
-                        {data[tournamentId]['000'].holes[holeNum].strokeIndex}
-                      </Text>
-                    </Box>
-                  </Stack>
-                ))}
-              </Stack>
-              <Stack spacing={3} align="center">
-                {secondNine.map((holeNum) => (
-                  <Stack direction="row" spacing={3} key={holeNum}>
-                    <Box background="white" width="100px">
-                      <Text>Hole: {holeNum}</Text>
-                    </Box>
-                    <Box background="white" width="100px">
-                      <Text>
-                        Par:{data[tournamentId]['000'].holes[holeNum].par}
-                      </Text>
-                    </Box>
-                    <Box background="white" width="100px">
-                      <Text>
-                        SI:{' '}
-                        {data[tournamentId]['000'].holes[holeNum].strokeIndex}
-                      </Text>
-                    </Box>
-                  </Stack>
-                ))}
-              </Stack>
-              <Stack spacing={3} align="center">
+      <Flex>
+        <Container>
+          <VStack>
+            {Object.keys(data).length === 0 ? (
+              <Container>
                 <Button
-                  width="110px"
-                  background="#80D2F1"
+                  position="absolute"
+                  width="800px"
+                  height="100px"
+                  top="260px"
+                  left="calc(50% - 400px)"
+                  border="3px dashed #7FD661"
                   borderRadius="20px"
-                  color="white"
+                  align="center"
+                  background="white"
+                  onClick={() => {
+                    history.push('/admin/create');
+                  }}
                 >
-                  Completed
+                  <Text color="#7FD661" fontSize="28px">
+                    {buttonText}
+                  </Text>
                 </Button>
-                <Button
-                  width="110px"
-                  background="#80D2F1"
+                <Text
+                  color="rgba(127, 214, 97, 0.48)"
+                  fontSize="28px"
+                  position="absolute"
+                  top="400px"
+                >
+                  {backgroundText}
+                </Text>
+              </Container>
+            ) : (
+              Object.keys(data).map((tournamentId) => (
+                <Box
+                  key={tournamentId}
+                  padding="5"
+                  position="relative"
+                  background="#7FD661"
+                  width="auto"
+                  height="auto"
+                  top="240px"
                   borderRadius="20px"
-                  color="white"
+                  align="center"
+                  justifyItems="center"
+                  overflowY="auto"
+                  justifyContent="center"
                 >
-                  Add User
-                </Button>
-                <Popover>
-                  <PopoverTrigger>
-                    <Button width="110px" colorScheme="red" borderRadius="20px">
-                      Delete
-                    </Button>
-                  </PopoverTrigger>
-                  <Portal>
-                    <PopoverContent>
-                      <PopoverArrow />
-                      <PopoverHeader>
-                        Do you want to delete {data[tournamentId].name} ?
-                      </PopoverHeader>
-                      <PopoverCloseButton />
-                      <PopoverBody align="center">
-                        <Button
-                          width="200px"
-                          colorScheme="red"
-                          borderRadius="20px"
-                          disabled={deleteLoading}
-                          onClick={() => {
-                            setDeleteLoading(true);
-                            firebaseFunction
-                              .deleteTournament(uId, tournamentId)
-                              .then(() => {
-                                refresh();
-                              });
-                          }}
-                        >
-                          {deleteLoading ? <Spinner /> : 'Yes'}
-                        </Button>
-                      </PopoverBody>
-                    </PopoverContent>
-                  </Portal>
-                </Popover>
-              </Stack>
-            </HStack>
-          </Box>
-        ))}
-      </VStack>
+                  <Text color="white" fontSize="26px" mb="5">
+                    {' '}
+                    {data[tournamentId].name}{' '}
+                  </Text>
+                  <HStack
+                    spacing={5}
+                    align="center"
+                    justify="center"
+                    divider={<StackDivider borderColor="grey.200" size="30" />}
+                  >
+                    <Stack spacing={3} align="center">
+                      {firstNine.map((holeNum) => (
+                        <Stack direction="row" spacing={3} key={holeNum}>
+                          <Box background="white" width="100px">
+                            <Text>Hole: {holeNum}</Text>
+                          </Box>
+                          <Box background="white" width="100px">
+                            <Text>
+                              Par:{data[tournamentId]['000'].holes[holeNum].par}
+                            </Text>
+                          </Box>
+                          <Box background="white" width="100px">
+                            <Text>
+                              SI:{' '}
+                              {
+                                data[tournamentId]['000'].holes[holeNum]
+                                  .strokeIndex
+                              }
+                            </Text>
+                          </Box>
+                        </Stack>
+                      ))}
+                    </Stack>
+                    <Stack spacing={3} align="center">
+                      {secondNine.map((holeNum) => (
+                        <Stack direction="row" spacing={3} key={holeNum}>
+                          <Box background="white" width="100px">
+                            <Text>Hole: {holeNum}</Text>
+                          </Box>
+                          <Box background="white" width="100px">
+                            <Text>
+                              Par:{data[tournamentId]['000'].holes[holeNum].par}
+                            </Text>
+                          </Box>
+                          <Box background="white" width="100px">
+                            <Text>
+                              SI:{' '}
+                              {
+                                data[tournamentId]['000'].holes[holeNum]
+                                  .strokeIndex
+                              }
+                            </Text>
+                          </Box>
+                        </Stack>
+                      ))}
+                    </Stack>
+                    <Stack spacing={3} align="center">
+                      <Popover>
+                        <PopoverTrigger>
+                          <Button
+                            width="150px"
+                            background="#80D2F1"
+                            borderRadius="20px"
+                            color="white"
+                          >
+                            View QR Code
+                          </Button>
+                        </PopoverTrigger>
+                        <Portal>
+                          <PopoverContent>
+                            <PopoverArrow />
+                            <PopoverHeader>
+                              QR Code for {data[tournamentId].name}
+                            </PopoverHeader>
+                            <PopoverCloseButton />
+                            <PopoverBody align="center">
+                              <Image
+                                src={generateURL(tournamentId)}
+                                alt="QR Code"
+                              />
+                            </PopoverBody>
+                          </PopoverContent>
+                        </Portal>
+                      </Popover>
+                      <Button
+                        width="150px"
+                        background="#80D2F1"
+                        borderRadius="20px"
+                        color="white"
+                      >
+                        Completed
+                      </Button>
+                      <Button
+                        width="150px"
+                        background="#80D2F1"
+                        borderRadius="20px"
+                        color="white"
+                      >
+                        Add User
+                      </Button>
+                      <Popover>
+                        <PopoverTrigger>
+                          <Button
+                            width="150px"
+                            colorScheme="red"
+                            borderRadius="20px"
+                          >
+                            Delete
+                          </Button>
+                        </PopoverTrigger>
+                        <Portal>
+                          <PopoverContent>
+                            <PopoverArrow />
+                            <PopoverHeader>
+                              Do you want to delete {data[tournamentId].name} ?
+                            </PopoverHeader>
+                            <PopoverCloseButton />
+                            <PopoverBody align="center">
+                              <Button
+                                width="200px"
+                                colorScheme="red"
+                                borderRadius="20px"
+                                disabled={deleteLoading}
+                                onClick={() => {
+                                  setDeleteLoading(true);
+                                  firebaseFunction
+                                    .deleteTournament(uId, tournamentId)
+                                    .then(() => {
+                                      refresh();
+                                    });
+                                }}
+                              >
+                                {deleteLoading ? <Spinner /> : 'Yes'}
+                              </Button>
+                            </PopoverBody>
+                          </PopoverContent>
+                        </Portal>
+                      </Popover>
+                    </Stack>
+                  </HStack>
+                </Box>
+              ))
+            )}
+          </VStack>
+        </Container>
+      </Flex>
     </Box>
   );
 };
