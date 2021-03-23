@@ -17,6 +17,7 @@ import {
   PopoverHeader,
   PopoverCloseButton,
   PopoverBody,
+  StackDivider,
 } from '@chakra-ui/react';
 import { useHistory, useLocation } from 'react-router-dom';
 import firebase from 'firebase/app';
@@ -86,6 +87,7 @@ const AdminDashboard = () => {
           background="#80D2F1"
           borderRadius="20px"
           color="white"
+          disabled={refreshLoading}
           onClick={() => {
             setRefreshLoading(true);
             refresh();
@@ -153,7 +155,12 @@ const AdminDashboard = () => {
               {' '}
               {data[tournamentId].name}{' '}
             </Text>
-            <HStack spacing={5} align="center" justify="center">
+            <HStack
+              spacing={5}
+              align="center"
+              justify="center"
+              divider={<StackDivider borderColor="grey.200" size="30" />}
+            >
               <Stack spacing={3} align="center">
                 {firstNine.map((holeNum) => (
                   <Stack direction="row" spacing={3} key={holeNum}>
@@ -229,6 +236,7 @@ const AdminDashboard = () => {
                           width="200px"
                           colorScheme="red"
                           borderRadius="20px"
+                          disabled={deleteLoading}
                           onClick={() => {
                             setDeleteLoading(true);
                             firebaseFunction

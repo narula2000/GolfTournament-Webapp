@@ -105,6 +105,7 @@ const Login = () => {
             borderRadius="20px"
             width="140px"
             p="10px"
+            disabled={loading}
             onClick={loginAdmin}
           >
             {loading ? <Spinner /> : 'Log in'}

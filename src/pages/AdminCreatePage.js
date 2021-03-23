@@ -624,6 +624,7 @@ const AdminCreatePage = () => {
             </Button>
             <Button
               ml={3}
+              disabled={loading}
               onClick={() => {
                 setLoading(true);
                 firebaseFunction.createTournament(uId, holes, name).then(() => {
