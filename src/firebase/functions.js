@@ -46,6 +46,7 @@ const createTournament = async (_adminId, holesData, tournamentName) => {
       fairway: null,
       gir: false,
       putt: 0,
+      upDown: false,
       createDate: date,
       updateDate: date,
     };
