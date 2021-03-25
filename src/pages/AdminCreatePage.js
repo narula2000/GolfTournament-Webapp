@@ -100,7 +100,7 @@ const AdminCreatePage = () => {
     },
   };
   const history = useHistory();
-  const uId = localStorage.getItem('adminId');
+  const adminId = localStorage.getItem('adminId');
   const [name, setName] = useState('');
   const [outPar, setOut] = useState(0);
   const [inPar, setIn] = useState(0);
@@ -155,7 +155,7 @@ const AdminCreatePage = () => {
     setInSI(inSiCount);
   };
   const goBack = () => {
-    firebaseFunction.fetchRealtimeRank(uId).then((result) => {
+    firebaseFunction.fetchRealtimeRank(adminId).then((result) => {
       history.push({
         pathname: '/admin/dashboard',
         state: { detail: result || {} },
@@ -652,10 +652,10 @@ const AdminCreatePage = () => {
                     onClick={() => {
                       setLoading(true);
                       firebaseFunction
-                        .createTournament(uId, holes, name)
+                        .createTournament(adminId, holes, name)
                         .then(() => {
                           firebaseFunction
-                            .fetchRealtimeRank(uId)
+                            .fetchRealtimeRank(adminId)
                             .then((result) => {
                               setLoading(false);
                               history.push({

@@ -29,13 +29,11 @@ import 'firebase/auth';
 
 const AdminDashboard = () => {
   const history = useHistory();
-  const buttonText = '+ Create New Tournament';
-  const backgroundText = 'There is no ongoing tournament';
   const location = useLocation();
   const data = location.state.detail;
   const [refreshLoading, setRefreshLoading] = useState(false);
   const [deleteLoading, setDeleteLoading] = useState(false);
-  const uId = localStorage.getItem('adminId');
+  const adminId = localStorage.getItem('adminId');
   const firstNine = ['01', '02', '03', '04', '05', '06', '07', '08', '09'];
   const secondNine = ['10', '11', '12', '13', '14', '15', '16', '17', '18'];
   const logOut = () => {
@@ -47,7 +45,7 @@ const AdminDashboard = () => {
       });
   };
   const refresh = () => {
-    firebaseFunction.fetchRealtimeRank(uId).then((result) => {
+    firebaseFunction.fetchRealtimeRank(adminId).then((result) => {
       setRefreshLoading(false);
       setDeleteLoading(false);
       history.push({
@@ -58,7 +56,7 @@ const AdminDashboard = () => {
   };
 
   function generateURL(tournamentId) {
-    const qrData = { adminId: uId, tournamentId: tournamentId };
+    const qrData = { adminId: adminId, tournamentId: tournamentId };
     return `https://chart.googleapis.com/chart?cht=qr&chs=250x250&chl=${JSON.stringify(
       qrData
     )}`;
@@ -129,11 +127,11 @@ const AdminDashboard = () => {
                   }}
                 >
                   <Text color="#7FD661" fontSize="28px">
-                    {buttonText}
+                    Create New Tournament
                   </Text>
                 </Button>
                 <Text color="rgba(127, 214, 97, 0.48)" fontSize="28px" mt="30">
-                  {backgroundText}
+                  There is no ongoing tournament
                 </Text>
               </Container>
             ) : (
@@ -280,7 +278,7 @@ const AdminDashboard = () => {
                                 onClick={() => {
                                   setDeleteLoading(true);
                                   firebaseFunction
-                                    .deleteTournament(uId, tournamentId)
+                                    .deleteTournament(adminId, tournamentId)
                                     .then(() => {
                                       refresh();
                                     });
