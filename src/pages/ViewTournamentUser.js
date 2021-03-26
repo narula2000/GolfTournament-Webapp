@@ -8,8 +8,6 @@ import {
   Heading,
   HStack,
   Input,
-  InputGroup,
-  InputLeftElement,
   Table,
   Tbody,
   Tr,
@@ -19,7 +17,7 @@ import {
 } from '@chakra-ui/react';
 import {
   ArrowBackIcon,
-  SearchIcon,
+  AddIcon,
   DeleteIcon,
   RepeatIcon,
 } from '@chakra-ui/icons';
@@ -106,7 +104,7 @@ const ViewTournamentUser = () => {
               background="white"
               type="text"
               placeholder="Username"
-              maxW="40%"
+              maxW="30%"
               onChangeCapture={(event) => setUsername(event.target.value)}
               value={username}
             />
@@ -114,7 +112,7 @@ const ViewTournamentUser = () => {
               background="white"
               type="tel"
               placeholder="Phone Number"
-              maxW="40%"
+              maxW="30%"
               onChangeCapture={(event) => setPhoneNum(event.target.value)}
               value={phoneNum}
             />
@@ -124,6 +122,7 @@ const ViewTournamentUser = () => {
               borderRadius="20px"
               maxW="20%"
               p="20px"
+              leftIcon={<AddIcon />}
               isLoading={adding}
               loadingText="Adding"
               onClick={(e) => {
@@ -134,17 +133,10 @@ const ViewTournamentUser = () => {
             >
               Add User
             </Button>
-          </HStack>
-        </Box>
-        <Box mx={{ lg: '300px', md: '150px' }} my="10px">
-          <InputGroup>
-            <InputLeftElement pointerEvents="none">
-              <SearchIcon color="gray.300" />
-            </InputLeftElement>
-            <Input type="text" placeholder="Search" />
             <Button
               ml="15px"
               p="20px"
+              borderRadius="20px"
               aria-label="Refresh List"
               bg={theme.colors.primary}
               color="white"
@@ -159,15 +151,16 @@ const ViewTournamentUser = () => {
             >
               Refresh
             </Button>
-          </InputGroup>
-          <Table variant="simple" mt="30px">
+          </HStack>
+        </Box>
+        <Box mx={{ lg: '300px', md: '150px' }} my="10px">
+          <Table variant="simple">
             <Tbody>
-              {Object.keys(data[tournamentId]).length > 4 ? ( // check there are users other than Mai's mock user, default user, and the fields isCompelte and name
+              {Object.keys(data[tournamentId]).length > 3 ? ( // check if there are users other than default user, the fields isComplete and name
                 Object.keys(data[tournamentId]).map((userId) =>
                   userId !== 'isComplete' &&
                   userId !== 'name' &&
-                  userId !== 'itSxMneyR9ePHawMWLiuqUoSJP92' && // check to not render Mai's mock user
-                  userId !== '000' ? ( // check to not render default user
+                  userId !== '000' ? (
                     <Tr key={userId}>
                       <Td>{data[tournamentId][userId].name}</Td>
                       <Td textAlign="center">
