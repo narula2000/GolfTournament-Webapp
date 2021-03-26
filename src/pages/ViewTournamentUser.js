@@ -34,6 +34,9 @@ import logo from '../assets/golf-logo.png';
 const ViewTournamentUser = () => {
   const history = useHistory();
   const location = useLocation();
+  const [adding, setAdding] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
+
   const [username, setUsername] = useState('');
   const [phoneNum, setPhoneNum] = useState('');
 
@@ -121,32 +124,41 @@ const ViewTournamentUser = () => {
               borderRadius="20px"
               maxW="20%"
               p="20px"
+              isLoading={adding}
+              loadingText="Adding"
               onClick={(e) => {
                 e.preventDefault();
-                addAndFetchNewData();
+                setAdding(true);
+                addAndFetchNewData().then(() => setAdding(false));
               }}
             >
               Add User
             </Button>
           </HStack>
         </Box>
-        <Box mx={{ lg: '300px', md: '150px' }} my="10px" p="20px">
+        <Box mx={{ lg: '300px', md: '150px' }} my="10px">
           <InputGroup>
             <InputLeftElement pointerEvents="none">
               <SearchIcon color="gray.300" />
             </InputLeftElement>
             <Input type="text" placeholder="Search" />
-            <IconButton
+            <Button
               ml="15px"
+              p="20px"
               aria-label="Refresh List"
               bg={theme.colors.primary}
               color="white"
-              icon={<RepeatIcon />}
+              leftIcon={<RepeatIcon />}
+              isLoading={refreshing}
+              loadingText="Refreshing"
               onClick={(e) => {
                 e.preventDefault();
-                refreshData();
+                setRefreshing(true);
+                refreshData().then(() => setRefreshing(false));
               }}
-            />
+            >
+              Refresh
+            </Button>
           </InputGroup>
           <Table variant="simple" mt="30px">
             <Tbody>
