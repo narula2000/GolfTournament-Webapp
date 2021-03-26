@@ -51,6 +51,11 @@ const ViewTournamentUser = () => {
   const [data, setData] = useState(location.state.detail);
   const tournamentId = Object.keys(data)[0];
 
+  const usernameValidator = (_username) => {
+    if (!_username || _username.length <= 0) return 'Username cannot be empty!';
+    return '';
+  };
+
   const phoneNumberValidator = (_phoneNum) => {
     const regex = /^(\+\d{2}( )?)?(\d{2,3})[- .]?\d{3}[- .]?\d{4}$/;
     if (!_phoneNum || _phoneNum.length <= 0)
@@ -66,10 +71,11 @@ const ViewTournamentUser = () => {
   }
 
   async function addAndFetchNewData() {
+    const usernameError = usernameValidator(username);
     const phoneNumError = phoneNumberValidator(phoneNum);
 
-    if (phoneNumError) {
-      alert(`${phoneNumError}`);
+    if (usernameError || phoneNumError) {
+      alert(`${usernameError}\n${phoneNumError}`);
       return;
     }
 
