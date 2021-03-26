@@ -22,7 +22,7 @@ import {
   DeleteIcon,
   RepeatIcon,
 } from '@chakra-ui/icons';
-import { useLocation } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 
 import functions from '../firebase/functions';
 import 'firebase/auth';
@@ -31,6 +31,7 @@ import theme from '../core/theme';
 import logo from '../assets/golf-logo.png';
 
 const ViewTournamentUser = () => {
+  const history = useHistory();
   const location = useLocation();
   const [username, setName] = useState('');
   const [phoneNum, setPhoneNum] = useState('');
@@ -62,6 +63,10 @@ const ViewTournamentUser = () => {
             leftIcon={<ArrowBackIcon />}
             colorScheme="green"
             variant="ghost"
+            onClick={(e) => {
+              e.preventDefault();
+              history.go(-1);
+            }}
           >
             Back
           </Button>
