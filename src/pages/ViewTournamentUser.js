@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Box,
   Flex,
@@ -16,7 +16,13 @@ import {
   Td,
   IconButton,
 } from '@chakra-ui/react';
-import { ArrowBackIcon, SearchIcon, DeleteIcon } from '@chakra-ui/icons';
+import {
+  ArrowBackIcon,
+  SearchIcon,
+  DeleteIcon,
+  RepeatIcon,
+} from '@chakra-ui/icons';
+import { useLocation } from 'react-router-dom';
 
 import functions from '../firebase/functions';
 import 'firebase/auth';
@@ -25,26 +31,20 @@ import theme from '../core/theme';
 import logo from '../assets/golf-logo.png';
 
 const ViewTournamentUser = () => {
+  const location = useLocation();
   const [username, setName] = useState('');
   const [phoneNum, setPhoneNum] = useState('');
 
-  const adminIDTest = 'G6WINzX2fLY73zrVUfIp3UQJzYC2';
+  const adminId = localStorage.getItem('adminId');
   const tournamentIDTest =
-    'a9ea14e9b5975dadb5c6f88768a0749e449f049917ea7aaff52387569a66b8a1';
+    '228f14c08b530a5826adafc602b52345ebbb2ea8a5599dfdc421fbca90e06424';
 
-  const getUsers = () => {
-    // const lis = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five'];
-    const items = [];
-    functions
-      .fetchRealtimeRank(adminIDTest)
-      .then((result) =>
-        Object.keys(result[tournamentIDTest]).forEach((user) =>
-          user !== 'isComplete' && user !== 'name'
-            ? console.log(user)
-            : console.log('None')
-        )
-      );
-  };
+  const [render, setRender] = useState(false);
+  const data = location.state.detail;
+
+  function renderUsers() {
+    console.log(data);
+  }
 
   return (
     <Box>
@@ -95,7 +95,7 @@ const ViewTournamentUser = () => {
               p="20px"
               onClick={(e) => {
                 e.preventDefault();
-                functions.addUser(adminIDTest, tournamentIDTest, {
+                functions.addUser(adminId, tournamentIDTest, {
                   name: username,
                   phonenumber: phoneNum,
                 });
@@ -105,12 +105,23 @@ const ViewTournamentUser = () => {
             </Button>
           </HStack>
         </Box>
+        {renderUsers()}
         <Box mx="200px" my="10px" p="20px">
           <InputGroup>
             <InputLeftElement pointerEvents="none">
               <SearchIcon color="gray.300" />
             </InputLeftElement>
             <Input type="text" placeholder="Search" />
+            <IconButton
+              aria-label="Refresh List"
+              colorScheme="blue"
+              icon={<RepeatIcon />}
+              onClick={(e) => {
+                e.preventDefault();
+                console.log(render);
+                setRender(true);
+              }}
+            />
           </InputGroup>
           <Table variant="simple">
             <Tbody>
@@ -122,6 +133,9 @@ const ViewTournamentUser = () => {
                     aria-label="Delete user"
                     colorScheme="red"
                     icon={<DeleteIcon />}
+                    onClick={(e) => {
+                      e.preventDefault();
+                    }}
                   />
                 </Td>
               </Tr>
