@@ -58,6 +58,11 @@ const ViewTournamentUser = () => {
     await refreshData();
   }
 
+  async function deleteAndFetchNewData(uID) {
+    await functions.deleteUser(adminId, tournamentId, uID);
+    await refreshData();
+  }
+
   return (
     <Box>
       <Flex bg={theme.colors.background}>
@@ -121,7 +126,7 @@ const ViewTournamentUser = () => {
           </HStack>
         </Box>
         <Box mx="300px" my="10px" p="20px">
-          <InputGroup justifySelf="center">
+          <InputGroup>
             <InputLeftElement pointerEvents="none">
               <SearchIcon color="gray.300" />
             </InputLeftElement>
@@ -156,6 +161,10 @@ const ViewTournamentUser = () => {
                           aria-label="Delete user"
                           colorScheme="red"
                           icon={<DeleteIcon />}
+                          onClick={(e) => {
+                            e.preventDefault();
+                            deleteAndFetchNewData(userId);
+                          }}
                         />{' '}
                       </Td>
                     </Tr>
