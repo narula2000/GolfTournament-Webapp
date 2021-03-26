@@ -120,13 +120,14 @@ const ViewTournamentUser = () => {
             </Button>
           </HStack>
         </Box>
-        <Box mx="200px" my="10px" p="20px">
-          <InputGroup>
+        <Box mx="300px" my="10px" p="20px">
+          <InputGroup justifySelf="center">
             <InputLeftElement pointerEvents="none">
               <SearchIcon color="gray.300" />
             </InputLeftElement>
             <Input type="text" placeholder="Search" />
             <IconButton
+              ml="15px"
               aria-label="Refresh List"
               colorScheme="blue"
               icon={<RepeatIcon />}
@@ -136,7 +137,7 @@ const ViewTournamentUser = () => {
               }}
             />
           </InputGroup>
-          <Table variant="simple">
+          <Table variant="simple" mt="30px">
             <Tbody>
               {Object.keys(data[tournamentId]).length > 4 ? ( // check there are users other than Mai's mock user, default user, and the fields isCompelte and name
                 Object.keys(data[tournamentId]).map((userId) =>
@@ -146,8 +147,10 @@ const ViewTournamentUser = () => {
                   userId !== '000' ? ( // check to not render default user
                     <Tr key={userId}>
                       <Td>{data[tournamentId][userId].name}</Td>
-                      <Td>{data[tournamentId][userId].phonenumber}</Td>
-                      <Td>
+                      <Td textAlign="center">
+                        {data[tournamentId][userId].phonenumber}
+                      </Td>
+                      <Td textAlign="right">
                         {' '}
                         <IconButton
                           aria-label="Delete user"
