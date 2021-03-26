@@ -15,6 +15,7 @@ import {
   Tr,
   Td,
   IconButton,
+  Text,
 } from '@chakra-ui/react';
 import {
   ArrowBackIcon,
@@ -37,14 +38,22 @@ const ViewTournamentUser = () => {
   const [phoneNum, setPhoneNum] = useState('');
 
   const adminId = localStorage.getItem('adminId');
-  const tournamentIDTest =
-    '228f14c08b530a5826adafc602b52345ebbb2ea8a5599dfdc421fbca90e06424';
+  const [data, setData] = useState(location.state.detail);
+  const tournamentId = Object.keys(data)[0];
+  const [refresh, setRefresh] = useState(false);
 
-  const [render, setRender] = useState(false);
-  const data = location.state.detail;
+  async function refreshData() {
+    setData(
+      await functions.fetchRealtimeRank(adminId).then((result) => result)
+    );
+  }
 
-  function renderUsers() {
-    console.log(data);
+  async function addAndFetchNewData() {
+    await functions.addUser(adminId, tournamentId, {
+      name: username,
+      phonenumber: phoneNum,
+    });
+    await refreshData();
   }
 
   return (
@@ -100,17 +109,13 @@ const ViewTournamentUser = () => {
               p="20px"
               onClick={(e) => {
                 e.preventDefault();
-                functions.addUser(adminId, tournamentIDTest, {
-                  name: username,
-                  phonenumber: phoneNum,
-                });
+                addAndFetchNewData();
               }}
             >
               Add User
             </Button>
           </HStack>
         </Box>
-        {renderUsers()}
         <Box mx="200px" my="10px" p="20px">
           <InputGroup>
             <InputLeftElement pointerEvents="none">
@@ -123,51 +128,41 @@ const ViewTournamentUser = () => {
               icon={<RepeatIcon />}
               onClick={(e) => {
                 e.preventDefault();
-                console.log(render);
-                setRender(true);
+                refreshData();
               }}
             />
           </InputGroup>
           <Table variant="simple">
             <Tbody>
-              <Tr>
-                <Td>User 1</Td>
-                <Td>xxx-xxx-xxxx</Td>
-                <Td>
-                  <IconButton
-                    aria-label="Delete user"
-                    colorScheme="red"
-                    icon={<DeleteIcon />}
-                    onClick={(e) => {
-                      e.preventDefault();
-                    }}
-                  />
-                </Td>
-              </Tr>
-              <Tr>
-                <Td>User 2</Td>
-                <Td>xxx-xxx-xxxx</Td>
-                <Td>
-                  {' '}
-                  <IconButton
-                    aria-label="Delete user"
-                    colorScheme="red"
-                    icon={<DeleteIcon />}
-                  />{' '}
-                </Td>
-              </Tr>
-              <Tr>
-                <Td>User 3</Td>
-                <Td>xxx-xxx-xxxx</Td>
-                <Td>
-                  {' '}
-                  <IconButton
-                    aria-label="Delete user"
-                    colorScheme="red"
-                    icon={<DeleteIcon />}
-                  />{' '}
-                </Td>
-              </Tr>
+              {Object.keys(data[tournamentId]).length > 4 ? ( // check there are users other than Mai's mock user, default user, and the fields isCompelte and name
+                Object.keys(data[tournamentId]).map((userId) =>
+                  userId !== 'isComplete' && userId !== 'name' ? (
+                    <Tr key={userId}>
+                      <Td>{data[tournamentId][userId].name}</Td>
+                      <Td>{data[tournamentId][userId].phonenumber}</Td>
+                      <Td>
+                        {' '}
+                        <IconButton
+                          aria-label="Delete user"
+                          colorScheme="red"
+                          icon={<DeleteIcon />}
+                        />{' '}
+                      </Td>
+                    </Tr>
+                  ) : (
+                    ''
+                  )
+                )
+              ) : (
+                <Flex
+                  justify="center"
+                  align="center"
+                  my="20px"
+                  color="gray.400"
+                >
+                  <Text fontSize="xl">There are no users!</Text>
+                </Flex>
+              )}
             </Tbody>
           </Table>
         </Box>
