@@ -77,7 +77,7 @@ const ViewTournamentUser = () => {
         </Flex>
       </Flex>
       <Flex mb="147px" bg="white" direction="column">
-        <Box mx="20px" my="10px">
+        <Box mx="20px" my="10px" position="absolute">
           <Button
             leftIcon={<ArrowBackIcon />}
             colorScheme="green"
@@ -91,7 +91,9 @@ const ViewTournamentUser = () => {
           </Button>
         </Box>
         <Box
-          mx="200px"
+          ml={{ lg: '200px', sm: '120px' }}
+          mr={{ lg: '200px', md: '100px' }}
+          my="20px"
           borderRadius="20px"
           p="20px"
           bg={theme.colors.secondary}
@@ -128,7 +130,7 @@ const ViewTournamentUser = () => {
             </Button>
           </HStack>
         </Box>
-        <Box mx="300px" my="10px" p="20px">
+        <Box mx={{ lg: '300px', md: '150px' }} my="10px" p="20px">
           <InputGroup>
             <InputLeftElement pointerEvents="none">
               <SearchIcon color="gray.300" />
@@ -137,7 +139,8 @@ const ViewTournamentUser = () => {
             <IconButton
               ml="15px"
               aria-label="Refresh List"
-              colorScheme="blue"
+              bg={theme.colors.primary}
+              color="white"
               icon={<RepeatIcon />}
               onClick={(e) => {
                 e.preventDefault();
