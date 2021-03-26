@@ -40,7 +40,6 @@ const ViewTournamentUser = () => {
   const adminId = localStorage.getItem('adminId');
   const [data, setData] = useState(location.state.detail);
   const tournamentId = Object.keys(data)[0];
-  const [refresh, setRefresh] = useState(false);
 
   async function refreshData() {
     setData(
@@ -62,6 +61,10 @@ const ViewTournamentUser = () => {
     await functions.deleteUser(adminId, tournamentId, uID);
     await refreshData();
   }
+
+  useEffect(() => {
+    refreshData();
+  }, []);
 
   return (
     <Box>
