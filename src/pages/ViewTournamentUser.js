@@ -14,6 +14,14 @@ import {
   Td,
   IconButton,
   Text,
+  PopoverTrigger,
+  Portal,
+  PopoverContent,
+  PopoverArrow,
+  PopoverHeader,
+  PopoverCloseButton,
+  PopoverFooter,
+  Popover,
 } from '@chakra-ui/react';
 import {
   ArrowBackIcon,
@@ -34,6 +42,7 @@ const ViewTournamentUser = () => {
   const location = useLocation();
   const [adding, setAdding] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
+  const [deleting, setDeleting] = useState(false);
 
   const [username, setUsername] = useState('');
   const [phoneNum, setPhoneNum] = useState('');
@@ -162,21 +171,47 @@ const ViewTournamentUser = () => {
                   userId !== 'name' &&
                   userId !== '000' ? (
                     <Tr key={userId}>
-                      <Td>{data[tournamentId][userId].name}</Td>
+                      <Td maxW="200px">{data[tournamentId][userId].name}</Td>
                       <Td textAlign="center">
                         {data[tournamentId][userId].phonenumber}
                       </Td>
-                      <Td textAlign="right">
+                      <Td>
                         {' '}
-                        <IconButton
-                          aria-label="Delete user"
-                          colorScheme="red"
-                          icon={<DeleteIcon />}
-                          onClick={(e) => {
-                            e.preventDefault();
-                            deleteAndFetchNewData(userId);
-                          }}
-                        />{' '}
+                        <Popover placement="right" maxW="100px">
+                          <PopoverTrigger>
+                            <IconButton
+                              aria-label="Delete user"
+                              colorScheme="red"
+                              icon={<DeleteIcon />}
+                            />
+                          </PopoverTrigger>
+                          <Portal>
+                            <PopoverContent>
+                              <PopoverArrow />
+                              <PopoverHeader align="center">
+                                Delete {data[tournamentId][userId].name} ?
+                              </PopoverHeader>
+                              <PopoverCloseButton />
+                              <PopoverFooter align="center">
+                                <Button
+                                  colorScheme="red"
+                                  borderRadius="10px"
+                                  isLoading={deleting}
+                                  loadingText="Deleting"
+                                  onClick={(e) => {
+                                    e.preventDefault();
+                                    setDeleting(true);
+                                    deleteAndFetchNewData(userId).then(() =>
+                                      setDeleting(false)
+                                    );
+                                  }}
+                                >
+                                  Delete
+                                </Button>
+                              </PopoverFooter>
+                            </PopoverContent>
+                          </Portal>
+                        </Popover>{' '}
                       </Td>
                     </Tr>
                   ) : (
