@@ -51,6 +51,14 @@ const ViewTournamentUser = () => {
   const [data, setData] = useState(location.state.detail);
   const tournamentId = Object.keys(data)[0];
 
+  const phoneNumberValidator = (_phoneNum) => {
+    const regex = /^(\+\d{2}( )?)?(\d{2,3})[- .]?\d{3}[- .]?\d{4}$/;
+    if (!_phoneNum || _phoneNum.length <= 0)
+      return 'Phone number cannot be empty!';
+    if (!regex.test(_phoneNum)) return 'Invalid phone number!';
+    return '';
+  };
+
   async function refreshData() {
     setData(
       await functions.fetchRealtimeRank(adminId).then((result) => result)
@@ -58,6 +66,13 @@ const ViewTournamentUser = () => {
   }
 
   async function addAndFetchNewData() {
+    const phoneNumError = phoneNumberValidator(phoneNum);
+
+    if (phoneNumError) {
+      alert(`${phoneNumError}`);
+      return;
+    }
+
     await functions.addUser(adminId, tournamentId, {
       name: username,
       phonenumber: phoneNum,
