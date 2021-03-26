@@ -34,7 +34,7 @@ import logo from '../assets/golf-logo.png';
 const ViewTournamentUser = () => {
   const history = useHistory();
   const location = useLocation();
-  const [username, setName] = useState('');
+  const [username, setUsername] = useState('');
   const [phoneNum, setPhoneNum] = useState('');
 
   const adminId = localStorage.getItem('adminId');
@@ -53,6 +53,8 @@ const ViewTournamentUser = () => {
       name: username,
       phonenumber: phoneNum,
     });
+    setUsername('');
+    setPhoneNum('');
     await refreshData();
   }
 
@@ -92,7 +94,8 @@ const ViewTournamentUser = () => {
               type="text"
               placeholder="Username"
               maxW="40%"
-              onChangeCapture={(event) => setName(event.target.value)}
+              onChangeCapture={(event) => setUsername(event.target.value)}
+              value={username}
             />
             <Input
               background="white"
@@ -100,6 +103,7 @@ const ViewTournamentUser = () => {
               placeholder="Phone Number"
               maxW="40%"
               onChangeCapture={(event) => setPhoneNum(event.target.value)}
+              value={phoneNum}
             />
             <Button
               bg={theme.colors.primary}
@@ -136,7 +140,10 @@ const ViewTournamentUser = () => {
             <Tbody>
               {Object.keys(data[tournamentId]).length > 4 ? ( // check there are users other than Mai's mock user, default user, and the fields isCompelte and name
                 Object.keys(data[tournamentId]).map((userId) =>
-                  userId !== 'isComplete' && userId !== 'name' ? (
+                  userId !== 'isComplete' &&
+                  userId !== 'name' &&
+                  userId !== 'itSxMneyR9ePHawMWLiuqUoSJP92' && // check to not render Mai's mock user
+                  userId !== '000' ? ( // check to not render default user
                     <Tr key={userId}>
                       <Td>{data[tournamentId][userId].name}</Td>
                       <Td>{data[tournamentId][userId].phonenumber}</Td>
