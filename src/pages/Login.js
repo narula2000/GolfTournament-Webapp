@@ -63,7 +63,7 @@ const Login = () => {
   };
 
   return (
-    <Box bg={theme.colors.background} borderRadius="20px" p="30px" minH="100vh">
+    <Box bg={theme.colors.background} p="30px" minH="100vh">
       <Image
         src={logo}
         boxSize="150px"
