@@ -39,7 +39,7 @@ const createTournament = async (_adminId, holesData, tournamentName) => {
       par: par,
       strokeIndex: strokeIndex,
       score: 0,
-      stroke: par,
+      stroke: 0,
       sandShot: 0,
       sandSave: false,
       penalty: 0,
