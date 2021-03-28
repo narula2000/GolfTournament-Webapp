@@ -243,8 +243,15 @@ const AdminDashboard = () => {
                         background="#80D2F1"
                         borderRadius="20px"
                         color="white"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          history.push({
+                            pathname: '/admin/tournamentuser',
+                            state: { detail: data },
+                          });
+                        }}
                       >
-                        Add User
+                        User List
                       </Button>
                       <Popover>
                         <PopoverTrigger>
