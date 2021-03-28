@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Flex,
   Box,
@@ -30,8 +30,10 @@ import 'firebase/auth';
 const AdminDashboard = () => {
   const history = useHistory();
   const location = useLocation();
-  const data = location.state.detail;
-  const [refreshLoading, setRefreshLoading] = useState(false);
+  const [data, setData] = useState(
+    location.state === undefined ? {} : location.state.detail
+  );
+
   const [deleteLoading, setDeleteLoading] = useState(false);
   const adminId = localStorage.getItem('adminId');
   const firstNine = ['01', '02', '03', '04', '05', '06', '07', '08', '09'];
@@ -41,26 +43,32 @@ const AdminDashboard = () => {
       .auth()
       .signOut()
       .then(() => {
+        localStorage.removeItem('adminId');
         history.push({ pathname: '/admin' });
       });
   };
-  const refresh = () => {
-    firebaseFunction.fetchRealtimeRank(adminId).then((result) => {
-      setRefreshLoading(false);
-      setDeleteLoading(false);
-      history.push({
-        pathname: '/admin/dashboard',
-        state: { detail: result || {} },
-      });
-    });
-  };
 
-  function generateURL(tournamentId) {
+  const generateURL = (tournamentId) => {
     const qrData = { adminId: adminId, tournamentId: tournamentId };
     return `https://chart.googleapis.com/chart?cht=qr&chs=250x250&chl=${JSON.stringify(
       qrData
     )}`;
+  };
+
+  async function refreshData() {
+    setData(
+      await firebaseFunction.fetchRealtimeRank(adminId).then((result) => result)
+    );
   }
+
+  async function deleteTournamentAndRefresh(tournamentId) {
+    await firebaseFunction.deleteTournament(adminId, tournamentId);
+    await refreshData();
+  }
+
+  useEffect(() => {
+    refreshData();
+  }, []);
 
   return (
     <Box background="white">
@@ -84,20 +92,6 @@ const AdminDashboard = () => {
           )}
           <Spacer />
           <Box>
-            <Button
-              mr="4"
-              mt="50"
-              background="#80D2F1"
-              borderRadius="20px"
-              color="white"
-              disabled={refreshLoading}
-              onClick={() => {
-                setRefreshLoading(true);
-                refresh();
-              }}
-            >
-              {refreshLoading ? <Spinner /> : 'Update Page'}
-            </Button>
             <Button
               mr="4"
               mt="50"
@@ -277,11 +271,11 @@ const AdminDashboard = () => {
                                 disabled={deleteLoading}
                                 onClick={() => {
                                   setDeleteLoading(true);
-                                  firebaseFunction
-                                    .deleteTournament(adminId, tournamentId)
-                                    .then(() => {
-                                      refresh();
-                                    });
+                                  deleteTournamentAndRefresh(tournamentId).then(
+                                    () => {
+                                      setDeleteLoading(false);
+                                    }
+                                  );
                                 }}
                               >
                                 {deleteLoading ? <Spinner /> : 'Yes'}
