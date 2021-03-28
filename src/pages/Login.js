@@ -10,8 +10,10 @@ import {
   Button,
   Spinner,
 } from '@chakra-ui/react';
+
 import logo from '../assets/golf-logo.png';
 import theme from '../core/theme';
+
 import 'firebase/auth';
 import firebaseFunction from '../firebase/functions';
 
@@ -40,7 +42,8 @@ const Login = () => {
     setLoading(true);
 
     if (emailError || passwordError) {
-      alert(`${emailError} ${passwordError}`);
+      alert(`${emailError} \n${passwordError}`);
+      setLoading(false);
       return;
     }
 
@@ -57,11 +60,15 @@ const Login = () => {
               state: { detail: result || {} },
             });
           });
+      })
+      .catch((err) => {
+        setLoading(false);
+        alert(err.message);
       });
   };
 
   return (
-    <Box bg={theme.colors.background}>
+    <Box bg={theme.colors.background} p="30px" minH="100vh">
       <Image
         src={logo}
         boxSize="150px"
@@ -75,11 +82,12 @@ const Login = () => {
         bg={theme.colors.secondary}
         borderRadius="20px"
         maxW="400px"
-        alignItems="center"
-        justifyItems="center"
+        align="center"
+        justify="center"
         textAlign="center"
         p="20px"
-        m="auto"
+        mx="auto"
+        my="20px"
       >
         <VStack spacing="20px">
           <Text fontSize="xl" color="white">
