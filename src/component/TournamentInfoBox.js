@@ -167,10 +167,10 @@ const TournamentInfoBox = ({
                     disabled={deleteLoading}
                     onClick={(e) => {
                       e.preventDefault();
-                      // setDeleteLoading(true);
-                      // deleteTournament.then(() => {
-                      //   setDeleteLoading(false);
-                      // });
+                      setDeleteLoading(true);
+                      deleteTournament(tournamentId).then(() => {
+                        setDeleteLoading(false);
+                      });
                     }}
                   >
                     {deleteLoading ? <Spinner /> : 'Yes'}

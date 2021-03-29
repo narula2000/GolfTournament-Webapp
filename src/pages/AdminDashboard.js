@@ -6,20 +6,8 @@ import {
   Text,
   Button,
   VStack,
-  HStack,
-  Stack,
   Container,
   Spacer,
-  Spinner,
-  Popover,
-  PopoverTrigger,
-  Portal,
-  PopoverContent,
-  PopoverArrow,
-  PopoverHeader,
-  PopoverCloseButton,
-  PopoverBody,
-  StackDivider,
 } from '@chakra-ui/react';
 import { useHistory, useLocation } from 'react-router-dom';
 import firebase from 'firebase/app';
@@ -35,10 +23,7 @@ const AdminDashboard = () => {
     location.state === undefined ? {} : location.state.detail
   );
 
-  const [deleteLoading, setDeleteLoading] = useState(false);
   const adminId = localStorage.getItem('adminId');
-  const firstNine = ['01', '02', '03', '04', '05', '06', '07', '08', '09'];
-  const secondNine = ['10', '11', '12', '13', '14', '15', '16', '17', '18'];
   const logOut = () => {
     firebase
       .auth()
@@ -69,12 +54,12 @@ const AdminDashboard = () => {
     await refreshData();
   }
 
-  const renderTournamentBox = (_tournamentId) => (
+  const renderTournamentBox = (tournamentId) => (
     <TournamentInfoBox
       data={data}
-      tournamentId={_tournamentId}
-      qrCode={generateURL(_tournamentId)}
-      // deleteTournament={deleteTournamentAndRefresh(tournamentId)}
+      tournamentId={tournamentId}
+      qrCode={generateURL(tournamentId)}
+      deleteTournament={deleteTournamentAndRefresh}
     />
   );
 
@@ -141,172 +126,8 @@ const AdminDashboard = () => {
                 </Text>
               </Container>
             ) : (
-              Object.keys(data).map(
-                (tournamentId) => renderTournamentBox(tournamentId)
-                // <Box
-                //   key={tournamentId}
-                //   padding="5"
-                //   position="relative"
-                //   background="#7FD661"
-                //   width="auto"
-                //   height="auto"
-                //   mt="20"
-                //   borderRadius="20px"
-                //   align="center"
-                //   justifyItems="center"
-                //   overflowY="auto"
-                //   justifyContent="center"
-                // >
-                //   <Text color="white" fontSize="26px" mb="5">
-                //     {' '}
-                //     {data[tournamentId].name}{' '}
-                //   </Text>
-                //   <HStack
-                //     spacing={5}
-                //     align="center"
-                //     justify="center"
-                //     divider={<StackDivider borderColor="grey.200" size="30" />}
-                //   >
-                //     <Stack spacing={3} align="center">
-                //       {firstNine.map((holeNum) => (
-                //         <Stack direction="row" spacing={3} key={holeNum}>
-                //           <Box background="white" width="100px">
-                //             <Text>Hole: {holeNum}</Text>
-                //           </Box>
-                //           <Box background="white" width="100px">
-                //             <Text>
-                //               Par:
-                //               {data[tournamentId]['000'].holes[holeNum].par}
-                //             </Text>
-                //           </Box>
-                //           <Box background="white" width="100px">
-                //             <Text>
-                //               SI:{' '}
-                //               {
-                //                 data[tournamentId]['000'].holes[holeNum]
-                //                   .strokeIndex
-                //               }
-                //             </Text>
-                //           </Box>
-                //         </Stack>
-                //       ))}
-                //     </Stack>
-                //     <Stack spacing={3} align="center">
-                //       {secondNine.map((holeNum) => (
-                //         <Stack direction="row" spacing={3} key={holeNum}>
-                //           <Box background="white" width="100px">
-                //             <Text>Hole: {holeNum}</Text>
-                //           </Box>
-                //           <Box background="white" width="100px">
-                //             <Text>
-                //               Par:
-                //               {data[tournamentId]['000'].holes[holeNum].par}
-                //             </Text>
-                //           </Box>
-                //           <Box background="white" width="100px">
-                //             <Text>
-                //               SI:{' '}
-                //               {
-                //                 data[tournamentId]['000'].holes[holeNum]
-                //                   .strokeIndex
-                //               }
-                //             </Text>
-                //           </Box>
-                //         </Stack>
-                //       ))}
-                //     </Stack>
-                //     <Stack spacing={3} align="center">
-                //       <Popover>
-                //         <PopoverTrigger>
-                //           <Button
-                //             width="150px"
-                //             background="#80D2F1"
-                //             borderRadius="20px"
-                //             color="white"
-                //           >
-                //             View QR Code
-                //           </Button>
-                //         </PopoverTrigger>
-                //         <Portal>
-                //           <PopoverContent>
-                //             <PopoverArrow />
-                //             <PopoverHeader>
-                //               QR Code for {data[tournamentId].name}
-                //             </PopoverHeader>
-                //             <PopoverCloseButton />
-                //             <PopoverBody align="center">
-                //               <Image
-                //                 src={generateURL(tournamentId)}
-                //                 alt="QR Code"
-                //               />
-                //             </PopoverBody>
-                //           </PopoverContent>
-                //         </Portal>
-                //       </Popover>
-                //       <Button
-                //         width="150px"
-                //         background="#80D2F1"
-                //         borderRadius="20px"
-                //         color="white"
-                //       >
-                //         Completed
-                //       </Button>
-                //       <Button
-                //         width="150px"
-                //         background="#80D2F1"
-                //         borderRadius="20px"
-                //         color="white"
-                //         onClick={(e) => {
-                //           e.preventDefault();
-                //           history.push({
-                //             pathname: '/admin/tournamentuser',
-                //             state: { detail: data },
-                //           });
-                //         }}
-                //       >
-                //         User List
-                //       </Button>
-                //       <Popover>
-                //         <PopoverTrigger>
-                //           <Button
-                //             width="150px"
-                //             colorScheme="red"
-                //             borderRadius="20px"
-                //           >
-                //             Delete
-                //           </Button>
-                //         </PopoverTrigger>
-                //         <Portal>
-                //           <PopoverContent>
-                //             <PopoverArrow />
-                //             <PopoverHeader>
-                //               Do you want to delete {data[tournamentId].name} ?
-                //             </PopoverHeader>
-                //             <PopoverCloseButton />
-                //             <PopoverBody align="center">
-                //               <Button
-                //                 width="200px"
-                //                 colorScheme="red"
-                //                 borderRadius="20px"
-                //                 disabled={deleteLoading}
-                //                 onClick={() => {
-                //                   setDeleteLoading(true);
-                //                   deleteTournamentAndRefresh(tournamentId).then(
-                //                     () => {
-                //                       setDeleteLoading(false);
-                //                     }
-                //                   );
-                //                 }}
-                //               >
-                //                 {deleteLoading ? <Spinner /> : 'Yes'}
-                //               </Button>
-                //             </PopoverBody>
-                //           </PopoverContent>
-                //         </Portal>
-                //       </Popover>
-                //     </Stack>
-                //   </HStack>
-                // </Box>
+              Object.keys(data).map((tournamentId) =>
+                renderTournamentBox(tournamentId)
               )
             )}
           </VStack>
