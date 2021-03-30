@@ -11,9 +11,11 @@ import {
   InputGroup,
   InputLeftElement,
   Input,
+  Icon,
 } from '@chakra-ui/react';
 import { useHistory, useLocation } from 'react-router-dom';
-import { SearchIcon } from '@chakra-ui/icons';
+import { FiLogOut } from 'react-icons/fi';
+import { SearchIcon, AddIcon } from '@chakra-ui/icons';
 import firebase from 'firebase/app';
 import logo from '../assets/golf-logo.png';
 import firebaseFunction from '../firebase/functions';
@@ -94,6 +96,7 @@ const AdminDashboard = () => {
               background="#80D2F1"
               borderRadius="20px"
               color="white"
+              leftIcon={<AddIcon />}
               onClick={() => {
                 history.push('/admin/create');
               }}
@@ -109,6 +112,7 @@ const AdminDashboard = () => {
               background="#80D2F1"
               borderRadius="20px"
               color="white"
+              leftIcon={<Icon as={FiLogOut} />}
               onClick={logOut}
             >
               Logout
@@ -117,7 +121,7 @@ const AdminDashboard = () => {
         </Flex>
         <Image src={logo} position="absolute" left="calc(50% - 131px)" />
         <Box mt="7" p="20px">
-          <Box mx="300px" mt="50px">
+          <Box mx="300px" mt="50px" mb="20px">
             <InputGroup>
               <InputLeftElement pointerEvents="none">
                 <SearchIcon color="gray.300" />
