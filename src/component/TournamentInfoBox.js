@@ -98,7 +98,7 @@ const TournamentInfoBox = ({
           ))}
         </Stack>
         <Stack spacing={3} align="center">
-          <Popover>
+          <Popover placement="left">
             <PopoverTrigger>
               <Button
                 width="150px"
@@ -145,7 +145,7 @@ const TournamentInfoBox = ({
           >
             User List
           </Button>
-          <Popover>
+          <Popover placement="left">
             <PopoverTrigger>
               <Button width="150px" colorScheme="red" borderRadius="20px">
                 Delete
