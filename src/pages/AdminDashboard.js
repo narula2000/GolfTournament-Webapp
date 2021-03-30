@@ -11,7 +11,6 @@ import {
   InputGroup,
   InputLeftElement,
   Input,
-  IconButton,
 } from '@chakra-ui/react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { SearchIcon } from '@chakra-ui/icons';

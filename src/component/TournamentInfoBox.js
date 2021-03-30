@@ -16,7 +16,10 @@ import {
   Stack,
   StackDivider,
   Text,
+  Icon,
 } from '@chakra-ui/react';
+import { IoQrCodeOutline, IoPeople } from 'react-icons/io5';
+import { CheckIcon, DeleteIcon } from '@chakra-ui/icons';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
@@ -105,6 +108,7 @@ const TournamentInfoBox = ({
                 background="#80D2F1"
                 borderRadius="20px"
                 color="white"
+                leftIcon={<Icon as={IoQrCodeOutline} />}
               >
                 View QR Code
               </Button>
@@ -127,6 +131,7 @@ const TournamentInfoBox = ({
             background="#80D2F1"
             borderRadius="20px"
             color="white"
+            leftIcon={<CheckIcon />}
           >
             Completed
           </Button>
@@ -135,6 +140,7 @@ const TournamentInfoBox = ({
             background="#80D2F1"
             borderRadius="20px"
             color="white"
+            leftIcon={<Icon as={IoPeople} />}
             onClick={(e) => {
               e.preventDefault();
               history.push({
@@ -147,7 +153,12 @@ const TournamentInfoBox = ({
           </Button>
           <Popover placement="left">
             <PopoverTrigger>
-              <Button width="150px" colorScheme="red" borderRadius="20px">
+              <Button
+                width="150px"
+                colorScheme="red"
+                borderRadius="20px"
+                leftIcon={<DeleteIcon />}
+              >
                 Delete
               </Button>
             </PopoverTrigger>
