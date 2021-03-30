@@ -19,7 +19,6 @@ import {
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
-import firebaseFunction from '../firebase/functions';
 
 const TournamentInfoBox = ({
   tournamentId,
@@ -41,7 +40,7 @@ const TournamentInfoBox = ({
       background="#7FD661"
       width="auto"
       height="auto"
-      mt="20"
+      mt="10"
       borderRadius="20px"
       align="center"
       justifyItems="center"

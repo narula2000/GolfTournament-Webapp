@@ -8,8 +8,13 @@ import {
   VStack,
   Container,
   Spacer,
+  InputGroup,
+  InputLeftElement,
+  Input,
+  IconButton,
 } from '@chakra-ui/react';
 import { useHistory, useLocation } from 'react-router-dom';
+import { SearchIcon } from '@chakra-ui/icons';
 import firebase from 'firebase/app';
 import logo from '../assets/golf-logo.png';
 import firebaseFunction from '../firebase/functions';
@@ -102,7 +107,21 @@ const AdminDashboard = () => {
           </Box>
         </Flex>
         <Image src={logo} position="absolute" left="calc(50% - 131px)" />
-        <Box mt="7">
+        <Box mt="7" p="20px">
+          <Box mx="300px" mt="50px">
+            <InputGroup>
+              <InputLeftElement pointerEvents="none">
+                <SearchIcon color="gray.300" />
+              </InputLeftElement>
+              <Input type="text" placeholder="Search" />
+              <IconButton
+                ml="10px"
+                colorScheme="blue"
+                aria-label="Search database"
+                icon={<SearchIcon />}
+              />
+            </InputGroup>
+          </Box>
           <VStack>
             {Object.keys(data).length === 0 ? (
               <Container align="center" mt="100">
