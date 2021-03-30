@@ -36,6 +36,9 @@ import {
 } from '@chakra-ui/icons';
 import { useHistory, useLocation } from 'react-router-dom';
 
+import NormalBanner from '../component/NormalBanner';
+import BackButton from '../component/BackButton';
+
 import functions from '../firebase/functions';
 import 'firebase/auth';
 
@@ -124,27 +127,10 @@ const ViewTournamentUser = () => {
 
   return (
     <Box width="100vw">
-      <Flex bg={theme.colors.background}>
-        <Square>
-          <Image src={logo} boxSize="100px" objectFit="cover" />
-        </Square>
-        <Flex align="center" mx="10px">
-          <Heading size="md">View Tournament Users</Heading>
-        </Flex>
-      </Flex>
+      <NormalBanner title="View Tournament Users" />
       <Flex mb="147px" bg="white" direction="column">
         <Box mx="20px" my="10px" position="absolute">
-          <Button
-            leftIcon={<ArrowBackIcon />}
-            colorScheme="green"
-            variant="ghost"
-            onClick={(e) => {
-              e.preventDefault();
-              history.go(-1);
-            }}
-          >
-            Back
-          </Button>
+          <BackButton history={history} />
         </Box>
         <Box
           ml={{ lg: '200px', sm: '120px' }}

@@ -21,8 +21,14 @@ import {
   AlertDialogCloseButton,
 } from '@chakra-ui/react';
 import { useHistory } from 'react-router-dom';
+
+import NormalBanner from '../component/NormalBanner';
+
 import logo from '../assets/golf-logo.png';
+
 import firebaseFunction from '../firebase/functions';
+import BackButton from '../component/BackButton';
+import theme from '../core/theme';
 
 const AdminCreatePage = () => {
   const template = {
@@ -166,514 +172,512 @@ const AdminCreatePage = () => {
   return (
     <Box background="white">
       <Flex direction="column">
-        <Flex background="#CFECC5" width="100%" height="147px">
+        <NormalBanner title="Create Tournament" />
+        <Flex mb="147px" bg="white" direction="column">
+          <Box mx="20px" my="10px" position="absolute">
+            <BackButton history={history} />
+          </Box>
+          <Box
+            position="relative"
+            left="50vw"
+            ml="-20vw"
+            my="20px"
+            borderRadius="20px"
+            p="15px"
+            bg={theme.colors.secondary}
+            width="40vw"
+          >
+            <Input
+              placeholder="Tournament Name"
+              width="100%"
+              background="white"
+              border="3px solid #BBBBBB"
+              borderRadius="10px"
+              onChangeCapture={(event) => setName(event.target.value)}
+            />
+          </Box>
+          <Box>
+            <Flex direction="row">
+              <Spacer />
+              <Box
+                background="#7FD661"
+                width="auto"
+                height="auto"
+                padding="5"
+                borderRadius="20px"
+                align="center"
+                overflowY="auto"
+              >
+                <Stack spacing={3} align="center">
+                  <InputGroup width="auto">
+                    <Stack direction="row" spacing={4} align="center">
+                      <InputGroup>
+                        <InputLeftAddon>Hole 1</InputLeftAddon>
+                        <Input
+                          placeholder="Par"
+                          type="text"
+                          background="white"
+                          border="3px solid #BBBBBB"
+                          onChange={(event) => handlePar(event, '01')}
+                        />
+                      </InputGroup>
+                      <Input
+                        placeholder="Stroke Index"
+                        type="text"
+                        background="white"
+                        border="3px solid #BBBBBB"
+                        onChange={(event) => handleStrokeIndex(event, '01')}
+                      />
+                    </Stack>
+                  </InputGroup>
+                  <InputGroup width="auto">
+                    <Stack direction="row" spacing={4} align="center">
+                      <InputGroup>
+                        <InputLeftAddon>Hole 2</InputLeftAddon>
+                        <Input
+                          placeholder="Par"
+                          type="text"
+                          background="white"
+                          border="3px solid #BBBBBB"
+                          onChange={(event) => handlePar(event, '02')}
+                        />
+                      </InputGroup>
+                      <Input
+                        placeholder="Stroke Index"
+                        type="text"
+                        background="white"
+                        border="3px solid #BBBBBB"
+                        onChange={(event) => handleStrokeIndex(event, '02')}
+                      />
+                    </Stack>
+                  </InputGroup>
+                  <InputGroup width="auto">
+                    <Stack direction="row" spacing={4} align="center">
+                      <InputGroup>
+                        <InputLeftAddon>Hole 3</InputLeftAddon>
+                        <Input
+                          placeholder="Par"
+                          type="text"
+                          background="white"
+                          border="3px solid #BBBBBB"
+                          onChange={(event) => handlePar(event, '03')}
+                        />
+                      </InputGroup>
+                      <Input
+                        placeholder="Stroke Index"
+                        type="text"
+                        background="white"
+                        border="3px solid #BBBBBB"
+                        onChange={(event) => handleStrokeIndex(event, '03')}
+                      />
+                    </Stack>
+                  </InputGroup>
+                  <InputGroup width="auto">
+                    <Stack direction="row" spacing={4} align="center">
+                      <InputGroup>
+                        <InputLeftAddon>Hole 4</InputLeftAddon>
+                        <Input
+                          placeholder="Par"
+                          type="text"
+                          background="white"
+                          border="3px solid #BBBBBB"
+                          onChange={(event) => handlePar(event, '04')}
+                        />
+                      </InputGroup>
+                      <Input
+                        placeholder="Stroke Index"
+                        type="text"
+                        background="white"
+                        border="3px solid #BBBBBB"
+                        onChange={(event) => handleStrokeIndex(event, '04')}
+                      />
+                    </Stack>
+                  </InputGroup>
+                  <InputGroup width="auto">
+                    <Stack direction="row" spacing={4} align="center">
+                      <InputGroup>
+                        <InputLeftAddon>Hole 5</InputLeftAddon>
+                        <Input
+                          placeholder="Par"
+                          type="text"
+                          background="white"
+                          border="3px solid #BBBBBB"
+                          onChange={(event) => handlePar(event, '05')}
+                        />
+                      </InputGroup>
+                      <Input
+                        placeholder="Stroke Index"
+                        type="text"
+                        background="white"
+                        border="3px solid #BBBBBB"
+                        onChange={(event) => handleStrokeIndex(event, '05')}
+                      />
+                    </Stack>
+                  </InputGroup>
+                  <InputGroup width="auto">
+                    <Stack direction="row" spacing={4} align="center">
+                      <InputGroup>
+                        <InputLeftAddon>Hole 6</InputLeftAddon>
+                        <Input
+                          placeholder="Par"
+                          type="text"
+                          background="white"
+                          border="3px solid #BBBBBB"
+                          onChange={(event) => handlePar(event, '06')}
+                        />
+                      </InputGroup>
+                      <Input
+                        placeholder="Stroke Index"
+                        type="text"
+                        background="white"
+                        border="3px solid #BBBBBB"
+                        onChange={(event) => handleStrokeIndex(event, '06')}
+                      />
+                    </Stack>
+                  </InputGroup>
+                  <InputGroup width="auto">
+                    <Stack direction="row" spacing={4} align="center">
+                      <InputGroup>
+                        <InputLeftAddon>Hole 7</InputLeftAddon>
+                        <Input
+                          placeholder="Par"
+                          type="text"
+                          background="white"
+                          border="3px solid #BBBBBB"
+                          onChange={(event) => handlePar(event, '07')}
+                        />
+                      </InputGroup>
+                      <Input
+                        placeholder="Stroke Index"
+                        type="text"
+                        background="white"
+                        border="3px solid #BBBBBB"
+                        onChange={(event) => handleStrokeIndex(event, '07')}
+                      />
+                    </Stack>
+                  </InputGroup>
+                  <InputGroup width="auto">
+                    <Stack direction="row" spacing={4} align="center">
+                      <InputGroup>
+                        <InputLeftAddon>Hole 8</InputLeftAddon>
+                        <Input
+                          placeholder="Par"
+                          type="text"
+                          background="white"
+                          border="3px solid #BBBBBB"
+                          onChange={(event) => handlePar(event, '08')}
+                        />
+                      </InputGroup>
+                      <Input
+                        placeholder="Stroke Index"
+                        type="text"
+                        background="white"
+                        border="3px solid #BBBBBB"
+                        onChange={(event) => handleStrokeIndex(event, '08')}
+                      />
+                    </Stack>
+                  </InputGroup>
+                  <InputGroup width="auto">
+                    <Stack direction="row" spacing={4} align="center">
+                      <InputGroup>
+                        <InputLeftAddon>Hole 9</InputLeftAddon>
+                        <Input
+                          placeholder="Par"
+                          type="text"
+                          background="white"
+                          border="3px solid #BBBBBB"
+                          onChange={(event) => handlePar(event, '09')}
+                        />
+                      </InputGroup>
+                      <Input
+                        placeholder="Stroke Index"
+                        type="text"
+                        background="white"
+                        border="3px solid #BBBBBB"
+                        onChange={(event) => handleStrokeIndex(event, '09')}
+                      />
+                    </Stack>
+                  </InputGroup>
+                </Stack>
+              </Box>
+              <Spacer />
+              <Box
+                background="#7FD661"
+                width="auto"
+                height="auto"
+                padding="5"
+                borderRadius="20px"
+                align="center"
+                overflowY="auto"
+              >
+                <Stack spacing={3} align="center">
+                  <InputGroup width="auto">
+                    <Stack direction="row" spacing={4} align="center">
+                      <InputGroup>
+                        <InputLeftAddon>Hole 10</InputLeftAddon>
+                        <Input
+                          type="text"
+                          placeholder="Par"
+                          background="white"
+                          border="3px solid #BBBBBB"
+                          onChange={(event) => handlePar(event, '10')}
+                        />
+                      </InputGroup>
+                      <Input
+                        type="text"
+                        placeholder="Stroke Index"
+                        background="white"
+                        border="3px solid #BBBBBB"
+                        onChange={(event) => handleStrokeIndex(event, '10')}
+                      />
+                    </Stack>
+                  </InputGroup>
+                  <InputGroup width="auto">
+                    <Stack direction="row" spacing={4} align="center">
+                      <InputGroup>
+                        <InputLeftAddon>Hole 11</InputLeftAddon>
+                        <Input
+                          placeholder="Par"
+                          type="text"
+                          background="white"
+                          border="3px solid #BBBBBB"
+                          onChange={(event) => handlePar(event, '11')}
+                        />
+                      </InputGroup>
+                      <Input
+                        placeholder="Stroke Index"
+                        type="text"
+                        background="white"
+                        border="3px solid #BBBBBB"
+                        onChange={(event) => handleStrokeIndex(event, '11')}
+                      />
+                    </Stack>
+                  </InputGroup>
+                  <InputGroup width="auto">
+                    <Stack direction="row" spacing={4} align="center">
+                      <InputGroup>
+                        <InputLeftAddon>Hole 12</InputLeftAddon>
+                        <Input
+                          placeholder="Par"
+                          type="text"
+                          background="white"
+                          border="3px solid #BBBBBB"
+                          onChange={(event) => handlePar(event, '12')}
+                        />
+                      </InputGroup>
+                      <Input
+                        placeholder="Stroke Index"
+                        type="text"
+                        background="white"
+                        border="3px solid #BBBBBB"
+                        onChange={(event) => handleStrokeIndex(event, '12')}
+                      />
+                    </Stack>
+                  </InputGroup>
+                  <InputGroup width="auto">
+                    <Stack direction="row" spacing={4} align="center">
+                      <InputGroup>
+                        <InputLeftAddon>Hole 13</InputLeftAddon>
+                        <Input
+                          placeholder="Par"
+                          type="text"
+                          background="white"
+                          border="3px solid #BBBBBB"
+                          onChange={(event) => handlePar(event, '13')}
+                        />
+                      </InputGroup>
+                      <Input
+                        placeholder="Stroke Index"
+                        type="text"
+                        background="white"
+                        border="3px solid #BBBBBB"
+                        onChange={(event) => handleStrokeIndex(event, '13')}
+                      />
+                    </Stack>
+                  </InputGroup>
+                  <InputGroup width="auto">
+                    <Stack direction="row" spacing={4} align="center">
+                      <InputGroup>
+                        <InputLeftAddon>Hole 14</InputLeftAddon>
+                        <Input
+                          placeholder="Par"
+                          type="text"
+                          background="white"
+                          border="3px solid #BBBBBB"
+                          onChange={(event) => handlePar(event, '14')}
+                        />
+                      </InputGroup>
+                      <Input
+                        placeholder="Stroke Index"
+                        type="text"
+                        background="white"
+                        border="3px solid #BBBBBB"
+                        onChange={(event) => handleStrokeIndex(event, '14')}
+                      />
+                    </Stack>
+                  </InputGroup>
+                  <InputGroup width="auto">
+                    <Stack direction="row" spacing={4} align="center">
+                      <InputGroup>
+                        <InputLeftAddon>Hole 15</InputLeftAddon>
+                        <Input
+                          placeholder="Par"
+                          type="text"
+                          background="white"
+                          border="3px solid #BBBBBB"
+                          onChange={(event) => handlePar(event, '15')}
+                        />
+                      </InputGroup>
+                      <Input
+                        placeholder="Stroke Index"
+                        type="text"
+                        background="white"
+                        border="3px solid #BBBBBB"
+                        onChange={(event) => handleStrokeIndex(event, '15')}
+                      />
+                    </Stack>
+                  </InputGroup>
+                  <InputGroup width="auto">
+                    <Stack direction="row" spacing={4} align="center">
+                      <InputGroup>
+                        <InputLeftAddon>Hole 16</InputLeftAddon>
+                        <Input
+                          placeholder="Par"
+                          type="text"
+                          background="white"
+                          border="3px solid #BBBBBB"
+                          onChange={(event) => handlePar(event, '16')}
+                        />
+                      </InputGroup>
+                      <Input
+                        placeholder="Stroke Index"
+                        type="text"
+                        background="white"
+                        border="3px solid #BBBBBB"
+                        onChange={(event) => handleStrokeIndex(event, '16')}
+                      />
+                    </Stack>
+                  </InputGroup>
+                  <InputGroup width="auto">
+                    <Stack direction="row" spacing={4} align="center">
+                      <InputGroup>
+                        <InputLeftAddon>Hole 17</InputLeftAddon>
+                        <Input
+                          placeholder="Par"
+                          type="text"
+                          background="white"
+                          border="3px solid #BBBBBB"
+                          onChange={(event) => handlePar(event, '17')}
+                        />
+                      </InputGroup>
+                      <Input
+                        placeholder="Stroke Index"
+                        type="text"
+                        background="white"
+                        border="3px solid #BBBBBB"
+                        onChange={(event) => handleStrokeIndex(event, '17')}
+                      />
+                    </Stack>
+                  </InputGroup>
+                  <InputGroup width="auto">
+                    <Stack direction="row" spacing={4} align="center">
+                      <InputGroup>
+                        <InputLeftAddon>Hole 18</InputLeftAddon>
+                        <Input
+                          placeholder="Par"
+                          type="text"
+                          background="white"
+                          border="3px solid #BBBBBB"
+                          onChange={(event) => handlePar(event, '18')}
+                        />
+                      </InputGroup>
+                      <Input
+                        placeholder="Stroke Index"
+                        type="text"
+                        background="white"
+                        border="3px solid #BBBBBB"
+                        onChange={(event) => handleStrokeIndex(event, '18')}
+                      />
+                    </Stack>
+                  </InputGroup>
+                </Stack>
+              </Box>
+              <Spacer />
+            </Flex>
+          </Box>
           <Button
-            ml="4"
-            mt="50"
             background="#80D2F1"
+            width="40vw"
+            mx="auto"
             borderRadius="20px"
             color="white"
-            onClick={goBack}
+            top="20px"
+            onClick={() => {
+              console.log(holes);
+              setIsOpen(true);
+              totalCount();
+            }}
           >
-            Back
+            Create Tournament
           </Button>
-        </Flex>
-        <Image src={logo} position="absolute" left="calc(50% - 131px)" />
-        <Box mt="7">
-          <Flex direction="row">
-            <Spacer />
-            <Box
-              background="#7FD661"
-              width="auto"
-              height="auto"
-              padding="5"
-              borderRadius="20px"
-              align="center"
-              overflowY="auto"
-            >
-              <Text color="white" fontSize="26px" lineHeight="70px">
-                {' '}
-                Create Tournament{' '}
-              </Text>
-              <Stack spacing={3} align="center">
-                <Input
-                  placeholder="Tournament Name"
-                  width="auto"
-                  background="white"
-                  border="3px solid #BBBBBB"
-                  onChangeCapture={(event) => setName(event.target.value)}
-                />
-                <InputGroup width="auto">
-                  <Stack direction="row" spacing={4} align="center">
-                    <InputGroup>
-                      <InputLeftAddon>Hole 1</InputLeftAddon>
-                      <Input
-                        placeholder="Par"
-                        type="text"
-                        background="white"
-                        border="3px solid #BBBBBB"
-                        onChange={(event) => handlePar(event, '01')}
-                      />
-                    </InputGroup>
-                    <Input
-                      placeholder="Stroke Index"
-                      type="text"
-                      background="white"
-                      border="3px solid #BBBBBB"
-                      onChange={(event) => handleStrokeIndex(event, '01')}
-                    />
-                  </Stack>
-                </InputGroup>
-                <InputGroup width="auto">
-                  <Stack direction="row" spacing={4} align="center">
-                    <InputGroup>
-                      <InputLeftAddon>Hole 2</InputLeftAddon>
-                      <Input
-                        placeholder="Par"
-                        type="text"
-                        background="white"
-                        border="3px solid #BBBBBB"
-                        onChange={(event) => handlePar(event, '02')}
-                      />
-                    </InputGroup>
-                    <Input
-                      placeholder="Stroke Index"
-                      type="text"
-                      background="white"
-                      border="3px solid #BBBBBB"
-                      onChange={(event) => handleStrokeIndex(event, '02')}
-                    />
-                  </Stack>
-                </InputGroup>
-                <InputGroup width="auto">
-                  <Stack direction="row" spacing={4} align="center">
-                    <InputGroup>
-                      <InputLeftAddon>Hole 3</InputLeftAddon>
-                      <Input
-                        placeholder="Par"
-                        type="text"
-                        background="white"
-                        border="3px solid #BBBBBB"
-                        onChange={(event) => handlePar(event, '03')}
-                      />
-                    </InputGroup>
-                    <Input
-                      placeholder="Stroke Index"
-                      type="text"
-                      background="white"
-                      border="3px solid #BBBBBB"
-                      onChange={(event) => handleStrokeIndex(event, '03')}
-                    />
-                  </Stack>
-                </InputGroup>
-                <InputGroup width="auto">
-                  <Stack direction="row" spacing={4} align="center">
-                    <InputGroup>
-                      <InputLeftAddon>Hole 4</InputLeftAddon>
-                      <Input
-                        placeholder="Par"
-                        type="text"
-                        background="white"
-                        border="3px solid #BBBBBB"
-                        onChange={(event) => handlePar(event, '04')}
-                      />
-                    </InputGroup>
-                    <Input
-                      placeholder="Stroke Index"
-                      type="text"
-                      background="white"
-                      border="3px solid #BBBBBB"
-                      onChange={(event) => handleStrokeIndex(event, '04')}
-                    />
-                  </Stack>
-                </InputGroup>
-                <InputGroup width="auto">
-                  <Stack direction="row" spacing={4} align="center">
-                    <InputGroup>
-                      <InputLeftAddon>Hole 5</InputLeftAddon>
-                      <Input
-                        placeholder="Par"
-                        type="text"
-                        background="white"
-                        border="3px solid #BBBBBB"
-                        onChange={(event) => handlePar(event, '05')}
-                      />
-                    </InputGroup>
-                    <Input
-                      placeholder="Stroke Index"
-                      type="text"
-                      background="white"
-                      border="3px solid #BBBBBB"
-                      onChange={(event) => handleStrokeIndex(event, '05')}
-                    />
-                  </Stack>
-                </InputGroup>
-                <InputGroup width="auto">
-                  <Stack direction="row" spacing={4} align="center">
-                    <InputGroup>
-                      <InputLeftAddon>Hole 6</InputLeftAddon>
-                      <Input
-                        placeholder="Par"
-                        type="text"
-                        background="white"
-                        border="3px solid #BBBBBB"
-                        onChange={(event) => handlePar(event, '06')}
-                      />
-                    </InputGroup>
-                    <Input
-                      placeholder="Stroke Index"
-                      type="text"
-                      background="white"
-                      border="3px solid #BBBBBB"
-                      onChange={(event) => handleStrokeIndex(event, '06')}
-                    />
-                  </Stack>
-                </InputGroup>
-                <InputGroup width="auto">
-                  <Stack direction="row" spacing={4} align="center">
-                    <InputGroup>
-                      <InputLeftAddon>Hole 7</InputLeftAddon>
-                      <Input
-                        placeholder="Par"
-                        type="text"
-                        background="white"
-                        border="3px solid #BBBBBB"
-                        onChange={(event) => handlePar(event, '07')}
-                      />
-                    </InputGroup>
-                    <Input
-                      placeholder="Stroke Index"
-                      type="text"
-                      background="white"
-                      border="3px solid #BBBBBB"
-                      onChange={(event) => handleStrokeIndex(event, '07')}
-                    />
-                  </Stack>
-                </InputGroup>
-                <InputGroup width="auto">
-                  <Stack direction="row" spacing={4} align="center">
-                    <InputGroup>
-                      <InputLeftAddon>Hole 8</InputLeftAddon>
-                      <Input
-                        placeholder="Par"
-                        type="text"
-                        background="white"
-                        border="3px solid #BBBBBB"
-                        onChange={(event) => handlePar(event, '08')}
-                      />
-                    </InputGroup>
-                    <Input
-                      placeholder="Stroke Index"
-                      type="text"
-                      background="white"
-                      border="3px solid #BBBBBB"
-                      onChange={(event) => handleStrokeIndex(event, '08')}
-                    />
-                  </Stack>
-                </InputGroup>
-                <InputGroup width="auto">
-                  <Stack direction="row" spacing={4} align="center">
-                    <InputGroup>
-                      <InputLeftAddon>Hole 9</InputLeftAddon>
-                      <Input
-                        placeholder="Par"
-                        type="text"
-                        background="white"
-                        border="3px solid #BBBBBB"
-                        onChange={(event) => handlePar(event, '09')}
-                      />
-                    </InputGroup>
-                    <Input
-                      placeholder="Stroke Index"
-                      type="text"
-                      background="white"
-                      border="3px solid #BBBBBB"
-                      onChange={(event) => handleStrokeIndex(event, '09')}
-                    />
-                  </Stack>
-                </InputGroup>
-              </Stack>
-            </Box>
-            <Spacer />
-            <Box
-              background="#7FD661"
-              width="auto"
-              height="auto"
-              padding="5"
-              borderRadius="20px"
-              align="center"
-              overflowY="auto"
-            >
-              <Text color="white" fontSize="26px" lineHeight="70px">
-                {' '}
-                Create Tournament{' '}
-              </Text>
-              <Stack spacing={3} align="center">
-                <InputGroup width="auto">
-                  <Stack direction="row" spacing={4} align="center">
-                    <InputGroup>
-                      <InputLeftAddon>Hole 10</InputLeftAddon>
-                      <Input
-                        type="text"
-                        placeholder="Par"
-                        background="white"
-                        border="3px solid #BBBBBB"
-                        onChange={(event) => handlePar(event, '10')}
-                      />
-                    </InputGroup>
-                    <Input
-                      type="text"
-                      placeholder="Stroke Index"
-                      background="white"
-                      border="3px solid #BBBBBB"
-                      onChange={(event) => handleStrokeIndex(event, '10')}
-                    />
-                  </Stack>
-                </InputGroup>
-                <InputGroup width="auto">
-                  <Stack direction="row" spacing={4} align="center">
-                    <InputGroup>
-                      <InputLeftAddon>Hole 11</InputLeftAddon>
-                      <Input
-                        placeholder="Par"
-                        type="text"
-                        background="white"
-                        border="3px solid #BBBBBB"
-                        onChange={(event) => handlePar(event, '11')}
-                      />
-                    </InputGroup>
-                    <Input
-                      placeholder="Stroke Index"
-                      type="text"
-                      background="white"
-                      border="3px solid #BBBBBB"
-                      onChange={(event) => handleStrokeIndex(event, '11')}
-                    />
-                  </Stack>
-                </InputGroup>
-                <InputGroup width="auto">
-                  <Stack direction="row" spacing={4} align="center">
-                    <InputGroup>
-                      <InputLeftAddon>Hole 12</InputLeftAddon>
-                      <Input
-                        placeholder="Par"
-                        type="text"
-                        background="white"
-                        border="3px solid #BBBBBB"
-                        onChange={(event) => handlePar(event, '12')}
-                      />
-                    </InputGroup>
-                    <Input
-                      placeholder="Stroke Index"
-                      type="text"
-                      background="white"
-                      border="3px solid #BBBBBB"
-                      onChange={(event) => handleStrokeIndex(event, '12')}
-                    />
-                  </Stack>
-                </InputGroup>
-                <InputGroup width="auto">
-                  <Stack direction="row" spacing={4} align="center">
-                    <InputGroup>
-                      <InputLeftAddon>Hole 13</InputLeftAddon>
-                      <Input
-                        placeholder="Par"
-                        type="text"
-                        background="white"
-                        border="3px solid #BBBBBB"
-                        onChange={(event) => handlePar(event, '13')}
-                      />
-                    </InputGroup>
-                    <Input
-                      placeholder="Stroke Index"
-                      type="text"
-                      background="white"
-                      border="3px solid #BBBBBB"
-                      onChange={(event) => handleStrokeIndex(event, '13')}
-                    />
-                  </Stack>
-                </InputGroup>
-                <InputGroup width="auto">
-                  <Stack direction="row" spacing={4} align="center">
-                    <InputGroup>
-                      <InputLeftAddon>Hole 14</InputLeftAddon>
-                      <Input
-                        placeholder="Par"
-                        type="text"
-                        background="white"
-                        border="3px solid #BBBBBB"
-                        onChange={(event) => handlePar(event, '14')}
-                      />
-                    </InputGroup>
-                    <Input
-                      placeholder="Stroke Index"
-                      type="text"
-                      background="white"
-                      border="3px solid #BBBBBB"
-                      onChange={(event) => handleStrokeIndex(event, '14')}
-                    />
-                  </Stack>
-                </InputGroup>
-                <InputGroup width="auto">
-                  <Stack direction="row" spacing={4} align="center">
-                    <InputGroup>
-                      <InputLeftAddon>Hole 15</InputLeftAddon>
-                      <Input
-                        placeholder="Par"
-                        type="text"
-                        background="white"
-                        border="3px solid #BBBBBB"
-                        onChange={(event) => handlePar(event, '15')}
-                      />
-                    </InputGroup>
-                    <Input
-                      placeholder="Stroke Index"
-                      type="text"
-                      background="white"
-                      border="3px solid #BBBBBB"
-                      onChange={(event) => handleStrokeIndex(event, '15')}
-                    />
-                  </Stack>
-                </InputGroup>
-                <InputGroup width="auto">
-                  <Stack direction="row" spacing={4} align="center">
-                    <InputGroup>
-                      <InputLeftAddon>Hole 16</InputLeftAddon>
-                      <Input
-                        placeholder="Par"
-                        type="text"
-                        background="white"
-                        border="3px solid #BBBBBB"
-                        onChange={(event) => handlePar(event, '16')}
-                      />
-                    </InputGroup>
-                    <Input
-                      placeholder="Stroke Index"
-                      type="text"
-                      background="white"
-                      border="3px solid #BBBBBB"
-                      onChange={(event) => handleStrokeIndex(event, '16')}
-                    />
-                  </Stack>
-                </InputGroup>
-                <InputGroup width="auto">
-                  <Stack direction="row" spacing={4} align="center">
-                    <InputGroup>
-                      <InputLeftAddon>Hole 17</InputLeftAddon>
-                      <Input
-                        placeholder="Par"
-                        type="text"
-                        background="white"
-                        border="3px solid #BBBBBB"
-                        onChange={(event) => handlePar(event, '17')}
-                      />
-                    </InputGroup>
-                    <Input
-                      placeholder="Stroke Index"
-                      type="text"
-                      background="white"
-                      border="3px solid #BBBBBB"
-                      onChange={(event) => handleStrokeIndex(event, '17')}
-                    />
-                  </Stack>
-                </InputGroup>
-                <InputGroup width="auto">
-                  <Stack direction="row" spacing={4} align="center">
-                    <InputGroup>
-                      <InputLeftAddon>Hole 18</InputLeftAddon>
-                      <Input
-                        placeholder="Par"
-                        type="text"
-                        background="white"
-                        border="3px solid #BBBBBB"
-                        onChange={(event) => handlePar(event, '18')}
-                      />
-                    </InputGroup>
-                    <Input
-                      placeholder="Stroke Index"
-                      type="text"
-                      background="white"
-                      border="3px solid #BBBBBB"
-                      onChange={(event) => handleStrokeIndex(event, '18')}
-                    />
-                  </Stack>
-                </InputGroup>
-              </Stack>
-              <Button
-                background="#80D2F1"
-                width="auto"
-                borderRadius="20px"
-                color="white"
-                top="20px"
-                onClick={() => {
-                  console.log(holes);
-                  setIsOpen(true);
-                  totalCount();
-                }}
-              >
-                Create Tournament
-              </Button>
-            </Box>
-            <AlertDialog
-              motionPreset="slideInBottom"
-              leastDestructiveRef={cancelRef}
-              onClose={onClose}
-              isOpen={isOpen}
-              isCentered
-            >
-              <AlertDialogOverlay />
+          <AlertDialog
+            motionPreset="slideInBottom"
+            leastDestructiveRef={cancelRef}
+            onClose={onClose}
+            isOpen={isOpen}
+            isCentered
+          >
+            <AlertDialogOverlay />
 
-              <AlertDialogContent>
-                <AlertDialogHeader>Create Tournament?</AlertDialogHeader>
-                <AlertDialogCloseButton />
-                <AlertDialogBody>
-                  <Heading>{name}</Heading>
-                  <br />
-                  {outPar === 36 ? (
-                    <Text color="green">Total Out Par: {outPar}</Text>
-                  ) : (
-                    <Text color="red">Total Out Par: {outPar}</Text>
-                  )}
-                  <Text>Total Out Stroke Index: {outSi}</Text>
-                  {inPar === 36 ? (
-                    <Text color="green">Total In Par: {inPar}</Text>
-                  ) : (
-                    <Text color="red">Total In Par: {inPar}</Text>
-                  )}
-                  <Text>Total In Stroke Index: {inSi}</Text>
-                </AlertDialogBody>
-                <AlertDialogFooter>
-                  <Button ref={cancelRef} colorScheme="red" onClick={onClose}>
-                    No
-                  </Button>
-                  <Button
-                    ml={3}
-                    disabled={loading}
-                    onClick={() => {
-                      setLoading(true);
-                      firebaseFunction
-                        .createTournament(adminId, holes, name)
-                        .then(() => {
-                          firebaseFunction
-                            .fetchRealtimeRank(adminId)
-                            .then((result) => {
-                              setLoading(false);
-                              history.push({
-                                pathname: '/admin/dashboard',
-                                state: { detail: result },
-                              });
+            <AlertDialogContent>
+              <AlertDialogHeader>Create Tournament?</AlertDialogHeader>
+              <AlertDialogCloseButton />
+              <AlertDialogBody>
+                <Heading>{name}</Heading>
+                <br />
+                {outPar === 36 ? (
+                  <Text color="green">Total Out Par: {outPar}</Text>
+                ) : (
+                  <Text color="red">Total Out Par: {outPar}</Text>
+                )}
+                <Text>Total Out Stroke Index: {outSi}</Text>
+                {inPar === 36 ? (
+                  <Text color="green">Total In Par: {inPar}</Text>
+                ) : (
+                  <Text color="red">Total In Par: {inPar}</Text>
+                )}
+                <Text>Total In Stroke Index: {inSi}</Text>
+              </AlertDialogBody>
+              <AlertDialogFooter>
+                <Button ref={cancelRef} colorScheme="red" onClick={onClose}>
+                  No
+                </Button>
+                <Button
+                  ml={3}
+                  disabled={loading}
+                  onClick={() => {
+                    setLoading(true);
+                    firebaseFunction
+                      .createTournament(adminId, holes, name)
+                      .then(() => {
+                        firebaseFunction
+                          .fetchRealtimeRank(adminId)
+                          .then((result) => {
+                            setLoading(false);
+                            history.push({
+                              pathname: '/admin/dashboard',
+                              state: { detail: result },
                             });
-                        });
-                    }}
-                  >
-                    {loading ? <Spinner /> : 'Yes'}
-                  </Button>
-                </AlertDialogFooter>
-              </AlertDialogContent>
-            </AlertDialog>
-            <Spacer />
-          </Flex>
-        </Box>
+                          });
+                      });
+                  }}
+                >
+                  {loading ? <Spinner /> : 'Yes'}
+                </Button>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
+        </Flex>
       </Flex>
     </Box>
   );
