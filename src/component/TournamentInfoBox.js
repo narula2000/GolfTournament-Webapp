@@ -23,6 +23,8 @@ import { CheckIcon, DeleteIcon } from '@chakra-ui/icons';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
+import theme from '../core/theme';
+
 const TournamentInfoBox = ({
   tournamentId,
   data,
@@ -32,8 +34,11 @@ const TournamentInfoBox = ({
   const history = useHistory();
 
   const [deleteLoading, setDeleteLoading] = useState(false);
-  const firstNine = ['01', '02', '03', '04', '05', '06', '07', '08', '09'];
-  const secondNine = ['10', '11', '12', '13', '14', '15', '16', '17', '18'];
+  const firstCol = ['01', '02', '03', '04', '05', '06'];
+  const secondCol = ['07', '08', '09', '10', '11', '12'];
+  const thirdCol = ['13', '14', '15', '16', '17', '18'];
+
+  const holeArray = [firstCol, secondCol, thirdCol];
 
   return (
     <Box
@@ -60,46 +65,60 @@ const TournamentInfoBox = ({
         justify="center"
         divider={<StackDivider borderColor="grey.200" size="30" />}
       >
-        <Stack spacing={3} align="center">
-          {firstNine.map((holeNum) => (
-            <Stack direction="row" spacing={3} key={holeNum}>
-              <Box background="white" width="100px">
-                <Text>Hole: {holeNum}</Text>
+        {holeArray.map((column) => (
+          <Stack spacing={2} align="center">
+            <Box bg="white" p="3px" borderRadius="10px">
+              <Stack direction="row" spacing={0} color="white">
+                <Box
+                  background={theme.colors.secondary}
+                  width="75px"
+                  borderTopLeftRadius="7px"
+                  borderBottomLeftRadius="7px"
+                >
+                  <Text>Hole</Text>
+                </Box>
+                <Box width="75px" background={theme.colors.secondary}>
+                  <Text>Par</Text>
+                </Box>
+                <Box
+                  background={theme.colors.secondary}
+                  width="75px"
+                  borderTopRightRadius="7px"
+                  borderBottomRightRadius="7px"
+                >
+                  <Text>SI</Text>
+                </Box>
+              </Stack>
+            </Box>
+            {column.map((holeNum) => (
+              <Box bg="white" p="3px" borderRadius="10px">
+                <Stack direction="row" spacing={0} key={holeNum}>
+                  <Box
+                    background={theme.colors.background}
+                    width="75px"
+                    borderTopLeftRadius="7px"
+                    borderBottomLeftRadius="7px"
+                  >
+                    <Text>{holeNum}</Text>
+                  </Box>
+                  <Box background="#F3FDF1" width="75px">
+                    <Text>{data[tournamentId]['000'].holes[holeNum].par}</Text>
+                  </Box>
+                  <Box
+                    background="#F3FDF1"
+                    width="75px"
+                    borderTopRightRadius="7px"
+                    borderBottomRightRadius="7px"
+                  >
+                    <Text>
+                      {data[tournamentId]['000'].holes[holeNum].strokeIndex}
+                    </Text>
+                  </Box>
+                </Stack>
               </Box>
-              <Box background="white" width="100px">
-                <Text>
-                  Par:
-                  {data[tournamentId]['000'].holes[holeNum].par}
-                </Text>
-              </Box>
-              <Box background="white" width="100px">
-                <Text>
-                  SI: {data[tournamentId]['000'].holes[holeNum].strokeIndex}
-                </Text>
-              </Box>
-            </Stack>
-          ))}
-        </Stack>
-        <Stack spacing={3} align="center">
-          {secondNine.map((holeNum) => (
-            <Stack direction="row" spacing={3} key={holeNum}>
-              <Box background="white" width="100px">
-                <Text>Hole: {holeNum}</Text>
-              </Box>
-              <Box background="white" width="100px">
-                <Text>
-                  Par:
-                  {data[tournamentId]['000'].holes[holeNum].par}
-                </Text>
-              </Box>
-              <Box background="white" width="100px">
-                <Text>
-                  SI: {data[tournamentId]['000'].holes[holeNum].strokeIndex}
-                </Text>
-              </Box>
-            </Stack>
-          ))}
-        </Stack>
+            ))}
+          </Stack>
+        ))}
         <Stack spacing={3} align="center">
           <Popover placement="left">
             <PopoverTrigger>
