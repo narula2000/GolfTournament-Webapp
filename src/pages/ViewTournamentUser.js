@@ -123,7 +123,7 @@ const ViewTournamentUser = () => {
   }, []);
 
   return (
-    <Box>
+    <Box width="100vw">
       <Flex bg={theme.colors.background}>
         <Square>
           <Image src={logo} boxSize="100px" objectFit="cover" />

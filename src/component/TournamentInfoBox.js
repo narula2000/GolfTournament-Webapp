@@ -18,6 +18,7 @@ import {
   Text,
   Icon,
   Spacer,
+  Heading,
 } from '@chakra-ui/react';
 import { IoQrCodeOutline, IoPeople } from 'react-icons/io5';
 import { CheckIcon, DeleteIcon } from '@chakra-ui/icons';
@@ -47,7 +48,7 @@ const TournamentInfoBox = ({
       padding="5"
       position="relative"
       background={theme.colors.secondary}
-      width="auto"
+      width="70vw"
       height="auto"
       my="20px"
       borderRadius="20px"
@@ -56,11 +57,11 @@ const TournamentInfoBox = ({
       overflowY="auto"
       justifyContent="center"
     >
-      <HStack mb="5">
-        <Text color="white" fontSize="26px" textAlign="left" ml="15px">
-          {' '}
-          {data[tournamentId].name}{' '}
-        </Text>
+      <Heading color="white" size="lg" textAlign="left" ml="15px">
+        {' '}
+        {data[tournamentId].name}{' '}
+      </Heading>
+      <HStack my="20px">
         <Spacer />
         <Popover placement="left">
           <PopoverTrigger>
