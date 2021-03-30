@@ -10,12 +10,13 @@ import {
   Spacer,
   InputGroup,
   InputLeftElement,
+  InputRightElement,
   Input,
   Icon,
 } from '@chakra-ui/react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { FiLogOut } from 'react-icons/fi';
-import { SearchIcon, AddIcon } from '@chakra-ui/icons';
+import { SearchIcon, AddIcon, CloseIcon } from '@chakra-ui/icons';
 import firebase from 'firebase/app';
 import logo from '../assets/golf-logo.png';
 import firebaseFunction from '../firebase/functions';
@@ -130,7 +131,22 @@ const AdminDashboard = () => {
                 type="text"
                 placeholder="Search tournament"
                 onChangeCapture={(event) => setSearchText(event.target.value)}
+                value={searchText}
               />
+              <InputRightElement>
+                <Button
+                  variant="ghost"
+                  color="gray.300"
+                  borderRadius="100px"
+                  size="sm"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setSearchText('');
+                  }}
+                >
+                  <CloseIcon />
+                </Button>
+              </InputRightElement>
             </InputGroup>
           </Box>
           <VStack>

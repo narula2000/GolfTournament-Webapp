@@ -24,6 +24,7 @@ import {
   Popover,
   InputLeftElement,
   InputGroup,
+  InputRightElement,
 } from '@chakra-ui/react';
 import {
   ArrowBackIcon,
@@ -31,6 +32,7 @@ import {
   DeleteIcon,
   RepeatIcon,
   SearchIcon,
+  CloseIcon,
 } from '@chakra-ui/icons';
 import { useHistory, useLocation } from 'react-router-dom';
 
@@ -207,7 +209,7 @@ const ViewTournamentUser = () => {
           </HStack>
         </Box>
         <Box mx={{ lg: '300px', md: '150px' }} my="10px">
-          <InputGroup>
+          <InputGroup mb="20px">
             <InputLeftElement pointerEvents="none">
               <SearchIcon color="gray.300" />
             </InputLeftElement>
@@ -215,7 +217,22 @@ const ViewTournamentUser = () => {
               type="text"
               placeholder="Search user"
               onChangeCapture={(event) => setSearchText(event.target.value)}
+              value={searchText}
             />
+            <InputRightElement>
+              <Button
+                variant="ghost"
+                color="gray.300"
+                borderRadius="100px"
+                size="sm"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setSearchText('');
+                }}
+              >
+                <CloseIcon />
+              </Button>
+            </InputRightElement>
           </InputGroup>
           <Table variant="simple">
             <Tbody>
