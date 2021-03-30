@@ -7,6 +7,7 @@ const overrides = {
     secondary: '#7FD661',
     error: '#f13a59',
     background: '#cfecc5',
+    lightBackground: '#F3FDF1',
   },
 };
 

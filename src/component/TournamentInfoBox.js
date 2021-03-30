@@ -46,7 +46,7 @@ const TournamentInfoBox = ({
       key={tournamentId}
       padding="5"
       position="relative"
-      background="#7FD661"
+      background={theme.colors.secondary}
       width="auto"
       height="auto"
       my="20px"
@@ -66,7 +66,7 @@ const TournamentInfoBox = ({
           <PopoverTrigger>
             <Button
               p="15px"
-              background="#80D2F1"
+              background={theme.colors.primary}
               borderRadius="20px"
               color="white"
               leftIcon={<Icon as={IoQrCodeOutline} />}
@@ -90,7 +90,7 @@ const TournamentInfoBox = ({
 
         <Button
           p="15px"
-          background="#80D2F1"
+          background={theme.colors.primary}
           borderRadius="20px"
           color="white"
           leftIcon={<CheckIcon />}
@@ -99,7 +99,7 @@ const TournamentInfoBox = ({
         </Button>
         <Button
           p="15px"
-          background="#80D2F1"
+          background={theme.colors.primary}
           borderRadius="20px"
           color="white"
           leftIcon={<Icon as={IoPeople} />}
@@ -194,11 +194,11 @@ const TournamentInfoBox = ({
                   >
                     <Text>{holeNum}</Text>
                   </Box>
-                  <Box background="#F3FDF1" width="75px">
+                  <Box background={theme.colors.lightBackground} width="75px">
                     <Text>{data[tournamentId]['000'].holes[holeNum].par}</Text>
                   </Box>
                   <Box
-                    background="#F3FDF1"
+                    background={theme.colors.lightBackground}
                     width="75px"
                     borderTopRightRadius="7px"
                     borderBottomRightRadius="7px"
