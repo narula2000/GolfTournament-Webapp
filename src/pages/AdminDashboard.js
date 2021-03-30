@@ -87,13 +87,13 @@ const AdminDashboard = () => {
   return (
     <Box background="white">
       <Flex direction="column">
-        <Flex background="#CFECC5" width="100%" height="147px">
+        <Flex background="#CFECC5" width="100%" height="100px">
           {Object.keys(data).length === 0 ? (
             ''
           ) : (
             <Button
-              ml="4"
-              mt="50"
+              ml="20px"
+              mt="30px"
               background="#80D2F1"
               borderRadius="20px"
               color="white"
@@ -108,8 +108,8 @@ const AdminDashboard = () => {
           <Spacer />
           <Box>
             <Button
-              mr="4"
-              mt="50"
+              mr="20px"
+              mt="30px"
               background="#80D2F1"
               borderRadius="20px"
               color="white"
@@ -120,7 +120,14 @@ const AdminDashboard = () => {
             </Button>
           </Box>
         </Flex>
-        <Image src={logo} position="absolute" left="calc(50% - 131px)" />
+        <Image
+          src={logo}
+          boxSize="200px"
+          objectFit="cover"
+          position="absolute"
+          left="50%"
+          ml="-100px"
+        />
         <Box mt="7" p="20px">
           <Box mx="300px" mt="50px" mb="20px">
             <InputGroup>
