@@ -27,6 +27,7 @@ const AdminDashboard = () => {
   const [data, setData] = useState(
     location.state === undefined ? {} : location.state.detail
   );
+  const [searchText, setSearchText] = useState('');
 
   const adminId = localStorage.getItem('adminId');
   const logOut = () => {
@@ -67,6 +68,15 @@ const AdminDashboard = () => {
       deleteTournament={deleteTournamentAndRefresh}
     />
   );
+
+  const dataToRender = () => {
+    if (searchText !== '') {
+      return Object.keys(data).filter((tournamentId) =>
+        data[tournamentId].name.toLowerCase().includes(searchText.toLowerCase())
+      );
+    }
+    return Object.keys(data);
+  };
 
   useEffect(() => {
     refreshData();
@@ -113,12 +123,10 @@ const AdminDashboard = () => {
               <InputLeftElement pointerEvents="none">
                 <SearchIcon color="gray.300" />
               </InputLeftElement>
-              <Input type="text" placeholder="Search" />
-              <IconButton
-                ml="10px"
-                colorScheme="blue"
-                aria-label="Search database"
-                icon={<SearchIcon />}
+              <Input
+                type="text"
+                placeholder="Search"
+                onChangeCapture={(event) => setSearchText(event.target.value)}
               />
             </InputGroup>
           </Box>
@@ -145,7 +153,7 @@ const AdminDashboard = () => {
                 </Text>
               </Container>
             ) : (
-              Object.keys(data).map((tournamentId) =>
+              dataToRender().map((tournamentId) =>
                 renderTournamentBox(tournamentId)
               )
             )}
