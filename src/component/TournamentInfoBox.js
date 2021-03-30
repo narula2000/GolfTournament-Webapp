@@ -17,6 +17,7 @@ import {
   StackDivider,
   Text,
   Icon,
+  Spacer,
 } from '@chakra-ui/react';
 import { IoQrCodeOutline, IoPeople } from 'react-icons/io5';
 import { CheckIcon, DeleteIcon } from '@chakra-ui/icons';
@@ -55,10 +56,102 @@ const TournamentInfoBox = ({
       overflowY="auto"
       justifyContent="center"
     >
-      <Text color="white" fontSize="26px" mb="5">
-        {' '}
-        {data[tournamentId].name}{' '}
-      </Text>
+      <HStack mb="5">
+        <Text color="white" fontSize="26px" textAlign="left" ml="15px">
+          {' '}
+          {data[tournamentId].name}{' '}
+        </Text>
+        <Spacer />
+        <Popover placement="left">
+          <PopoverTrigger>
+            <Button
+              p="15px"
+              background="#80D2F1"
+              borderRadius="20px"
+              color="white"
+              leftIcon={<Icon as={IoQrCodeOutline} />}
+            >
+              QR Code
+            </Button>
+          </PopoverTrigger>
+          <Portal>
+            <PopoverContent>
+              <PopoverArrow />
+              <PopoverHeader>
+                QR Code for {data[tournamentId].name}
+              </PopoverHeader>
+              <PopoverCloseButton />
+              <PopoverBody align="center">
+                <Image src={qrCode} alt="QR Code" />
+              </PopoverBody>
+            </PopoverContent>
+          </Portal>
+        </Popover>
+
+        <Button
+          p="15px"
+          background="#80D2F1"
+          borderRadius="20px"
+          color="white"
+          leftIcon={<CheckIcon />}
+        >
+          Completed
+        </Button>
+        <Button
+          p="15px"
+          background="#80D2F1"
+          borderRadius="20px"
+          color="white"
+          leftIcon={<Icon as={IoPeople} />}
+          onClick={(e) => {
+            e.preventDefault();
+            history.push({
+              pathname: '/admin/tournamentuser',
+              state: { detail: data, tournamentId: tournamentId },
+            });
+          }}
+        >
+          User List
+        </Button>
+        <Popover placement="left">
+          <PopoverTrigger>
+            <Button
+              p="15px"
+              colorScheme="red"
+              borderRadius="20px"
+              leftIcon={<DeleteIcon />}
+            >
+              Delete
+            </Button>
+          </PopoverTrigger>
+          <Portal>
+            <PopoverContent>
+              <PopoverArrow />
+              <PopoverHeader>
+                Do you want to delete {data[tournamentId].name} ?
+              </PopoverHeader>
+              <PopoverCloseButton />
+              <PopoverBody align="center">
+                <Button
+                  width="200px"
+                  colorScheme="red"
+                  borderRadius="20px"
+                  disabled={deleteLoading}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setDeleteLoading(true);
+                    deleteTournament(tournamentId).then(() => {
+                      setDeleteLoading(false);
+                    });
+                  }}
+                >
+                  {deleteLoading ? <Spinner /> : 'Yes'}
+                </Button>
+              </PopoverBody>
+            </PopoverContent>
+          </Portal>
+        </Popover>
+      </HStack>
       <HStack
         spacing={5}
         align="center"
@@ -119,96 +212,6 @@ const TournamentInfoBox = ({
             ))}
           </Stack>
         ))}
-        <Stack spacing={3} align="center">
-          <Popover placement="left">
-            <PopoverTrigger>
-              <Button
-                width="150px"
-                background="#80D2F1"
-                borderRadius="20px"
-                color="white"
-                leftIcon={<Icon as={IoQrCodeOutline} />}
-              >
-                View QR Code
-              </Button>
-            </PopoverTrigger>
-            <Portal>
-              <PopoverContent>
-                <PopoverArrow />
-                <PopoverHeader>
-                  QR Code for {data[tournamentId].name}
-                </PopoverHeader>
-                <PopoverCloseButton />
-                <PopoverBody align="center">
-                  <Image src={qrCode} alt="QR Code" />
-                </PopoverBody>
-              </PopoverContent>
-            </Portal>
-          </Popover>
-          <Button
-            width="150px"
-            background="#80D2F1"
-            borderRadius="20px"
-            color="white"
-            leftIcon={<CheckIcon />}
-          >
-            Completed
-          </Button>
-          <Button
-            width="150px"
-            background="#80D2F1"
-            borderRadius="20px"
-            color="white"
-            leftIcon={<Icon as={IoPeople} />}
-            onClick={(e) => {
-              e.preventDefault();
-              history.push({
-                pathname: '/admin/tournamentuser',
-                state: { detail: data, tournamentId: tournamentId },
-              });
-            }}
-          >
-            User List
-          </Button>
-          <Popover placement="left">
-            <PopoverTrigger>
-              <Button
-                width="150px"
-                colorScheme="red"
-                borderRadius="20px"
-                leftIcon={<DeleteIcon />}
-              >
-                Delete
-              </Button>
-            </PopoverTrigger>
-            <Portal>
-              <PopoverContent>
-                <PopoverArrow />
-                <PopoverHeader>
-                  Do you want to delete {data[tournamentId].name} ?
-                </PopoverHeader>
-                <PopoverCloseButton />
-                <PopoverBody align="center">
-                  <Button
-                    width="200px"
-                    colorScheme="red"
-                    borderRadius="20px"
-                    disabled={deleteLoading}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setDeleteLoading(true);
-                      deleteTournament(tournamentId).then(() => {
-                        setDeleteLoading(false);
-                      });
-                    }}
-                  >
-                    {deleteLoading ? <Spinner /> : 'Yes'}
-                  </Button>
-                </PopoverBody>
-              </PopoverContent>
-            </Portal>
-          </Popover>
-        </Stack>
       </HStack>
     </Box>
   );
