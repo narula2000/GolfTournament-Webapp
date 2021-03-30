@@ -22,12 +22,15 @@ import {
   PopoverCloseButton,
   PopoverFooter,
   Popover,
+  InputLeftElement,
+  InputGroup,
 } from '@chakra-ui/react';
 import {
   ArrowBackIcon,
   AddIcon,
   DeleteIcon,
   RepeatIcon,
+  SearchIcon,
 } from '@chakra-ui/icons';
 import { useHistory, useLocation } from 'react-router-dom';
 
@@ -43,6 +46,7 @@ const ViewTournamentUser = () => {
   const [adding, setAdding] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const [searchText, setSearchText] = useState('');
 
   const [username, setUsername] = useState('');
   const [phoneNum, setPhoneNum] = useState('');
@@ -68,7 +72,9 @@ const ViewTournamentUser = () => {
 
   async function refreshData() {
     setData(
-      await functions.fetchRealtimeRank(adminId).then((result) => result)
+      await functions
+        .fetchRealtimeRank(adminId)
+        .then((result) => (result === null ? {} : result))
     );
   }
 
@@ -94,6 +100,21 @@ const ViewTournamentUser = () => {
     await functions.deleteUser(adminId, tournamentId, uID);
     await refreshData();
   }
+
+  const dataToRender = () => {
+    const userData = Object.keys(data[tournamentId]).filter(
+      (userId) =>
+        userId !== 'isComplete' && userId !== 'name' && userId !== '000'
+    );
+    if (searchText !== '') {
+      return userData.filter((userId) =>
+        data[tournamentId][userId].name
+          .toLowerCase()
+          .includes(searchText.toLowerCase())
+      );
+    }
+    return userData;
+  };
 
   useEffect(() => {
     refreshData();
@@ -186,61 +207,65 @@ const ViewTournamentUser = () => {
           </HStack>
         </Box>
         <Box mx={{ lg: '300px', md: '150px' }} my="10px">
+          <InputGroup>
+            <InputLeftElement pointerEvents="none">
+              <SearchIcon color="gray.300" />
+            </InputLeftElement>
+            <Input
+              type="text"
+              placeholder="Search user"
+              onChangeCapture={(event) => setSearchText(event.target.value)}
+            />
+          </InputGroup>
           <Table variant="simple">
             <Tbody>
               {Object.keys(data[tournamentId]).length > 3 ? ( // check if there are users other than default user, the fields isComplete and name
-                Object.keys(data[tournamentId]).map((userId) =>
-                  userId !== 'isComplete' &&
-                  userId !== 'name' &&
-                  userId !== '000' ? (
-                    <Tr key={userId}>
-                      <Td maxW="200px">{data[tournamentId][userId].name}</Td>
-                      <Td textAlign="center">
-                        {data[tournamentId][userId].phonenumber}
-                      </Td>
-                      <Td>
-                        {' '}
-                        <Popover placement="right" maxW="100px">
-                          <PopoverTrigger>
-                            <IconButton
-                              aria-label="Delete user"
-                              colorScheme="red"
-                              icon={<DeleteIcon />}
-                            />
-                          </PopoverTrigger>
-                          <Portal>
-                            <PopoverContent>
-                              <PopoverArrow />
-                              <PopoverHeader align="center">
-                                Delete {data[tournamentId][userId].name} ?
-                              </PopoverHeader>
-                              <PopoverCloseButton />
-                              <PopoverFooter align="center">
-                                <Button
-                                  colorScheme="red"
-                                  borderRadius="10px"
-                                  isLoading={deleting}
-                                  loadingText="Deleting"
-                                  onClick={(e) => {
-                                    e.preventDefault();
-                                    setDeleting(true);
-                                    deleteAndFetchNewData(userId).then(() =>
-                                      setDeleting(false)
-                                    );
-                                  }}
-                                >
-                                  Delete
-                                </Button>
-                              </PopoverFooter>
-                            </PopoverContent>
-                          </Portal>
-                        </Popover>{' '}
-                      </Td>
-                    </Tr>
-                  ) : (
-                    ''
-                  )
-                )
+                dataToRender().map((userId) => (
+                  <Tr key={userId}>
+                    <Td maxW="200px">{data[tournamentId][userId].name}</Td>
+                    <Td textAlign="center">
+                      {data[tournamentId][userId].phonenumber}
+                    </Td>
+                    <Td>
+                      {' '}
+                      <Popover placement="right" maxW="100px">
+                        <PopoverTrigger>
+                          <IconButton
+                            aria-label="Delete user"
+                            colorScheme="red"
+                            icon={<DeleteIcon />}
+                          />
+                        </PopoverTrigger>
+                        <Portal>
+                          <PopoverContent>
+                            <PopoverArrow />
+                            <PopoverHeader align="center">
+                              Delete {data[tournamentId][userId].name} ?
+                            </PopoverHeader>
+                            <PopoverCloseButton />
+                            <PopoverFooter align="center">
+                              <Button
+                                colorScheme="red"
+                                borderRadius="10px"
+                                isLoading={deleting}
+                                loadingText="Deleting"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  setDeleting(true);
+                                  deleteAndFetchNewData(userId).then(() =>
+                                    setDeleting(false)
+                                  );
+                                }}
+                              >
+                                Delete
+                              </Button>
+                            </PopoverFooter>
+                          </PopoverContent>
+                        </Portal>
+                      </Popover>{' '}
+                    </Td>
+                  </Tr>
+                ))
               ) : (
                 <Flex
                   justify="center"

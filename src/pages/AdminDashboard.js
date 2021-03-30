@@ -128,7 +128,7 @@ const AdminDashboard = () => {
               </InputLeftElement>
               <Input
                 type="text"
-                placeholder="Search"
+                placeholder="Search tournament"
                 onChangeCapture={(event) => setSearchText(event.target.value)}
               />
             </InputGroup>
