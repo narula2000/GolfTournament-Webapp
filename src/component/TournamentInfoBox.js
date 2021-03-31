@@ -78,7 +78,7 @@ const TournamentInfoBox = ({
           <Portal>
             <PopoverContent>
               <PopoverArrow />
-              <PopoverHeader>
+              <PopoverHeader pr="30px">
                 QR Code for {data[tournamentId].name}
               </PopoverHeader>
               <PopoverCloseButton />
@@ -128,7 +128,7 @@ const TournamentInfoBox = ({
           <Portal>
             <PopoverContent>
               <PopoverArrow />
-              <PopoverHeader>
+              <PopoverHeader pr="30px">
                 Do you want to delete {data[tournamentId].name} ?
               </PopoverHeader>
               <PopoverCloseButton />
