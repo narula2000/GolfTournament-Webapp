@@ -1,8 +1,8 @@
 /* eslint-disable consistent-return */
 /* eslint-disable array-callback-return */
 import firebase from 'firebase/app';
-import admin from 'firebase-admin';
 import crypto from 'crypto';
+import axios from 'axios';
 import 'firebase/database';
 import 'firebase/firestore';
 
@@ -103,12 +103,21 @@ const deleteUser = async (adminId, tournamentId, userId) => {
 const migrateUser = async (validUserId, tournament, tournamentId) => {
   let idx = '001';
   const toMigrate = {};
-  const adminAuth = admin.auth();
+  const payload = {};
   await validUserId.forEach(async (validId) => {
     toMigrate[idx] = tournament[validId];
+    payload[idx] = validId;
     idx = String(Number(idx) + 1).padStart(3, '0');
-    await adminAuth.deleteUser(validId);
   });
+
+  const headers = {
+    headers: {
+      'Content-Type': 'application/json;charset=UTF-8',
+      'Access-Control-Allow-Origin': '*',
+    },
+  };
+
+  await axios.post(process.env.REACT_APP_API_URL, payload, headers);
 
   const db = firebase.firestore();
   await db.collection('tournaments').doc(tournamentId).set(toMigrate);
