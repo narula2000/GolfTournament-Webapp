@@ -42,7 +42,8 @@ const Login = () => {
     setLoading(true);
 
     if (emailError || passwordError) {
-      alert(`${emailError} ${passwordError}`);
+      alert(`${emailError} \n${passwordError}`);
+      setLoading(false);
       return;
     }
 
@@ -59,6 +60,10 @@ const Login = () => {
               state: { detail: result || {} },
             });
           });
+      })
+      .catch((err) => {
+        setLoading(false);
+        alert(err.message);
       });
   };
 

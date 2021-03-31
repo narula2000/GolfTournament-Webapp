@@ -247,7 +247,7 @@ const AdminDashboard = () => {
                           e.preventDefault();
                           history.push({
                             pathname: '/admin/tournamentuser',
-                            state: { detail: data },
+                            state: { detail: data, tournamentId: tournamentId },
                           });
                         }}
                       >

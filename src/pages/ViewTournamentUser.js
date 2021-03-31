@@ -48,8 +48,10 @@ const ViewTournamentUser = () => {
   const [phoneNum, setPhoneNum] = useState('');
 
   const adminId = localStorage.getItem('adminId');
-  const [data, setData] = useState(location.state.detail);
-  const tournamentId = Object.keys(data)[0];
+  const [data, setData] = useState(
+    location.state === undefined ? history.goBack : location.state.detail
+  );
+  const { tournamentId } = location.state;
 
   const usernameValidator = (_username) => {
     if (!_username || _username.length <= 0) return 'Username cannot be empty!';
