@@ -204,7 +204,6 @@ const AdminCreatePage = () => {
                 color="white"
                 leftIcon={<AddIcon />}
                 onClick={() => {
-                  console.log(holes);
                   setIsOpen(true);
                   totalCount();
                 }}

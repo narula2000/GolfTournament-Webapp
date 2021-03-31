@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import firebase from 'firebase/app';
+import PrivateRoute from '../component/PrivateRoute';
 import AdminCreatePage from '../pages/AdminCreatePage';
 import Login from '../pages/Login';
 import RankingHome from '../pages/RankingHome';
@@ -20,9 +21,9 @@ firebase.auth().onAuthStateChanged((user) => {
 const router = () => (
   <Router>
     <Switch>
+      <PrivateRoute path="/admin/dashboard" component={AdminDashboard} />
+      <PrivateRoute path="/admin/create" component={AdminCreatePage} />
       <Route path="/admin/tournamentuser" component={ViewTournamentUser} />
-      <Route path="/admin/create" component={AdminCreatePage} />
-      <Route path="/admin/dashboard" component={AdminDashboard} />
       <Route path="/admin" component={Login} />
       <Route path="/" component={RankingHome} />
     </Switch>
