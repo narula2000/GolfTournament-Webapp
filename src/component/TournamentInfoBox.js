@@ -19,6 +19,7 @@ import {
   Icon,
   Spacer,
   Heading,
+  VStack,
 } from '@chakra-ui/react';
 import { IoQrCodeOutline, IoPeople } from 'react-icons/io5';
 import { CheckIcon, DeleteIcon } from '@chakra-ui/icons';
@@ -43,176 +44,203 @@ const TournamentInfoBox = ({
   const holeArray = [firstCol, secondCol, thirdCol];
 
   return (
-    <Box
-      key={tournamentId}
-      padding="5"
-      position="relative"
-      background={theme.colors.secondary}
-      width="70vw"
-      height="auto"
-      my="20px"
-      borderRadius="20px"
-      align="center"
-      justifyItems="center"
-      overflowY="auto"
-      justifyContent="center"
-    >
-      <Heading color="white" size="lg" textAlign="left" ml="15px">
-        {' '}
-        {data[tournamentId].name}{' '}
-      </Heading>
-      <HStack my="20px">
-        <Spacer />
-        <Popover placement="left">
-          <PopoverTrigger>
+    <Box>
+      <HStack>
+        <Box
+          key={tournamentId}
+          padding="5"
+          position="relative"
+          background={theme.colors.secondary}
+          width="70vw"
+          height="auto"
+          my="20px"
+          borderRadius="20px"
+          align="center"
+          justifyItems="center"
+          overflowY="auto"
+          justifyContent="center"
+        >
+          <Heading color="white" size="lg" textAlign="left" ml="15px" mb="20px">
+            {' '}
+            {data[tournamentId].name}{' '}
+          </Heading>
+          <HStack
+            spacing={5}
+            align="center"
+            justify="center"
+            divider={<StackDivider borderColor="grey.200" size="30" />}
+          >
+            {holeArray.map((column) => (
+              <Stack spacing={2} align="center">
+                <Box bg="white" p="3px" borderRadius="10px">
+                  <Stack direction="row" spacing={0} color="white">
+                    <Box
+                      background={theme.colors.secondary}
+                      width="75px"
+                      borderTopLeftRadius="7px"
+                      borderBottomLeftRadius="7px"
+                    >
+                      <Text>Hole</Text>
+                    </Box>
+                    <Box width="75px" background={theme.colors.secondary}>
+                      <Text>Par</Text>
+                    </Box>
+                    <Box
+                      background={theme.colors.secondary}
+                      width="75px"
+                      borderTopRightRadius="7px"
+                      borderBottomRightRadius="7px"
+                    >
+                      <Text>SI</Text>
+                    </Box>
+                  </Stack>
+                </Box>
+                {column.map((holeNum) => (
+                  <Box bg="white" p="3px" borderRadius="10px">
+                    <Stack direction="row" spacing={0} key={holeNum}>
+                      <Box
+                        background={theme.colors.background}
+                        width="75px"
+                        borderTopLeftRadius="7px"
+                        borderBottomLeftRadius="7px"
+                      >
+                        <Text>{holeNum}</Text>
+                      </Box>
+                      <Box
+                        background={theme.colors.lightBackground}
+                        width="75px"
+                      >
+                        <Text>
+                          {data[tournamentId]['000'].holes[holeNum].par}
+                        </Text>
+                      </Box>
+                      <Box
+                        background={theme.colors.lightBackground}
+                        width="75px"
+                        borderTopRightRadius="7px"
+                        borderBottomRightRadius="7px"
+                      >
+                        <Text>
+                          {data[tournamentId]['000'].holes[holeNum].strokeIndex}
+                        </Text>
+                      </Box>
+                    </Stack>
+                  </Box>
+                ))}
+              </Stack>
+            ))}
+          </HStack>
+        </Box>
+        <Box
+          key={tournamentId}
+          padding="5"
+          position="relative"
+          width="auto"
+          height="auto"
+          my="20px"
+          borderRadius="20px"
+          align="center"
+          justifyItems="center"
+          overflowY="auto"
+          justifyContent="center"
+        >
+          <VStack my="20px">
+            <Spacer />
+            <Popover placement="left">
+              <PopoverTrigger>
+                <Button
+                  p="15px"
+                  width="10vw"
+                  background={theme.colors.primary}
+                  borderRadius="20px"
+                  color="white"
+                  leftIcon={<Icon as={IoQrCodeOutline} />}
+                >
+                  QR Code
+                </Button>
+              </PopoverTrigger>
+              <Portal>
+                <PopoverContent>
+                  <PopoverArrow />
+                  <PopoverHeader pr="30px">
+                    QR Code for {data[tournamentId].name}
+                  </PopoverHeader>
+                  <PopoverCloseButton />
+                  <PopoverBody align="center">
+                    <Image src={qrCode} alt="QR Code" />
+                  </PopoverBody>
+                </PopoverContent>
+              </Portal>
+            </Popover>
+
             <Button
               p="15px"
+              width="10vw"
               background={theme.colors.primary}
               borderRadius="20px"
               color="white"
-              leftIcon={<Icon as={IoQrCodeOutline} />}
+              leftIcon={<CheckIcon />}
             >
-              QR Code
+              Completed
             </Button>
-          </PopoverTrigger>
-          <Portal>
-            <PopoverContent>
-              <PopoverArrow />
-              <PopoverHeader pr="30px">
-                QR Code for {data[tournamentId].name}
-              </PopoverHeader>
-              <PopoverCloseButton />
-              <PopoverBody align="center">
-                <Image src={qrCode} alt="QR Code" />
-              </PopoverBody>
-            </PopoverContent>
-          </Portal>
-        </Popover>
-
-        <Button
-          p="15px"
-          background={theme.colors.primary}
-          borderRadius="20px"
-          color="white"
-          leftIcon={<CheckIcon />}
-        >
-          Completed
-        </Button>
-        <Button
-          p="15px"
-          background={theme.colors.primary}
-          borderRadius="20px"
-          color="white"
-          leftIcon={<Icon as={IoPeople} />}
-          onClick={(e) => {
-            e.preventDefault();
-            history.push({
-              pathname: '/admin/tournamentuser',
-              state: { detail: data, tournamentId: tournamentId },
-            });
-          }}
-        >
-          User List
-        </Button>
-        <Popover placement="left">
-          <PopoverTrigger>
             <Button
               p="15px"
-              colorScheme="red"
+              width="10vw"
+              background={theme.colors.primary}
               borderRadius="20px"
-              leftIcon={<DeleteIcon />}
+              color="white"
+              leftIcon={<Icon as={IoPeople} />}
+              onClick={(e) => {
+                e.preventDefault();
+                history.push({
+                  pathname: '/admin/tournamentuser',
+                  state: { detail: data, tournamentId: tournamentId },
+                });
+              }}
             >
-              Delete
+              User List
             </Button>
-          </PopoverTrigger>
-          <Portal>
-            <PopoverContent>
-              <PopoverArrow />
-              <PopoverHeader pr="30px">
-                Do you want to delete {data[tournamentId].name} ?
-              </PopoverHeader>
-              <PopoverCloseButton />
-              <PopoverBody align="center">
+            <Popover placement="left">
+              <PopoverTrigger>
                 <Button
-                  width="200px"
+                  p="15px"
+                  width="10vw"
                   colorScheme="red"
                   borderRadius="20px"
-                  disabled={deleteLoading}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setDeleteLoading(true);
-                    deleteTournament(tournamentId).then(() => {
-                      setDeleteLoading(false);
-                    });
-                  }}
+                  leftIcon={<DeleteIcon />}
                 >
-                  {deleteLoading ? <Spinner /> : 'Yes'}
+                  Delete
                 </Button>
-              </PopoverBody>
-            </PopoverContent>
-          </Portal>
-        </Popover>
-      </HStack>
-      <HStack
-        spacing={5}
-        align="center"
-        justify="center"
-        divider={<StackDivider borderColor="grey.200" size="30" />}
-      >
-        {holeArray.map((column) => (
-          <Stack spacing={2} align="center">
-            <Box bg="white" p="3px" borderRadius="10px">
-              <Stack direction="row" spacing={0} color="white">
-                <Box
-                  background={theme.colors.secondary}
-                  width="75px"
-                  borderTopLeftRadius="7px"
-                  borderBottomLeftRadius="7px"
-                >
-                  <Text>Hole</Text>
-                </Box>
-                <Box width="75px" background={theme.colors.secondary}>
-                  <Text>Par</Text>
-                </Box>
-                <Box
-                  background={theme.colors.secondary}
-                  width="75px"
-                  borderTopRightRadius="7px"
-                  borderBottomRightRadius="7px"
-                >
-                  <Text>SI</Text>
-                </Box>
-              </Stack>
-            </Box>
-            {column.map((holeNum) => (
-              <Box bg="white" p="3px" borderRadius="10px">
-                <Stack direction="row" spacing={0} key={holeNum}>
-                  <Box
-                    background={theme.colors.background}
-                    width="75px"
-                    borderTopLeftRadius="7px"
-                    borderBottomLeftRadius="7px"
-                  >
-                    <Text>{holeNum}</Text>
-                  </Box>
-                  <Box background={theme.colors.lightBackground} width="75px">
-                    <Text>{data[tournamentId]['000'].holes[holeNum].par}</Text>
-                  </Box>
-                  <Box
-                    background={theme.colors.lightBackground}
-                    width="75px"
-                    borderTopRightRadius="7px"
-                    borderBottomRightRadius="7px"
-                  >
-                    <Text>
-                      {data[tournamentId]['000'].holes[holeNum].strokeIndex}
-                    </Text>
-                  </Box>
-                </Stack>
-              </Box>
-            ))}
-          </Stack>
-        ))}
+              </PopoverTrigger>
+              <Portal>
+                <PopoverContent>
+                  <PopoverArrow />
+                  <PopoverHeader pr="30px">
+                    Do you want to delete {data[tournamentId].name} ?
+                  </PopoverHeader>
+                  <PopoverCloseButton />
+                  <PopoverBody align="center">
+                    <Button
+                      width="10vw"
+                      colorScheme="red"
+                      borderRadius="20px"
+                      disabled={deleteLoading}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setDeleteLoading(true);
+                        deleteTournament(tournamentId).then(() => {
+                          setDeleteLoading(false);
+                        });
+                      }}
+                    >
+                      {deleteLoading ? <Spinner /> : 'Yes'}
+                    </Button>
+                  </PopoverBody>
+                </PopoverContent>
+              </Portal>
+            </Popover>
+          </VStack>
+        </Box>
       </HStack>
     </Box>
   );
