@@ -129,33 +129,37 @@ const AdminDashboard = () => {
           ml="-100px"
         />
         <Box mt="7" p="20px">
-          <Box mx="25vw" mt="50px" mb="20px">
-            <InputGroup>
-              <InputLeftElement pointerEvents="none">
-                <SearchIcon color="gray.300" />
-              </InputLeftElement>
-              <Input
-                type="text"
-                placeholder="Search tournament"
-                onChangeCapture={(event) => setSearchText(event.target.value)}
-                value={searchText}
-              />
-              <InputRightElement>
-                <Button
-                  variant="ghost"
-                  color="gray.300"
-                  borderRadius="100px"
-                  size="sm"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setSearchText('');
-                  }}
-                >
-                  <CloseIcon />
-                </Button>
-              </InputRightElement>
-            </InputGroup>
-          </Box>
+          {Object.keys(data).length === 0 ? (
+            ''
+          ) : (
+            <Box mx="25vw" mt="50px" mb="20px">
+              <InputGroup>
+                <InputLeftElement pointerEvents="none">
+                  <SearchIcon color="gray.300" />
+                </InputLeftElement>
+                <Input
+                  type="text"
+                  placeholder="Search tournament"
+                  onChangeCapture={(event) => setSearchText(event.target.value)}
+                  value={searchText}
+                />
+                <InputRightElement>
+                  <Button
+                    variant="ghost"
+                    color="gray.300"
+                    borderRadius="100px"
+                    size="sm"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setSearchText('');
+                    }}
+                  >
+                    <CloseIcon />
+                  </Button>
+                </InputRightElement>
+              </InputGroup>
+            </Box>
+          )}
           <VStack>
             {Object.keys(data).length === 0 ? (
               <Container align="center" mt="100">
