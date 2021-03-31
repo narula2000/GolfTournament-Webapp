@@ -4,6 +4,7 @@ import firebase from 'firebase/app';
 import admin from 'firebase-admin';
 import crypto from 'crypto';
 import 'firebase/database';
+import 'firebase/firestore';
 
 const fetchRealtimeRank = async (adminId) => {
   const path = `admin/${adminId}/`;
@@ -99,15 +100,18 @@ const deleteUser = async (adminId, tournamentId, userId) => {
   await database.ref(path).set(data);
 };
 
-const deleteUsers = async (validUserId, tournament) => {
+const migrateUser = async (validUserId, tournament, tournamentId) => {
   let idx = '001';
   const toMigrate = {};
   const adminAuth = admin.auth();
-  validUserId.forEach(async (validId) => {
+  await validUserId.forEach(async (validId) => {
     toMigrate[idx] = tournament[validId];
     idx = String(Number(idx) + 1).padStart(3, '0');
     await adminAuth.deleteUser(validId);
   });
+
+  const db = firebase.firestore();
+  await db.collection('tournaments').doc(tournamentId).set(toMigrate);
 };
 
 const removeTournamentFromList = async (tournamentId) => {
@@ -133,7 +137,7 @@ const completeTournament = async (adminId, tournamentId) => {
   const validUserId = Object.keys(tournament).map((userId) => {
     if (userId.length > 3) return userId;
   });
-  await deleteUsers(validUserId, tournament);
+  await migrateUser(validUserId, tournament, tournamentId);
   await removeTournamentFromList(tournamentId);
 };
 
