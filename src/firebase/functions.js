@@ -141,6 +141,12 @@ const completeTournament = async (adminId, tournamentId) => {
   await removeTournamentFromList(tournamentId);
 };
 
+const fetchFirestoreTournaments = async () => {
+  const db = firebase.firestore();
+  const data = await db.collection('tournaments').get();
+  return data;
+};
+
 export default {
   fetchRealtimeRank,
   deleteTournament,
@@ -148,4 +154,5 @@ export default {
   addUser,
   deleteUser,
   completeTournament,
+  fetchFirestoreTournaments,
 };
