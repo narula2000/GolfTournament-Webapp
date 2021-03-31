@@ -169,42 +169,46 @@ const TournamentInfoBox = ({
               </Portal>
             </Popover>
 
-            <Tooltip label="Complete" placement="right" hasArrow>
-              <IconButton
-                colorScheme="blue"
-                aria-label="Search database"
-                icon={<CheckIcon />}
-              >
-                Completed
-              </IconButton>
-            </Tooltip>
-            <Tooltip label="User List" placement="right" hasArrow>
-              <IconButton
-                colorScheme="blue"
-                aria-label="Search database"
-                icon={<Icon as={IoPeople} />}
-                onClick={(e) => {
-                  e.preventDefault();
-                  history.push({
-                    pathname: '/admin/tournamentuser',
-                    state: { detail: data, tournamentId: tournamentId },
-                  });
-                }}
-              >
-                User List
-              </IconButton>
-            </Tooltip>
+            <Box display="inline-box">
+              <Tooltip label="Complete" placement="right" hasArrow>
+                <IconButton
+                  colorScheme="blue"
+                  aria-label="Search database"
+                  icon={<CheckIcon />}
+                />
+              </Tooltip>
+            </Box>
+            <Box display="inline-box">
+              <Tooltip label="User List" placement="right" hasArrow>
+                <IconButton
+                  colorScheme="blue"
+                  aria-label="Search database"
+                  icon={<Icon as={IoPeople} />}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    history.push({
+                      pathname: '/admin/tournamentuser',
+                      state: { detail: data, tournamentId: tournamentId },
+                    });
+                  }}
+                >
+                  User List
+                </IconButton>
+              </Tooltip>
+            </Box>
             <Popover placement="left">
               <PopoverTrigger>
-                <Tooltip label="Delete" placement="right" hasArrow>
-                  <IconButton
-                    colorScheme="red"
-                    aria-label="Search database"
-                    icon={<DeleteIcon />}
-                  >
-                    User List
-                  </IconButton>
-                </Tooltip>
+                <Box display="inline-box">
+                  <Tooltip label="Delete" placement="right" hasArrow>
+                    <IconButton
+                      colorScheme="red"
+                      aria-label="Search database"
+                      icon={<DeleteIcon />}
+                    >
+                      User List
+                    </IconButton>
+                  </Tooltip>
+                </Box>
               </PopoverTrigger>
               <Portal>
                 <PopoverContent>
