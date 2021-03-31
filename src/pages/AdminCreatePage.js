@@ -606,7 +606,6 @@ const AdminCreatePage = () => {
                 color="white"
                 top="20px"
                 onClick={() => {
-                  console.log(holes);
                   setIsOpen(true);
                   totalCount();
                 }}
