@@ -20,6 +20,8 @@ import {
   Spacer,
   Heading,
   VStack,
+  IconButton,
+  Tooltip,
 } from '@chakra-ui/react';
 import { IoQrCodeOutline, IoPeople } from 'react-icons/io5';
 import { CheckIcon, DeleteIcon } from '@chakra-ui/icons';
@@ -148,16 +150,15 @@ const TournamentInfoBox = ({
             <Spacer />
             <Popover placement="left">
               <PopoverTrigger>
-                <Button
-                  p="15px"
-                  width="10vw"
-                  background={theme.colors.primary}
-                  borderRadius="20px"
-                  color="white"
-                  leftIcon={<Icon as={IoQrCodeOutline} />}
-                >
-                  QR Code
-                </Button>
+                <Tooltip label="QR Code" placement="right" hasArrow>
+                  <IconButton
+                    colorScheme="blue"
+                    aria-label="Search database"
+                    icon={<Icon as={IoQrCodeOutline} />}
+                  >
+                    QR Code
+                  </IconButton>
+                </Tooltip>
               </PopoverTrigger>
               <Portal>
                 <PopoverContent>
@@ -173,44 +174,42 @@ const TournamentInfoBox = ({
               </Portal>
             </Popover>
 
-            <Button
-              p="15px"
-              width="10vw"
-              background={theme.colors.primary}
-              borderRadius="20px"
-              color="white"
-              leftIcon={<CheckIcon />}
-            >
-              Completed
-            </Button>
-            <Button
-              p="15px"
-              width="10vw"
-              background={theme.colors.primary}
-              borderRadius="20px"
-              color="white"
-              leftIcon={<Icon as={IoPeople} />}
-              onClick={(e) => {
-                e.preventDefault();
-                history.push({
-                  pathname: '/admin/tournamentuser',
-                  state: { detail: data, tournamentId: tournamentId },
-                });
-              }}
-            >
-              User List
-            </Button>
+            <Tooltip label="Complete" placement="right" hasArrow>
+              <IconButton
+                colorScheme="blue"
+                aria-label="Search database"
+                icon={<CheckIcon />}
+              >
+                Completed
+              </IconButton>
+            </Tooltip>
+            <Tooltip label="User List" placement="right" hasArrow>
+              <IconButton
+                colorScheme="blue"
+                aria-label="Search database"
+                icon={<Icon as={IoPeople} />}
+                onClick={(e) => {
+                  e.preventDefault();
+                  history.push({
+                    pathname: '/admin/tournamentuser',
+                    state: { detail: data, tournamentId: tournamentId },
+                  });
+                }}
+              >
+                User List
+              </IconButton>
+            </Tooltip>
             <Popover placement="left">
               <PopoverTrigger>
-                <Button
-                  p="15px"
-                  width="10vw"
-                  colorScheme="red"
-                  borderRadius="20px"
-                  leftIcon={<DeleteIcon />}
-                >
-                  Delete
-                </Button>
+                <Tooltip label="Delete" placement="right" hasArrow>
+                  <IconButton
+                    colorScheme="red"
+                    aria-label="Search database"
+                    icon={<DeleteIcon />}
+                  >
+                    User List
+                  </IconButton>
+                </Tooltip>
               </PopoverTrigger>
               <Portal>
                 <PopoverContent>
