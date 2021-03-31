@@ -85,9 +85,9 @@ const AdminDashboard = () => {
   }, []);
 
   return (
-    <Box background="white">
+    <Box background="white" overflow="hidden">
       <Flex direction="column">
-        <Flex background="#CFECC5" width="100vw" height="100px">
+        <Flex background="#CFECC5" height="100px">
           {Object.keys(data).length === 0 ? (
             ''
           ) : (

@@ -46,16 +46,24 @@ const TournamentInfoBox = ({
   const holeArray = [firstCol, secondCol, thirdCol];
 
   return (
-    <Box>
-      <HStack>
+    <Box
+      key={tournamentId}
+      position="relative"
+      width="auto"
+      my="20px"
+      borderRadius="20px"
+      align="center"
+      justifyItems="center"
+      justifyContent="center"
+      overflow="hidden"
+    >
+      <HStack spacing={3} align="center" justify="center">
         <Box
-          key={tournamentId}
           padding="5"
           position="relative"
           background={theme.colors.secondary}
           width="70vw"
           height="auto"
-          my="20px"
           borderRadius="20px"
           align="center"
           justifyItems="center"
@@ -133,32 +141,19 @@ const TournamentInfoBox = ({
             ))}
           </HStack>
         </Box>
-        <Box
-          key={tournamentId}
-          padding="5"
-          position="relative"
-          width="auto"
-          height="auto"
-          my="20px"
-          borderRadius="20px"
-          align="center"
-          justifyItems="center"
-          overflowY="auto"
-          justifyContent="center"
-        >
-          <VStack my="20px">
-            <Spacer />
+        <Box padding={3}>
+          <VStack spacing={2}>
             <Popover placement="left">
               <PopoverTrigger>
-                <Tooltip label="QR Code" placement="right" hasArrow>
-                  <IconButton
-                    colorScheme="blue"
-                    aria-label="Search database"
-                    icon={<Icon as={IoQrCodeOutline} />}
-                  >
-                    QR Code
-                  </IconButton>
-                </Tooltip>
+                <Box display="inline-box">
+                  <Tooltip label="QR Code" placement="right" hasArrow>
+                    <IconButton
+                      colorScheme="blue"
+                      aria-label="Search database"
+                      icon={<Icon as={IoQrCodeOutline} />}
+                    />
+                  </Tooltip>
+                </Box>
               </PopoverTrigger>
               <Portal>
                 <PopoverContent>
