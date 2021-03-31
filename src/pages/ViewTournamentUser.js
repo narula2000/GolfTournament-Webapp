@@ -43,7 +43,6 @@ import functions from '../firebase/functions';
 import 'firebase/auth';
 
 import theme from '../core/theme';
-import logo from '../assets/golf-logo.png';
 
 const ViewTournamentUser = () => {
   const history = useHistory();
@@ -128,7 +127,7 @@ const ViewTournamentUser = () => {
   return (
     <Box width="100vw">
       <NormalBanner title="View Tournament Users" />
-      <Flex mb="147px" bg="white" direction="column">
+      <Flex bg="white" direction="column">
         <Box mx="20px" my="10px" position="absolute">
           <BackButton history={history} />
         </Box>

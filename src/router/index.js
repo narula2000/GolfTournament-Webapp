@@ -9,6 +9,7 @@ import AdminDashboard from '../pages/AdminDashboard';
 import firebaseConfig from '../firebase';
 import 'firebase/auth';
 import ViewTournamentUser from '../pages/ViewTournamentUser';
+import UserScoreTable from '../pages/UserScoreTable';
 
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig);
@@ -25,6 +26,7 @@ const router = () => (
       <PrivateRoute path="/admin/create" component={AdminCreatePage} />
       <Route path="/admin/tournamentuser" component={ViewTournamentUser} />
       <Route path="/admin" component={Login} />
+      <Route path="/users" component={UserScoreTable} />
       <Route path="/" component={HomePage} />
     </Switch>
   </Router>
