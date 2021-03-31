@@ -4,7 +4,7 @@ import firebase from 'firebase/app';
 import PrivateRoute from '../component/PrivateRoute';
 import AdminCreatePage from '../pages/AdminCreatePage';
 import Login from '../pages/Login';
-import RankingHome from '../pages/RankingHome';
+import HomePage from '../pages/HomePage';
 import AdminDashboard from '../pages/AdminDashboard';
 import firebaseConfig from '../firebase';
 import 'firebase/auth';
@@ -25,7 +25,7 @@ const router = () => (
       <PrivateRoute path="/admin/create" component={AdminCreatePage} />
       <Route path="/admin/tournamentuser" component={ViewTournamentUser} />
       <Route path="/admin" component={Login} />
-      <Route path="/" component={RankingHome} />
+      <Route path="/" component={HomePage} />
     </Switch>
   </Router>
 );
