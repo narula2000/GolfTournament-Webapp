@@ -1329,13 +1329,6 @@
   dependencies:
     "@chakra-ui/utils" "1.4.0"
 
-"@chakra-ui/icon@1.1.3":
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/@chakra-ui/icon/-/icon-1.1.3.tgz#5fbc310652fa20da973ea9422ed5e1a654596d23"
-  integrity sha512-XZ9RTU0J/qB5bZawUK5yk6YN3P2fi74aTLap1qygmodAPo5sIroRzfuXndezjAYFhuRjI62zfSs/FVhwJyhmsw==
-  dependencies:
-    "@chakra-ui/utils" "1.4.0"
-
 "@chakra-ui/icons@^1.0.7":
   version "1.0.7"
   resolved "https://registry.yarnpkg.com/@chakra-ui/icons/-/icons-1.0.7.tgz#4a2a846468c57436fc61fb991a1126acfcbaede8"
@@ -1344,10 +1337,10 @@
     "@chakra-ui/icon" "1.1.3"
     "@types/react" "^17.0.0"
 
-"@chakra-ui/image@1.0.8":
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/@chakra-ui/image/-/image-1.0.8.tgz#3e20c89966c651859d95728f9d4987ae2f8cd8a9"
-  integrity sha512-WSVFFvx0bJ7qdJslBrj9FGFJvOLXk05rQC+tL+lPI8/jqhzj6EwUzsQ4qXlwcjo8KR5LviMA8zZsaoEZ+kAUqw==
+"@chakra-ui/image@1.0.9":
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/@chakra-ui/image/-/image-1.0.9.tgz#bd301f6028000d9dc3370c897868b465edc39ed5"
+  integrity sha512-GpfwgXzVC/IVkcFGUX0I4/NcQafjdCCSVNkdTRxYo0v368VrXb4087i2ypx+7w4PgRqZv3ABunM2BbbXE35U0w==
   dependencies:
     "@chakra-ui/hooks" "1.2.0"
     "@chakra-ui/utils" "1.4.0"
@@ -1686,27 +1679,10 @@
     css-box-model "1.2.1"
     lodash.mergewith "4.6.2"
 
-<<<<<<< HEAD
 "@chakra-ui/visually-hidden@1.0.6":
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/@chakra-ui/visually-hidden/-/visually-hidden-1.0.6.tgz#c47578afbbd9396996c4ee3d7ce05d91f00a43c1"
   integrity sha512-PM1QOGabhMAQyfNUq05GKSUr85dJdQGeQZVO6Gw8QOJ29+J/xS6Qpyvvn358OrWVYQjw3eEQ15ALEGXb/HJfeA==
-=======
-"@chakra-ui/utils@1.4.0":
-  version "1.4.0"
-  resolved "https://registry.yarnpkg.com/@chakra-ui/utils/-/utils-1.4.0.tgz#4b20c522141d68dc62b5c7be929bb6d1596db190"
-  integrity sha512-ND7NIilpncnkzcNBnAySGBFpOXb3urO1X9esSY0+M5zXiq+VSSfK9JuoJd3ilvV4Dbwgzil7hMAELBuHme4uTg==
-  dependencies:
-    "@types/lodash.mergewith" "4.6.6"
-    "@types/object-assign" "4.0.30"
-    css-box-model "1.2.1"
-    lodash.mergewith "4.6.2"
-
-"@chakra-ui/visually-hidden@1.0.5":
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/@chakra-ui/visually-hidden/-/visually-hidden-1.0.5.tgz#dcbd32a1eacb19e9636d2242e55aca5914dc3011"
-  integrity sha512-EIRZ081CgfFqhnOuhTfoluoqaKtx1id3/oCLk9QrJcB3s3r3PWexg41/z0WUaQzeQSPobw3hz5M5QxymmrZ4UQ==
->>>>>>> 0626f534c324a2fbd0bf6f189fe3d15ca1e7003c
   dependencies:
     "@chakra-ui/utils" "1.4.0"
 
