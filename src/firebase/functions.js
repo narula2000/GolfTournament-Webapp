@@ -144,7 +144,8 @@ const completeTournament = async (adminId, tournamentId) => {
   const dataRef = await database.ref(path).once('value');
   const tournament = dataRef.val();
   const validUserId = Object.keys(tournament).map((userId) => {
-    if (userId.length > 3) return userId;
+    if (userId.length > 3 && userId !== 'name' && userId !== 'isComplete')
+      return userId;
   });
   await migrateUser(validUserId, tournament, tournamentId);
   await removeTournamentFromList(tournamentId);
