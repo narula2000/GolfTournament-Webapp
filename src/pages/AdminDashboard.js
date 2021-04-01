@@ -62,12 +62,18 @@ const AdminDashboard = () => {
     await refreshData();
   }
 
+  async function completeTournamentAndRefresh(tournamentId) {
+    await firebaseFunction.completeTournament(adminId, tournamentId);
+    await refreshData();
+  }
+
   const renderTournamentBox = (tournamentId) => (
     <TournamentInfoBox
       data={data}
       tournamentId={tournamentId}
       qrCode={generateURL(tournamentId)}
       deleteTournament={deleteTournamentAndRefresh}
+      completeTournament={completeTournamentAndRefresh}
     />
   );
 

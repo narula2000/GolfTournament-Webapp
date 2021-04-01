@@ -1,19 +1,20 @@
 /* eslint-disable consistent-return */
 /* eslint-disable array-callback-return */
 import firebase from 'firebase/app';
-import admin from 'firebase-admin';
 import crypto from 'crypto';
+import axios from 'axios';
 import 'firebase/database';
+import 'firebase/firestore';
 
-const fetchRealtimeRank = async (_adminId) => {
-  const path = `admin/${_adminId}/`;
+const fetchRealtimeRank = async (adminId) => {
+  const path = `admin/${adminId}/`;
   const database = firebase.database();
   const tournaments = await database.ref(path).once('value');
   return tournaments.val();
 };
 
-const deleteTournament = async (_adminId, tournamentId) => {
-  const path = `admin/${_adminId}/${tournamentId}/`;
+const deleteTournament = async (adminId, tournamentId) => {
+  const path = `admin/${adminId}/${tournamentId}/`;
   const tournamentListPath = `tournament/`;
   const database = firebase.database();
   const tournamentListRef = await database
@@ -29,7 +30,7 @@ const deleteTournament = async (_adminId, tournamentId) => {
   await database.ref(path).set({});
 };
 
-const createTournament = async (_adminId, holesData, tournamentName) => {
+const createTournament = async (adminId, holesData, tournamentName) => {
   const date = new Date().toISOString();
   const tournamentId = crypto.createHash('sha256').update(date).digest('hex');
   const holes = {};
@@ -57,7 +58,7 @@ const createTournament = async (_adminId, holesData, tournamentName) => {
     phonenumber: '6666666666',
     holes: holes,
   };
-  const path = `admin/${_adminId}/${tournamentId}/`;
+  const path = `admin/${adminId}/${tournamentId}/`;
   const tournamentListPath = `tournament/`;
   const database = firebase.database();
   const tournamentListRef = await database.ref(tournamentListPath).push();
@@ -67,12 +68,12 @@ const createTournament = async (_adminId, holesData, tournamentName) => {
     .set({ '000': data, isComplete: false, name: tournamentName });
 };
 
-const addUser = async (_adminId, _tournamentId, userInfo) => {
+const addUser = async (adminId, tournamentId, userInfo) => {
   let max = 0;
   const { name, phonenumber } = userInfo;
   const database = firebase.database();
-  const holePath = `admin/${_adminId}/${_tournamentId}/000/holes`;
-  const userPath = `admin/${_adminId}/${_tournamentId}/`;
+  const holePath = `admin/${adminId}/${tournamentId}/000/holes`;
+  const userPath = `admin/${adminId}/${tournamentId}/`;
   const holesRef = await database.ref(holePath).once('value');
   const usersRef = await database.ref(userPath).once('value');
   const users = usersRef.val();
@@ -90,8 +91,8 @@ const addUser = async (_adminId, _tournamentId, userInfo) => {
   await database.ref(userPath).set(users);
 };
 
-const deleteUser = async (_adminId, _tournamentId, userId) => {
-  const path = `admin/${_adminId}/${_tournamentId}/`;
+const deleteUser = async (adminId, tournamentId, userId) => {
+  const path = `admin/${adminId}/${tournamentId}/`;
   const database = firebase.database();
   const dataRef = await database.ref(path).once('value');
   const data = dataRef.val();
@@ -99,23 +100,31 @@ const deleteUser = async (_adminId, _tournamentId, userId) => {
   await database.ref(path).set(data);
 };
 
-const completeTournament = async (_adminId, _tournamentId) => {
-  const path = `admin/${_adminId}/${_tournamentId}/`;
-  const database = firebase.database();
-  const dataRef = await database.ref(path).once('value');
-  const tournament = dataRef.val();
-  const validUserId = Object.keys(tournament).map((userId) => {
-    if (userId.length > 3) return userId;
-  });
-
+const migrateUser = async (validUserId, tournament, tournamentId) => {
   let idx = '001';
   const toMigrate = {};
-  const adminAuth = admin.auth();
-  validUserId.forEach((validId) => {
+  const payload = {};
+  await validUserId.forEach(async (validId) => {
     toMigrate[idx] = tournament[validId];
+    payload[idx] = validId;
     idx = String(Number(idx) + 1).padStart(3, '0');
-    adminAuth.deleteUser(validId);
   });
+
+  const headers = {
+    headers: {
+      'Content-Type': 'application/json;charset=UTF-8',
+      'Access-Control-Allow-Origin': '*',
+    },
+  };
+
+  await axios.post(process.env.REACT_APP_API_URL, payload, headers);
+
+  const db = firebase.firestore();
+  await db.collection('tournaments').doc(tournamentId).set(toMigrate);
+};
+
+const removeTournamentFromList = async (tournamentId) => {
+  const database = firebase.database();
   const tournamentListPath = `tournament/`;
   const tournamentListRef = await database
     .ref(tournamentListPath)
@@ -123,10 +132,28 @@ const completeTournament = async (_adminId, _tournamentId) => {
   const tournamentList = tournamentListRef.val();
   let delId = '';
   Object.keys(tournamentList).forEach((key) => {
-    if (tournamentList[key].id === _tournamentId) delId = key;
+    if (tournamentList[key].id === tournamentId) delId = key;
   });
   delete tournamentListRef[delId];
   await database.ref(tournamentListPath).set(tournamentList);
+};
+
+const completeTournament = async (adminId, tournamentId) => {
+  const path = `admin/${adminId}/${tournamentId}/`;
+  const database = firebase.database();
+  const dataRef = await database.ref(path).once('value');
+  const tournament = dataRef.val();
+  const validUserId = Object.keys(tournament).map((userId) => {
+    if (userId.length > 3) return userId;
+  });
+  await migrateUser(validUserId, tournament, tournamentId);
+  await removeTournamentFromList(tournamentId);
+};
+
+const fetchFirestoreTournaments = async () => {
+  const db = firebase.firestore();
+  const data = await db.collection('tournaments').get();
+  return data;
 };
 
 export default {
@@ -136,4 +163,5 @@ export default {
   addUser,
   deleteUser,
   completeTournament,
+  fetchFirestoreTournaments,
 };
