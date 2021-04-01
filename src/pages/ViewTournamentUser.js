@@ -22,20 +22,27 @@ import {
   PopoverCloseButton,
   PopoverFooter,
   Popover,
+  InputLeftElement,
+  InputGroup,
+  InputRightElement,
 } from '@chakra-ui/react';
 import {
   ArrowBackIcon,
   AddIcon,
   DeleteIcon,
   RepeatIcon,
+  SearchIcon,
+  CloseIcon,
 } from '@chakra-ui/icons';
 import { useHistory, useLocation } from 'react-router-dom';
+
+import NormalBanner from '../component/NormalBanner';
+import BackButton from '../component/BackButton';
 
 import functions from '../firebase/functions';
 import 'firebase/auth';
 
 import theme from '../core/theme';
-import logo from '../assets/golf-logo.png';
 
 const ViewTournamentUser = () => {
   const history = useHistory();
@@ -43,6 +50,7 @@ const ViewTournamentUser = () => {
   const [adding, setAdding] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const [searchText, setSearchText] = useState('');
 
   const [username, setUsername] = useState('');
   const [phoneNum, setPhoneNum] = useState('');
@@ -68,7 +76,9 @@ const ViewTournamentUser = () => {
 
   async function refreshData() {
     setData(
-      await functions.fetchRealtimeRank(adminId).then((result) => result)
+      await functions
+        .fetchRealtimeRank(adminId)
+        .then((result) => (result === null ? {} : result))
     );
   }
 
@@ -95,33 +105,31 @@ const ViewTournamentUser = () => {
     await refreshData();
   }
 
+  const dataToRender = () => {
+    const userData = Object.keys(data[tournamentId]).filter(
+      (userId) =>
+        userId !== 'isComplete' && userId !== 'name' && userId !== '000'
+    );
+    if (searchText !== '') {
+      return userData.filter((userId) =>
+        data[tournamentId][userId].name
+          .toLowerCase()
+          .includes(searchText.toLowerCase())
+      );
+    }
+    return userData;
+  };
+
   useEffect(() => {
     refreshData();
   }, []);
 
   return (
-    <Box>
-      <Flex bg={theme.colors.background}>
-        <Square>
-          <Image src={logo} boxSize="100px" objectFit="cover" />
-        </Square>
-        <Flex align="center" mx="10px">
-          <Heading size="md">View Tournament Users</Heading>
-        </Flex>
-      </Flex>
-      <Flex mb="147px" bg="white" direction="column">
+    <Box width="100vw">
+      <NormalBanner title="View Tournament Users" />
+      <Flex bg="white" direction="column">
         <Box mx="20px" my="10px" position="absolute">
-          <Button
-            leftIcon={<ArrowBackIcon />}
-            colorScheme="green"
-            variant="ghost"
-            onClick={(e) => {
-              e.preventDefault();
-              history.go(-1);
-            }}
-          >
-            Back
-          </Button>
+          <BackButton history={history} />
         </Box>
         <Box
           ml={{ lg: '200px', sm: '120px' }}
@@ -186,61 +194,80 @@ const ViewTournamentUser = () => {
           </HStack>
         </Box>
         <Box mx={{ lg: '300px', md: '150px' }} my="10px">
+          <InputGroup mb="20px">
+            <InputLeftElement pointerEvents="none">
+              <SearchIcon color="gray.300" />
+            </InputLeftElement>
+            <Input
+              type="text"
+              placeholder="Search user"
+              onChangeCapture={(event) => setSearchText(event.target.value)}
+              value={searchText}
+            />
+            <InputRightElement>
+              <Button
+                variant="ghost"
+                color="gray.300"
+                borderRadius="100px"
+                size="sm"
+                onClick={(e) => {
+                  e.preventDefault();
+                  setSearchText('');
+                }}
+              >
+                <CloseIcon />
+              </Button>
+            </InputRightElement>
+          </InputGroup>
           <Table variant="simple">
             <Tbody>
               {Object.keys(data[tournamentId]).length > 3 ? ( // check if there are users other than default user, the fields isComplete and name
-                Object.keys(data[tournamentId]).map((userId) =>
-                  userId !== 'isComplete' &&
-                  userId !== 'name' &&
-                  userId !== '000' ? (
-                    <Tr key={userId}>
-                      <Td maxW="200px">{data[tournamentId][userId].name}</Td>
-                      <Td textAlign="center">
-                        {data[tournamentId][userId].phonenumber}
-                      </Td>
-                      <Td>
-                        {' '}
-                        <Popover placement="right" maxW="100px">
-                          <PopoverTrigger>
-                            <IconButton
-                              aria-label="Delete user"
-                              colorScheme="red"
-                              icon={<DeleteIcon />}
-                            />
-                          </PopoverTrigger>
-                          <Portal>
-                            <PopoverContent>
-                              <PopoverArrow />
-                              <PopoverHeader align="center">
-                                Delete {data[tournamentId][userId].name} ?
-                              </PopoverHeader>
-                              <PopoverCloseButton />
-                              <PopoverFooter align="center">
-                                <Button
-                                  colorScheme="red"
-                                  borderRadius="10px"
-                                  isLoading={deleting}
-                                  loadingText="Deleting"
-                                  onClick={(e) => {
-                                    e.preventDefault();
-                                    setDeleting(true);
-                                    deleteAndFetchNewData(userId).then(() =>
-                                      setDeleting(false)
-                                    );
-                                  }}
-                                >
-                                  Delete
-                                </Button>
-                              </PopoverFooter>
-                            </PopoverContent>
-                          </Portal>
-                        </Popover>{' '}
-                      </Td>
-                    </Tr>
-                  ) : (
-                    ''
-                  )
-                )
+                dataToRender().map((userId) => (
+                  <Tr key={userId}>
+                    <Td maxW="200px">{data[tournamentId][userId].name}</Td>
+                    <Td textAlign="center">
+                      {data[tournamentId][userId].phonenumber}
+                    </Td>
+                    <Td>
+                      {' '}
+                      <Popover placement="right" maxW="100px">
+                        <PopoverTrigger>
+                          <IconButton
+                            aria-label="Delete user"
+                            colorScheme="red"
+                            icon={<DeleteIcon />}
+                          />
+                        </PopoverTrigger>
+                        <Portal>
+                          <PopoverContent>
+                            <PopoverArrow />
+                            <PopoverHeader align="center">
+                              Delete {data[tournamentId][userId].name} ?
+                            </PopoverHeader>
+                            <PopoverCloseButton />
+                            <PopoverFooter align="center">
+                              <Button
+                                colorScheme="red"
+                                borderRadius="10px"
+                                isLoading={deleting}
+                                loadingText="Deleting"
+                                onClick={(e) => {
+                                  e.preventDefault();
+                                  setDeleting(true);
+                                  deleteAndFetchNewData(userId).then(() =>
+                                    setDeleting(false)
+                                  );
+                                }}
+                              >
+                                Delete
+                              </Button>
+                            </PopoverFooter>
+                          </PopoverContent>
+                        </Portal>
+                      </Popover>{' '}
+                    </Td>
+                  </Tr>
+                ))
               ) : (
                 <Flex
                   justify="center"

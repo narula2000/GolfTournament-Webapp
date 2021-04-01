@@ -6,7 +6,8 @@ const overrides = {
     primary: '#80D2F1',
     secondary: '#7FD661',
     error: '#f13a59',
-    background: '#CFECC5',
+    background: '#cfecc5',
+    lightBackground: '#F3FDF1',
   },
 };
 
