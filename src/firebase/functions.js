@@ -152,6 +152,7 @@ const completeTournament = async (adminId, tournamentId) => {
   });
   await migrateUser(validUsers, tournament, tournamentId);
   await removeTournamentFromList(tournamentId);
+  await deleteTournament(adminId, tournamentId);
 };
 
 const fetchFirestoreTournaments = async () => {
