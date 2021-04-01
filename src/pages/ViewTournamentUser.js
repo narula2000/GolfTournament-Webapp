@@ -2,10 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {
   Box,
   Flex,
-  Image,
-  Square,
   Button,
-  Heading,
   HStack,
   Input,
   Table,
@@ -27,7 +24,6 @@ import {
   InputRightElement,
 } from '@chakra-ui/react';
 import {
-  ArrowBackIcon,
   AddIcon,
   DeleteIcon,
   RepeatIcon,

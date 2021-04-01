@@ -2,23 +2,15 @@ import React, { useState } from 'react';
 import {
   Box,
   Button,
-  Container,
   Flex,
-  Icon,
-  Image,
   Input,
   InputGroup,
   InputLeftElement,
   InputRightElement,
-  Spacer,
-  Text,
   VStack,
 } from '@chakra-ui/react';
-import { AddIcon, CloseIcon, SearchIcon } from '@chakra-ui/icons';
-import { FiLogOut } from 'react-icons/fi';
-import logo from '../assets/golf-logo.png';
+import { CloseIcon, SearchIcon } from '@chakra-ui/icons';
 import NormalBanner from '../component/NormalBanner';
-import TournamentInfoBox from '../component/TournamentInfoBox';
 import PastTournamentInfoBox from '../component/PastTournamentInfoBox';
 
 const HomePage = () => {

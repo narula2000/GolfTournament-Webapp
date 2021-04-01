@@ -3,20 +3,10 @@ import {
   Box,
   Button,
   Flex,
-  HStack,
-  IconButton,
   Input,
   InputGroup,
   InputLeftElement,
   InputRightElement,
-  Popover,
-  PopoverArrow,
-  PopoverCloseButton,
-  PopoverContent,
-  PopoverFooter,
-  PopoverHeader,
-  PopoverTrigger,
-  Portal,
   Table,
   Thead,
   Tbody,
@@ -24,13 +14,7 @@ import {
   Th,
   Tr,
 } from '@chakra-ui/react';
-import {
-  AddIcon,
-  CloseIcon,
-  DeleteIcon,
-  RepeatIcon,
-  SearchIcon,
-} from '@chakra-ui/icons';
+import { CloseIcon, SearchIcon } from '@chakra-ui/icons';
 import { useHistory } from 'react-router-dom';
 import NormalBanner from '../component/NormalBanner';
 import BackButton from '../component/BackButton';
