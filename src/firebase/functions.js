@@ -104,7 +104,7 @@ const migrateUser = async (validUserId, tournament, tournamentId) => {
   let idx = '001';
   const toMigrate = {};
   const payload = {};
-  await validUserId.forEach(async (validId) => {
+  validUserId.forEach((validId) => {
     toMigrate[idx] = tournament[validId];
     payload[idx] = validId;
     idx = String(Number(idx) + 1).padStart(3, '0');
@@ -113,14 +113,16 @@ const migrateUser = async (validUserId, tournament, tournamentId) => {
   const headers = {
     headers: {
       'Content-Type': 'application/json;charset=UTF-8',
-      'Access-Control-Allow-Origin': '*',
     },
   };
 
   await axios.post(process.env.REACT_APP_API_URL, payload, headers);
 
   const db = firebase.firestore();
-  await db.collection('tournaments').doc(tournamentId).set(toMigrate);
+  await db
+    .collection('tournaments')
+    .doc(tournamentId)
+    .set(JSON.parse(JSON.stringify(toMigrate)));
 };
 
 const removeTournamentFromList = async (tournamentId) => {
@@ -143,11 +145,14 @@ const completeTournament = async (adminId, tournamentId) => {
   const database = firebase.database();
   const dataRef = await database.ref(path).once('value');
   const tournament = dataRef.val();
-  const validUserId = Object.keys(tournament).map((userId) => {
-    if (userId.length > 3) return userId;
+  const validUsers = [];
+  Object.keys(tournament).forEach((userId) => {
+    if (userId.length > 3 && userId !== 'name' && userId !== 'isComplete')
+      validUsers.push(userId);
   });
-  await migrateUser(validUserId, tournament, tournamentId);
+  await migrateUser(validUsers, tournament, tournamentId);
   await removeTournamentFromList(tournamentId);
+  await deleteTournament(adminId, tournamentId);
 };
 
 const fetchFirestoreTournaments = async () => {
