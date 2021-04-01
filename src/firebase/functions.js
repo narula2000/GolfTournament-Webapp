@@ -122,7 +122,7 @@ const migrateUser = async (validUserId, tournament, tournamentId) => {
   await db
     .collection('tournaments')
     .doc(tournamentId)
-    .set(JSON.parse(toMigrate));
+    .set(JSON.stringify(toMigrate));
 };
 
 const removeTournamentFromList = async (tournamentId) => {
