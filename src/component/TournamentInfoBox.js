@@ -17,7 +17,6 @@ import {
   StackDivider,
   Text,
   Icon,
-  Spacer,
   Heading,
   VStack,
   IconButton,
@@ -35,10 +34,12 @@ const TournamentInfoBox = ({
   data,
   qrCode,
   deleteTournament,
+  completeTournament,
 }) => {
   const history = useHistory();
 
   const [deleteLoading, setDeleteLoading] = useState(false);
+  const [completeLoading, setCompleteLoading] = useState(false);
   const firstCol = ['01', '02', '03', '04', '05', '06'];
   const secondCol = ['07', '08', '09', '10', '11', '12'];
   const thirdCol = ['13', '14', '15', '16', '17', '18'];
@@ -169,15 +170,46 @@ const TournamentInfoBox = ({
               </Portal>
             </Popover>
 
-            <Box display="inline-box">
-              <Tooltip label="Complete" placement="right" hasArrow>
-                <IconButton
-                  colorScheme="blue"
-                  aria-label="Search database"
-                  icon={<CheckIcon />}
-                />
-              </Tooltip>
-            </Box>
+            <Popover placement="left">
+              <PopoverTrigger>
+                <Box display="inline-box">
+                  <Tooltip label="Complete" placement="right" hasArrow>
+                    <IconButton
+                      colorScheme="blue"
+                      aria-label="Complete tournament"
+                      isLoading={completeLoading}
+                      icon={<CheckIcon />}
+                    />
+                  </Tooltip>
+                </Box>
+              </PopoverTrigger>
+              <Portal>
+                <PopoverContent>
+                  <PopoverArrow />
+                  <PopoverHeader pr="30px">
+                    Complete {data[tournamentId].name} ?
+                  </PopoverHeader>
+                  <PopoverCloseButton />
+                  <PopoverBody align="center">
+                    <Button
+                      width="10vw"
+                      colorScheme="blue"
+                      borderRadius="20px"
+                      isLoading={completeLoading}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setCompleteLoading(true);
+                        completeTournament(tournamentId).then(() => {
+                          setCompleteLoading(false);
+                        });
+                      }}
+                    >
+                      Yes
+                    </Button>
+                  </PopoverBody>
+                </PopoverContent>
+              </Portal>
+            </Popover>
             <Box display="inline-box">
               <Tooltip label="User List" placement="right" hasArrow>
                 <IconButton
